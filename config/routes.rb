@@ -1,4 +1,8 @@
 SpecialServer::Application.routes.draw do
+  get "user/index"
+  get "user/register"
+  post "user/register"
+ 
   get "site/index"
   get "site/about"
   get "site/help"

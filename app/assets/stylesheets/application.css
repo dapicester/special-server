@@ -64,3 +64,103 @@ body {
   font-size: 18pt;
 }
 
+/* hack for IE */
+html fieldset {
+  position: relative;
+}
+html legend {
+  position: absolute;
+  top: -1em;
+  left: .5em;
+}
+html fieldset {
+  position: relative;
+  margin-top: 1em;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+/* form styles */
+
+fieldset {
+  background: #ddd;
+}
+legend {
+  color: white;
+  background: maroon;
+  padding: .4em 1em;
+}
+label {
+  width: 10em;
+  float: left;
+  text-align: right;
+  margin-right: 0.2em;
+  display: block;
+}
+.form_row {
+  white-space: nowrap;
+  padding-bottom: .5em;
+}
+.submit { 
+  margin-left: 15em;
+}
+
+/* debug style */
+
+.debug_dump {
+  text-align: left;
+  border-top: 1px dashed black;
+  background: #ccc;
+  margin: 0;
+  padding: 0.5em;
+}
+
+/* errors styles */
+
+.field_with_errors {
+  margin: 2px;
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#error_explanation {
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12pt;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#error_explanation ul li {
+  font-size: 11pt;
+  list-style: square;
+}
+
+/* flash style */
+
+#notice {
+  border: 1px solid green;
+  padding: 1em;
+  margin: 1em;
+  margin-bottom: 2em;
+  background-color: lightgray;
+  font: bold smaller sans-serif;
+}
+
