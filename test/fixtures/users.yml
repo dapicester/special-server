@@ -1,11 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  screen_name: MyString
-  email: MyString
-  password: MyString
+valid_user:
+  id: 1
+  screen_name: millikan
+  email: ram@example.com
+  password: electron
 
-two:
-  screen_name: MyString
-  email: MyString
-  password: MyString
+invalid_user:
+  id: 2
+  screen_name: aa/noyes
+  email: anoyes@example,com
+  password: sun
+

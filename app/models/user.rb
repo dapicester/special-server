@@ -16,11 +16,12 @@ class User < ActiveRecord::Base
   
   validates :screen_name, :uniqueness => true,
                           :length => { :within => SCREEN_NAME_RANGE },
-                          :format => { :with => /^[A-Z0-9_]*$/i, :message => "must contains only letters, numbers and underscores" }
+                          :format => { :with => /^[A-Z0-9_]+$/i, :message => "must contains only letters, numbers and underscores" }
   validates :email, :presence => true,
                     :uniqueness => true , 
                     :length => { :maximum => EMAIL_MAX_LENGTH },
-                    :format => { :with => /^[^@][\w.-]+@[\w.-]+[.][a-z]{2,4}$/i, :message => "must be a valid address" }
+                    #:format => { :with => /^[^@][\w.-]+@[\w.-]+[.][a-z]{2,4}$/i, :message => "must be a valid email address" }
+                    :format => { :with => /^[A-Z0-9._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i, :message => "must be a valid email address" }
 
   validates :password, :length => { :within => PASSWORD_RANGE }
 end
