@@ -1,4 +1,6 @@
 class UserController < ApplicationController
+  before_filter :protect, :only => :index
+
   def index
     @title = "User Hub"
     # this will be a protected page for viewing user information
@@ -36,6 +38,17 @@ class UserController < ApplicationController
         flash[:notice] = "User #{@user.screen_name} created!"
         redirect_to :action => "index"
       end
+    end
+  end
+
+private
+  
+  # Protect a page from unauthorize acces.
+  def protect 
+    unless session[:user_id]
+      redirect_to :action => "login"
+      flash[:notice] = "Please log in first"
+      return false
     end
   end
 end
