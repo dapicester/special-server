@@ -1,9 +1,11 @@
 class UserController < ApplicationController
   def index
+    @title = "User Hub"
+    # this will be a protected page for viewing user information
   end
   
   def login
-    #@title = "Login"
+    @title = "Login"
     if request.post? and params[:user]
       @user = User.new(params[:user])
       user = User.find_by_screen_name_and_password(@user.screen_name, @user.password)
@@ -26,7 +28,7 @@ class UserController < ApplicationController
   end
 
   def register
-    #@title = "Register"
+    @title = "Register"
     if request.post? and params[:user]
       @user = User.new(params[:user])
       if @user.save

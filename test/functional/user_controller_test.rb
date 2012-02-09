@@ -6,14 +6,10 @@ class UserControllerTest < ActionController::TestCase
     @valid_user = users(:valid_user)
   end
 
-  test "should get index" do
-    get :index
-    assert_response :success
-  end
-    
   # Test the registration page and its form.
   test "should get register" do
     get :register
+    assert_equal "Register", assigns(:title)
     assert_tag :h2, :content => "Register"
     assert_response :success
     assert_template "register"
@@ -84,8 +80,7 @@ class UserControllerTest < ActionController::TestCase
   # Test the login page
   test "should get login" do
     get :login
-    #title = assigns(:title)
-    #assert_equal "Login", title 
+    assert_equal "Login", assigns(:title)
     assert_response :success
     assert_template "login"
     assert_tag :form, :attributes => { :action => "/user/login",
