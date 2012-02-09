@@ -4,7 +4,8 @@ SpecialServer::Application.routes.draw do
   post "user/login"
   get "user/register"
   post "user/register"
- 
+  get "user/logout"
+   
   get "site/index"
   get "site/about"
   get "site/help"

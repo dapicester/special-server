@@ -19,6 +19,12 @@ class UserController < ApplicationController
     end
   end
 
+  def logout
+    session[:user_id] = nil
+    flash[:notice] = "Logged out"
+    redirect_to :action => "index", :controller => "site"
+  end
+
   def register
     #@title = "Register"
     if request.post? and params[:user]
