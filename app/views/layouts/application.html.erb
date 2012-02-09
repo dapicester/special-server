@@ -22,7 +22,18 @@
       <%= yield %>
     </div>
     <% if ENV["RAILS_ENV"] == "development" %>
-      <%= debug(params) %>
+      <div id="debug">
+        <a href="#" onclick="$('#params_debug_info').toggle()">params</a>
+        <a href="#" onclick="$('#session_debug_info').toggle()">session</a>
+        <fieldset id="params_debug_info" class="debug_info" style="display:none">
+          <legend>params</legend>
+          <%= debug(params) %>
+        </fieldset>
+        <fieldset id="session_debug_info" class="debug_info" style="display:none">
+          <legend>session</legend>
+          <%= debug(session) %>
+        </fieldset>
+      </div>
     <% end %>
   </div>
 </body>
