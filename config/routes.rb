@@ -1,5 +1,7 @@
 SpecialServer::Application.routes.draw do
   get "user/index"
+  get "user/login"
+  post "user/login"
   get "user/register"
   post "user/register"
  

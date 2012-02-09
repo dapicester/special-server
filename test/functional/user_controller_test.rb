@@ -1,11 +1,16 @@
 require 'test_helper'
 
 class UserControllerTest < ActionController::TestCase
+  setup do
+    # this user is valid, but we may change its attributes
+    @valid_user = users(:valid_user)
+  end
+
   test "should get index" do
     get :index
     assert_response :success
   end
-
+    
   # Test the registration page and its form.
   test "should get register" do
     get :register
@@ -45,6 +50,9 @@ class UserControllerTest < ActionController::TestCase
     # test flash and redirect
     assert_equal "User #{new_user.screen_name} created!", flash[:notice]
     assert_redirected_to :action => "index"
+    # test session login
+    assert_not_nil session[:user_id]
+    assert_equal user.id, session[:user_id]
   end
 
   # Test an invalid registration
@@ -72,4 +80,70 @@ class UserControllerTest < ActionController::TestCase
                                         # password inputs do not keep value
                        :parent => error_div    
   end
+
+  # Test the login page
+  test "should get login" do
+    get :login
+    #title = assigns(:title)
+    #assert_equal "Login", title 
+    assert_response :success
+    assert_template "login"
+    assert_tag :form, :attributes => { :action => "/user/login",
+                                       :method => "post" }
+    assert_tag :input, :attributes => { :name => "user[screen_name]",
+                                        :type => "text",
+                                        :size => User::SCREEN_NAME_SIZE,
+                                        :maxlength => User::SCREEN_NAME_MAX_LENGTH }
+    assert_tag :input, :attributes => { :name => "user[password]",
+                                        :type => "password",
+                                        :size => User::PASSWORD_SIZE,
+                                        :maxlength => User::PASSWORD_MAX_LENGTH }
+    assert_tag :input, :attributes => { :type => "submit",
+                                        :value => "Login" }
+  end
+
+  # Test a valid login.
+  test "should login user valid" do
+    try_to_login @valid_user
+    assert_not_nil session[:user_id]
+    assert_equal @valid_user.id, session[:user_id]
+    assert_equal "User #{@valid_user.screen_name} logged in!", flash[:notice]
+    assert_redirected_to "action" => "index"
+  end
+
+  # Test a login with invalid screen name.
+  test "should login failure with nonexistent screen name" do
+    invalid_user = @valid_user
+    invalid_user.screen_name = "nonexistent"
+    try_to_login invalid_user
+    assert_template "login"
+    assert_equal "Invalid screen name/password combination", flash[:notice]
+    # test that screen_name will be redisplayed, but not the password
+    user = assigns(:user)
+    assert_equal invalid_user.screen_name, user.screen_name
+    assert_nil user.password
+  end
+  
+  # Test a login with invalid password.
+  test "should login failure with wrong password" do
+    invalid_user = @valid_user
+    invalid_user.password += "baz"
+    try_to_login invalid_user
+    assert_template "login"
+    assert_equal "Invalid screen name/password combination", flash[:notice]
+    # test that screen name will be redisplayed, but not the password
+    user = assigns(:user)
+    assert_equal invalid_user.screen_name, user.screen_name
+    assert_nil user.password
+  end
+
+
+private
+  
+  # Try to log a user in using the login action.
+  def try_to_login(user)
+    post :login, :user => { :screen_name => user.screen_name,
+                            :password    => user.password }
+  end
 end
+  
