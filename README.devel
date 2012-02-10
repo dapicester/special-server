@@ -1,0 +1,8 @@
+Development instructions
+===
+
+Afted checking out the project, one must setup the database:
+$ rake db:create
+$ rake db:migrate
+$ rake db:test:prepare
+
