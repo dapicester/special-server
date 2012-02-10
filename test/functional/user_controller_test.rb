@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class UserControllerTest < ActionController::TestCase
+  include ApplicationHelper
+
   setup do
     # this user is valid, but we may change its attributes
     @valid_user = users(:valid_user)
@@ -47,7 +49,7 @@ class UserControllerTest < ActionController::TestCase
     assert_equal "User #{new_user.screen_name} created!", flash[:notice]
     assert_redirected_to :action => "index"
     # test session login
-    assert_not_nil session[:user_id]
+    assert logged_in?
     assert_equal user.id, session[:user_id]
   end
 
@@ -72,8 +74,8 @@ class UserControllerTest < ActionController::TestCase
     assert_tag :input, :attributes => { :name  => "user[email]",
                                         :value => "invalid@email" },
                        :parent => error_div
-    assert_tag :input, :attributes => { :name  => "user[password]" },
-                                        # password inputs do not keep value
+    assert_tag :input, :attributes => { :name  => "user[password]" ,
+                                        :value => nil },
                        :parent => error_div    
   end
 
@@ -100,7 +102,7 @@ class UserControllerTest < ActionController::TestCase
   # Test a valid login.
   test "should login user valid" do
     try_to_login @valid_user
-    assert_not_nil session[:user_id]
+    assert logged_in?
     assert_equal @valid_user.id, session[:user_id]
     assert_equal "User #{@valid_user.screen_name} logged in!", flash[:notice]
     assert_redirected_to "action" => "index"
@@ -135,12 +137,12 @@ class UserControllerTest < ActionController::TestCase
   # Test the logout function.
   test "should logout" do
     try_to_login @valid_user
-    assert_not_nil session[:user_id]
+    assert logged_in?
     get :logout
     assert_response :redirect
     assert_redirected_to :action => "index", :controller => "site"
     assert_equal "Logged out", flash[:notice]
-    assert_nil session[:user_id]
+    assert !logged_in?
   end
   
   # Test the navigation menu after login.
@@ -172,30 +174,17 @@ class UserControllerTest < ActionController::TestCase
   
   # Test forward back to protected page after login.
   test "login friendly url forwarding" do
-    # get a protected pge
-    get :index
-    assert_response :redirect
-    assert_redirected_to :action => "login"
-    try_to_login @valid_user
-    assert_response :redirect
-    assert_redirected_to :action => "index"
-    # make sure the forwarding url has been cleared
-    assert_nil session[:protected_page]
+    user = { :screen_name => @valid_user.screen_name,
+             :password    => @valid_user.password }
+    friendly_url_forwarding_aux(:login, :index, user)
   end
   
   # Test forward back to protected page after register.
   test "register friendly url forwarding" do
-    # get a protected pge
-    get :index
-    assert_response :redirect
-    assert_redirected_to :action => "login"
-    post :register, :user => { :screen_name => "new_screen_name",
-                               :email => "new@email.com",
-                               :password => "secret" }
-    assert_response :redirect
-    assert_redirected_to :action => "index"
-    # make sure the forwarding url has been cleared
-    assert_nil session[:protected_page]
+    user = { :screen_name => "new_screen_name",
+             :email => "new@email.com",
+             :password => "secret" }
+    friendly_url_forwarding_aux(:register, :index, user)
   end
   
 private
@@ -209,6 +198,17 @@ private
   # Authorize a user.
   def authorize(user)
     @request.session[:user_id] = user.id
+  end
+
+  def friendly_url_forwarding_aux(test_page, protected_page, user)
+    get protected_page
+    assert_response :redirect
+    assert_redirected_to :action => "login"
+    post test_page, :user => user
+    assert_response :redirect
+    assert_redirected_to :action => protected_page
+    # make sure the forwarding url has been cleared
+    assert_nil session[:protected_page]
   end
 end
   
