@@ -169,7 +169,35 @@ class UserControllerTest < ActionController::TestCase
     assert_response :success
     assert_template "index"
   end
-
+  
+  # Test forward back to protected page after login.
+  test "login friendly url forwarding" do
+    # get a protected pge
+    get :index
+    assert_response :redirect
+    assert_redirected_to :action => "login"
+    try_to_login @valid_user
+    assert_response :redirect
+    assert_redirected_to :action => "index"
+    # make sure the forwarding url has been cleared
+    assert_nil session[:protected_page]
+  end
+  
+  # Test forward back to protected page after register.
+  test "register friendly url forwarding" do
+    # get a protected pge
+    get :index
+    assert_response :redirect
+    assert_redirected_to :action => "login"
+    post :register, :user => { :screen_name => "new_screen_name",
+                               :email => "new@email.com",
+                               :password => "secret" }
+    assert_response :redirect
+    assert_redirected_to :action => "index"
+    # make sure the forwarding url has been cleared
+    assert_nil session[:protected_page]
+  end
+  
 private
   
   # Try to log a user in using the login action.

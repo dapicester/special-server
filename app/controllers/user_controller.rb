@@ -14,7 +14,12 @@ class UserController < ApplicationController
       if user
         session[:user_id] = user.id
         flash[:notice] = "User #{user.screen_name} logged in!"
-        redirect_to :action => "index"
+        if (redirect_url = session[:protected_page])
+          session[:protected_page] = nil
+          redirect_to redirect_url
+        else
+          redirect_to :action => "index"
+        end
       else
         # don't show the password
         @user.password = nil
@@ -36,8 +41,22 @@ class UserController < ApplicationController
       if @user.save
         session[:user_id] = @user.id
         flash[:notice] = "User #{@user.screen_name} created!"
-        redirect_to :action => "index"
+        if (redirect_url = session[:protected_page])
+          session[:protected_page] = nil
+          redirect_to redirect_url
+        else
+          redirect_to :action => "index"
+        end
       end
+    end
+  end
+
+  def protected
+    unless session[:user_id]
+      session[:protected_page] = request.request_uri
+      flash[:notice] = "Please log in first"
+      redirect_to :action => "login"
+      return false
     end
   end
 

@@ -33,6 +33,9 @@
       <div id="debug">
         <a href="#" onclick="$('#params_debug_info').toggle()">params</a>
         <a href="#" onclick="$('#session_debug_info').toggle()">session</a>
+        <a href="#" onclick="$('#env_debug_info').toggle()">env</a>
+        <a href="#" onclick="$('#request_debug_info').toggle()">request</a>
+
         <fieldset id="params_debug_info" class="debug_info" style="display:none">
           <legend>params</legend>
           <%= debug(params) %>
@@ -40,6 +43,14 @@
         <fieldset id="session_debug_info" class="debug_info" style="display:none">
           <legend>session</legend>
           <%= debug(session) %>
+        </fieldset>
+        <fieldset id="env_debug_info" class="debug_info" style="display:none">
+          <legend>env</legend>
+          <%# FIXME ruby bug: debug(request.env) %>
+        </fieldset>
+        <fieldset id="request_debug_info" class="debug_info" style="display:none">
+          <legend>request</legend>
+          <%# FIXME ruby bug: debug(request) %>
         </fieldset>
       </div>
     <% end %>
