@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Special - How you feel today</title>
+  <title>Special - <%= @title %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -10,10 +10,18 @@
   <div id="whole_page">
     <div id="header">Special</div>
     <div id="nav">
+      <span style="float: right">
+        <% if logged_in? -%>
+          <%= nav_link "Hub", "user", "index" %> |
+          <%= nav_link "Logout", "user", "logout" %>
+        <% else -%>
+          <%= nav_link 'Register', 'user', 'register' %> |
+          <%= nav_link 'Login',    'user', 'login' %>
+        <% end %>
+      </span> 
       <%= nav_link 'Home',     'site' %> |
       <%= nav_link 'About us', 'site', 'about' %> |
-      <%= nav_link 'Help',     'site', 'help'  %> |
-      <%= nav_link 'Register', 'user', 'register' %>
+      <%= nav_link 'Help',     'site', 'help'  %>
     </div>
     <div id="content">
       <% if flash[:notice] -%>
@@ -22,7 +30,29 @@
       <%= yield %>
     </div>
     <% if ENV["RAILS_ENV"] == "development" %>
-      <%= debug(params) %>
+      <div id="debug">
+        <a href="#" onclick="$('#params_debug_info').toggle()">params</a>
+        <a href="#" onclick="$('#session_debug_info').toggle()">session</a>
+        <a href="#" onclick="$('#env_debug_info').toggle()">env</a>
+        <a href="#" onclick="$('#request_debug_info').toggle()">request</a>
+
+        <fieldset id="params_debug_info" class="debug_info" style="display:none">
+          <legend>params</legend>
+          <%= debug(params) %>
+        </fieldset>
+        <fieldset id="session_debug_info" class="debug_info" style="display:none">
+          <legend>session</legend>
+          <%= debug(session) %>
+        </fieldset>
+        <fieldset id="env_debug_info" class="debug_info" style="display:none">
+          <legend>env</legend>
+          <%# FIXME ruby bug: debug(request.env) %>
+        </fieldset>
+        <fieldset id="request_debug_info" class="debug_info" style="display:none">
+          <legend>request</legend>
+          <%# FIXME ruby bug: debug(request) %>
+        </fieldset>
+      </div>
     <% end %>
   </div>
 </body>
