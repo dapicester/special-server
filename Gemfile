@@ -33,6 +33,8 @@ group :test do
   #gem 'rb-fchange'
   #gem 'rb-notifu'
   #gem 'win32console'
+  gem 'guard-spork', '0.5.2'
+  gem 'spork-rails'
 end
 
 group :production do
