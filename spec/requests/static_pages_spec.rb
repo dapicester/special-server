@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "StaticPages" do
 
-  let(:base_title) { "Special" }
+  let(:base_title) { "Special Social Network" }
 
   describe "Home page" do
     it "should have the content 'Special'" do
