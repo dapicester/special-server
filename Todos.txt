@@ -1,3 +1,6 @@
 # Sign in
 - use a checkbox "remember me" for not logging out when closing browsers
 
+# edit profile
+- refactoring code and test
+- set field old_password
