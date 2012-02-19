@@ -42,6 +42,23 @@ describe "Authentication" do
         it { should_not have_link('Settings') }
       end
     end
+
+    describe "for signed-in users" do
+      let(:user) { Factory(:user) }
+      let(:another) { Factory(:user) }
+
+      before { sign_in user }
+
+      describe "visiting users#new page" do
+        before { visit signup_path }
+        it { should have_selector('title', text: 'Home') }
+      end
+
+      describe "submitting a POST request to the users#create action" do
+        before { post users_path(another) }
+        specify { response.should redirect_to(root_path) }
+      end
+    end
   end
 
   describe "authorization" do
