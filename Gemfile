@@ -2,15 +2,16 @@ source 'http://gems.gzruby.org'
 
 gem 'rails', '3.2.1'
 gem 'bcrypt-ruby', '3.0.1'
-
-group :development, :test do
-  gem 'sqlite3','1.3.5'
-  gem 'rspec-rails','2.8.1'
-  gem 'annotate', '~> 2.4.1.beta'
-  gem 'guard-rspec', '0.6.0'
-end
+gem 'faker', '1.0.1'
+gem 'will_paginate', '3.0.3'
 
 gem 'json'
+
+group :development do
+  gem 'sqlite3','1.3.5'
+  gem 'annotate', '~> 2.4.1.beta'
+end
+
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -23,29 +24,35 @@ end
 
 gem 'jquery-rails', '2.0.0'
 
+group :development, :test do
+  gem 'rspec-rails','2.8.1'
+  gem 'guard-rspec', '0.6.0'
+  gem 'guard-spork', '0.5.2'
+  gem 'spork-rails', '3.2.0'
+end
+
 group :test do 
   gem 'capybara', '1.1.2'
+  gem 'factory_girl_rails', '1.6.0'
+
   # Mac OS X
   #gem 'rb-fsevent', :require => false
   #gem 'growl'
+  
   # Linux
   gem 'rb-inotify', '0.8.8'
   gem 'libnotify', '0.7.2'
+  
   # Windows
   #gem 'rb-fchange'
   #gem 'rb-notifu'
   #gem 'win32console'
-  gem 'guard-spork', '0.5.2'
-  gem 'spork-rails'
-  gem 'factory_girl_rails', '1.6.0'
 end
 
 group :production do
   gem 'pg'
+  gem 'thin'
 end
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
