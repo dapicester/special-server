@@ -1,1 +1,5 @@
+2012-02-19  Edit user profile
+            Admin users
+            Users deletion
+
 2012-02-18  Sign in, Sign out
