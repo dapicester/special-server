@@ -53,7 +53,7 @@ describe "User pages" do
   end
 
   describe "profile page" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { Factory(:user) }
     before { visit user_path(user) }
 
     it { should have_selector('h1', text: user.name) }
@@ -80,9 +80,9 @@ describe "User pages" do
 
     describe "with valid information" do
       before do
-        fill_in "Name", with: "Example User"
-        fill_in "Email", with: "user@example.com"
-        fill_in "Password", with: "foobar"
+        fill_in "Name",         with: "Example User"
+        fill_in "Email",        with: "user@example.com"
+        fill_in "Password",     with: "foobar"
         fill_in "Confirmation", with: "foobar"
       end
 
@@ -95,14 +95,14 @@ describe "User pages" do
         let (:user) { User.find_by_email('user@example.com') }
 
         it { should have_selector('title', text: user.name) }
-        it { should have_success_message('Welcome') }
+        it { should have_message(:success, 'Welcome') }
         it { should have_link('Sign out') }
       end
     end
   end
 
   describe "edit" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { Factory(:user) }
     before do
       sign_in user
       visit edit_user_path(user)
@@ -122,19 +122,19 @@ describe "User pages" do
     end
 
     describe "with valid information" do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { Factory(:user) }
       let(:new_name) { "New name" }
       let(:new_email) { "new@example.com" }
       before do
-        fill_in "Name", with: new_name
-        fill_in "Email", with: new_email
-        fill_in "Password", with: user.password
+        fill_in "Name",         with: new_name
+        fill_in "Email",        with: new_email
+        fill_in "Password",     with: user.password
         fill_in "Confirmation", with: user.password
         click_button "Update"
       end
 
       it { should have_selector('title', text: new_name) }
-      it { should have_selector('div.flash.success') }
+      it { should have_message(:success) }
       it { should have_link('Sign out', href: signout_path) }
       specify { user.reload.name.should == new_name }
       specify { user.reload.email.should == new_email }

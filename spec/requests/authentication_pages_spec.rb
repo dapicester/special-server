@@ -6,22 +6,25 @@ describe "Authentication" do
 
   describe "signin" do
     before { visit signin_path }
-    
+   
+    it { should_not have_link('Profile') }
+    it { should_not have_link('Settings') }
+     
     describe "with invalid information" do
       before { click_button "Sign in" }
 
       it { should have_selector('title', text: 'Sign in') }  
-      it { should have_error_message('Invalid') }
+      it { should have_message(:error, 'Invalid') }
       
       describe "after visiting another page" do
         before { click_link "Home" }
-        it { should_not have_selector('div.flash.error') }
+        it { should_not have_message(:error) }
       end
     end
  
     describe "with valid information" do
-      let(:user) { FactoryGirl.create(:user) }
-      before { valid_signin(user) }
+      let(:user) { Factory(:user) }
+      before { sign_in user }
 
       it { should have_selector('title', text: user.name) }
 
@@ -35,6 +38,8 @@ describe "Authentication" do
       describe "followed by signout" do
         before { click_link "Sign out" }
         it { should have_link('Sign in') }
+        it { should_not have_link('Profile') }
+        it { should_not have_link('Settings') }
       end
     end
   end

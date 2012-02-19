@@ -7,4 +7,3 @@
 
 # all
 - user notice: "string" on redirect instead of flash[:notice] (idem for :error but not for :success)
-- using Factory instead FactoryGirl.create in tests
