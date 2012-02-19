@@ -51,6 +51,7 @@ end
 
 group :production do
   gem 'pg'
+  gem 'thin'
 end
 
 # To use Jbuilder templates for JSON
