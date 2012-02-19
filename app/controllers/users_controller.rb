@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_filter :correct_user,           only: [:edit, :update]
   before_filter :already_signed_in_user, only: [:new, :create] 
   before_filter :admin_user,             only: :destroy
-
+  before_filter :self_delete,            only: :destroy
   
   def show
     @user = User.find(params[:id])
@@ -71,6 +71,11 @@ private
 
   def already_signed_in_user
     redirect_to(root_path) if signed_in?
+  end
+
+  def self_delete
+    user = User.find(params[:id])
+    redirect_to(root_path) if current_user?(user)
   end
 
 end
