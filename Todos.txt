@@ -5,3 +5,5 @@
 - refactoring code and test
 - set field old_password
 
+# all 
+- remove magic values
