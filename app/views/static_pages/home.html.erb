@@ -1,7 +1,21 @@
 <%= provide(:title, 'Home') %>
-<h1>Special</h1>
-<p>
-  This is the home page for the Special Social Network.
-</p>
+<% if signed_in? %>
+  <table class="front">
+    <tr>
+      <td class="main">
+        <h1 class="micropost">How do you feel today?</hi>
+        <%= render 'shared/micropost_form' %>
+      </td>
+      <td class="sidebar round">
+        <%= render 'shared/user_info' %>
+      </td>
+    </tr>
+  </table>
+<% else %>
+  <h1>Special</h1>
+  <p>
+    This is the home page for the Special Social Network.
+  </p>
 
-<%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+  <%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+<% end %>
