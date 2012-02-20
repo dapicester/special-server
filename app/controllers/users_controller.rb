@@ -5,10 +5,6 @@ class UsersController < ApplicationController
   before_filter :admin_user,             only: :destroy
   before_filter :self_delete,            only: :destroy
   
-  def show
-    @user = User.find(params[:id])
-  end
-
   def new
     @user = User.new
   end
@@ -43,6 +39,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def destroy
