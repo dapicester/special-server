@@ -5,5 +5,8 @@
 - refactoring code and test
 - set field old_password
 
+# home page
+- check why the feed fonts are so big
+
 # all 
 - remove magic values
