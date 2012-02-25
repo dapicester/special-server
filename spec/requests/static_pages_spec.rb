@@ -30,6 +30,10 @@ describe "StaticPages" do
           page.should have_selector("tr##{item.id}", text: item.content)
         end
       end
+
+      it "should display the microposts count" do
+        page.should have_selector('span.microposts', content: "#{plural(user.microposts.count, "micropost")}")
+      end
     end
   end
 
