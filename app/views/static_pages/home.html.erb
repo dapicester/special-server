@@ -1,22 +1,6 @@
 <%= provide(:title, 'Home') %>
 <% if signed_in? %>
-  <table class="front">
-    <tr>
-      <td class="main">
-        <h1 class="micropost">How you feel today</hi>
-        <%= render 'shared/micropost_form' %>
-        <%= render 'shared/feed' %>
-      </td>
-      <td class="sidebar round">
-        <%= render 'shared/user_info' %>
-      </td>
-    </tr>
-  </table>
+  <%= render 'static_pages/home_signed_in' %>
 <% else %>
-  <h1>Special</h1>
-  <p>
-    This is the home page for the Special Social Network.
-  </p>
-
-  <%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+  <%= render 'static_pages/home_unsigned_in' %>
 <% end %>
