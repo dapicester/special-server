@@ -1,7 +1,6 @@
 <%= provide(:title, 'Home') %>
-<h1>Special</h1>
-<p>
-  This is the home page for the Special Social Network.
-</p>
-
-<%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+<% if signed_in? %>
+  <%= render 'static_pages/home_signed_in' %>
+<% else %>
+  <%= render 'static_pages/home_unsigned_in' %>
+<% end %>

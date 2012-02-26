@@ -1,0 +1,26 @@
+diff --git a/app/views/layouts/_header.html.erb b/app/views/layouts/_header.html.erb
+index ba4c426..4dec77b 100644
+--- a/app/views/layouts/_header.html.erb
++++ b/app/views/layouts/_header.html.erb
+@@ -10,7 +10,7 @@
+       <% end %>
+       <li><%= link_to "Help", help_path %></li>
+       <% if signed_in? %>
+-        <li><%= link_to "Sign out (#{current_user.name})", signout_path, method: :delete %></li>
++        <li><%= link_to "Sign out", signout_path, method: :delete %></li>
+       <% else %>
+         <li><%= link_to "Sign in", signin_path %></li>
+       <% end %>
+diff --git a/spec/requests/authentication_pages_spec.rb b/spec/requests/authentication_pages_spec.rb
+index 57b2e19..456ab94 100644
+--- a/spec/requests/authentication_pages_spec.rb
++++ b/spec/requests/authentication_pages_spec.rb
+@@ -31,7 +31,7 @@ describe "Authentication" do
+       it { should have_link('Users', href: users_path) }
+       it { should have_link('Profile', href: user_path(user)) }
+       it { should have_link('Settings', href: edit_user_path(user)) }
+-      it { should have_link("Sign out (#{user.name})", href: signout_path) }
++      it { should have_link('Sign out', href: signout_path) }
+ 
+       it { should_not have_link('Sign in', href: signin_path) }
+        

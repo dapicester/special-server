@@ -15,6 +15,26 @@ describe "StaticPages" do
     let(:page_title) { 'Home' }
 
     it_should_behave_like "all static pages"
+
+    describe "for signed-in users" do
+      let(:user) { Factory(:user) }
+      before do
+        Factory(:micropost, user: user, content: "Lorem ipsum")
+        Factory(:micropost, user: user, content: "Dolor si amet")
+        sign_in user
+        visit root_path
+      end
+
+      it "should render the user's feed" do
+        user.feed.each do |item|
+          page.should have_selector("tr##{item.id}", text: item.content)
+        end
+      end
+
+      it "should display the microposts count" do
+        page.should have_selector('span.microposts', content: "#{plural(user.microposts.count, "micropost")}")
+      end
+    end
   end
 
   describe "Help Page" do

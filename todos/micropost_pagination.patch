@@ -1,0 +1,48 @@
+diff --git a/spec/factories.rb b/spec/factories.rb
+index 97e83d4..327409d 100644
+--- a/spec/factories.rb
++++ b/spec/factories.rb
+@@ -10,7 +10,7 @@ FactoryGirl.define do
+   end
+ 
+   factory :micropost do
+-    content "Lorem ipsum"
++    sequence(:content) { |n| "Lorem ipsum #{n}" }
+     user
+   end
+ end
+diff --git a/spec/requests/static_pages_spec.rb b/spec/requests/static_pages_spec.rb
+index 5f1e26a..f5a596a 100644
+--- a/spec/requests/static_pages_spec.rb
++++ b/spec/requests/static_pages_spec.rb
+@@ -34,6 +34,30 @@ describe "StaticPages" do
+       it "should display the microposts count" do
+         page.should have_selector('span.microposts', content: "#{plural(user.microposts.count, "micropost")}")
+       end
++
++      describe "feed pagination" do
++        before(:all) { 30.times { Factory(:micropost, user: user) } } 
++        after(:all) { user.microposts.delete_all } 
++
++        let(:first_page)  { user.microposts.paginate(page: 1) }
++        let(:second_page) { user.microposts.paginate(page: 2) }
++
++        it { user.microposts.count.should == 30 }
++        it { should have_link('Next') }
++        it { should have_link('2') }
++
++        it "should list the first page of feeds" do
++          first_page.each do |feed|
++            page.should have_selector('span.content', text: feed.content)
++          end
++        end
++        
++        it "should not list the second page of feeds" do
++          second_page.each do |feed|
++            page.should_not have_selector('span.content', text: feed.content)
++          end
++        end
++      end
+     end
+   end
+ 
