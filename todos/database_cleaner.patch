@@ -1,0 +1,54 @@
+diff --git a/Gemfile b/Gemfile
+index bdc9b8e..e4f19f7 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -29,6 +29,7 @@ group :development, :test do
+   gem 'guard-rspec', '0.6.0'
+   gem 'guard-spork', '0.5.2'
+   gem 'spork-rails', '3.2.0'
++  gem 'database_cleaner', '0.7.1'
+ end
+ 
+ group :test do 
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 942258e..7b6e09b 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -49,6 +49,7 @@ GEM
+       execjs
+     coffee-script-source (1.2.0)
+     daemons (1.1.8)
++    database_cleaner (0.7.1)
+     diff-lcs (1.1.3)
+     erubis (2.7.0)
+     eventmachine (0.12.10)
+@@ -175,6 +176,7 @@ DEPENDENCIES
+   bcrypt-ruby (= 3.0.1)
+   capybara (= 1.1.2)
+   coffee-rails (= 3.2.1)
++  database_cleaner (= 0.7.1)
+   factory_girl_rails (= 1.6.0)
+   faker (= 1.0.1)
+   guard-rspec (= 0.6.0)
+diff --git a/spec/spec_helper.rb b/spec/spec_helper.rb
+index fd5b9b8..3fdf44b 100644
+--- a/spec/spec_helper.rb
++++ b/spec/spec_helper.rb
+@@ -40,6 +40,17 @@ Spork.prefork do
+     # automatically. This will be the default behavior in future versions of
+     # rspec-rails.
+     config.infer_base_class_for_anonymous_controllers = false
++  
++    # Setup database_cleaner gem
++#    config.before(:suite) do
++#      DatabaseCleaner.strategy = :truncation
++#    end
++#    config.before(:each) do
++#      DatabaseCleaner.start
++#    end
++#    config.after(:each) do
++#      DatabaseCleaner.clean
++#    end
+   end
+ end
+ 
