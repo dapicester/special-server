@@ -8,5 +8,11 @@
 # home page
 - check why the feed fonts are so big
 
+# microposts
+- add test for pagination
+- check taht delete link doesn't appear for other users' posts
+- fix layout for long word (wrap)
+- add JavaScript for counting down 140 characters left
+
 # all 
 - remove magic values
