@@ -1,7 +1,7 @@
 <%= provide :title, @user.name %>
-<table class="profile">
-  <tr>
-    <td class="main">
+<div class="row">
+  <aside class="span4">
+    <section>
       <h1>
         <%= gravatar_for @user %>
         <%= @user.name %>
@@ -12,11 +12,14 @@
         </table>
         <%= will_paginate @microposts %>
       <% end %>
-    </td>
+    </section>
+  </aside>
+</div>
+<!--
     <td class="sidebar round">
       <strong>Name</strong> <%= @user.name %><br/>
       <strong>URL</strong> <%= link_to user_path(@user), @user %><br/>
       <strong>Microposts</strong> <%= @user.microposts.count %>
     </td>
-  </tr>
-</table>
+-->
+

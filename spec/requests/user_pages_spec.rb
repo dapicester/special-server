@@ -89,17 +89,15 @@ describe "User pages" do
 
     describe "with invalid information" do
       it "should not create a user" do
-        expect { click_button "Sign up" }.not_to change(User, :count)
+        expect { click_button "Create my account" }.not_to change(User, :count)
       end
     end
 
     describe "error messages" do
-      before { click_button "Sign up" }
-
-      let(:error) { 'errors prohibited this user from being saved' }
+      before { click_button "Create my account" }
 
       it { should have_selector('title', text: 'Sign up') }
-      it { should have_content(error) }
+      it { should have_content('error') }
     end
 
     describe "with valid information" do
@@ -111,11 +109,11 @@ describe "User pages" do
       end
 
       it "should create a user" do
-        expect { click_button "Sign up" }.to change(User, :count).by(1)
+        expect { click_button "Create my account" }.to change(User, :count).by(1)
       end
 
       describe "after saving the user" do
-        before { click_button "Sign up" }
+        before { click_button "Create my account" }
         let (:user) { User.find_by_email('user@example.com') }
 
         it { should have_selector('title', text: user.name) }
@@ -139,10 +137,9 @@ describe "User pages" do
     end
 
     describe "with invalid information" do
-      let(:error) { '1 error prohibited this user from being saved' }
       before { click_button "Update" }
 
-      it { should have_content(error) }
+      it { should have_content('1 error') }
     end
 
     describe "with valid information" do
