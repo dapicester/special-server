@@ -17,9 +17,8 @@ describe "MicropostPages" do
       end
 
       describe "error messages" do
-        let(:error) { '1 error prohibited this micropost from being saved' }
         before { click_button "Submit" }
-        it { should have_content(error) }
+        it { should have_content('1 error') }
       end
 
     end
