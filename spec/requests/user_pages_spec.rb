@@ -223,7 +223,7 @@ describe "User pages" do
         visit following_user_path(user)
       end
 
-      it { should have_selector('a', href: user_path(other_user), text: other_user.name) }
+      it { should have_link(other_user.name, href: user_path(other_user)) }
     end
 
     describe "followers" do
@@ -232,7 +232,7 @@ describe "User pages" do
         visit followers_user_path(other_user)
       end
 
-      it { should have_selector('a', href: user_path(user), text: user.name) }
+      it { should have_link(user.name, href: user_path(user)) }
     end
   end
 end

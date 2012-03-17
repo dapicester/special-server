@@ -3,12 +3,13 @@
   <a href="<%= following_user_path(@user) %>">
     <strong id="following" class="stat">
       <%= @user.followed_users.count %>
-    <strong>
+    </strong>
     following
   </a>
   <a href="<%= followers_user_path(@user) %>">
     <strong id="followers" class="stat">
-      <%= pluralize(@user.followers.count, "follower") %>
+      <%= @user.followers.count %>
     </strong>
+    followers
   </a>
 </div>

@@ -6,10 +6,10 @@
         <%= gravatar_for @user %>
         <%= @user.name %>
       </h1>
-   </section>
-   <section>
+    </section>
+    <section>
       <%= render 'shared/stats' %>
-   </section>
+    </section>
   </aside>
   <div class=span8">
     <%= render 'follow_form' if signed_in? %>
