@@ -24,7 +24,7 @@ group :assets do
   gem 'therubyracer', '0.9.9'
 end
 
-gem 'jquery-rails', '2.0.0'
+gem 'jquery-rails', '2.0.1'
 
 group :development, :test do
   gem 'rspec-rails','2.8.1'
