@@ -53,7 +53,6 @@ end
 
 group :production do
   gem 'pg'
-  gem 'thin'
 end
 
 # To use Jbuilder templates for JSON
@@ -67,3 +66,6 @@ end
 
 # To use debugger
 # gem 'ruby-debug'
+
+# Using Thin instead WEBrick
+gem 'thin', '1.3.1'
