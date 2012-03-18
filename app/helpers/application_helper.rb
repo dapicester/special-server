@@ -2,7 +2,7 @@ module ApplicationHelper
 
   # Returns the logo
   def logo
-    image_tag("logo.png", alt: "Workplaces")
+    image_tag("logo.png", alt: "Logo")
   end
 
   # Returns the full title on a per-page basis
