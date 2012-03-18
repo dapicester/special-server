@@ -17,4 +17,9 @@ class Micropost < ActiveRecord::Base
   validates :user_id, presence: true
 
   default_scope order: 'microposts.created_at DESC'
+
+  def self.from_users_followed_by(user)
+    followed_user_ids = user.followed_user_ids.join(', ')           # synthesized using relationship followed_users
+    where("user_id IN (?) OR user_id = ?", followed_user_ids, user) # automatically uses user.id
+  end
 end
