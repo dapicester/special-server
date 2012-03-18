@@ -24,11 +24,18 @@ describe Relationship do
 
   describe "follower methods" do
     before { relationship.save }
+    before { Factory(:micropost, user: followed) }
 
     it { should respond_to(:follower) }
     it { should respond_to(:followed) }
     its(:follower) { should == follower }
     its(:followed) { should == followed }
+
+    it "should destroy relationship" do
+      expect do
+        followed.destroy
+      end.to change(Micropost.from_users_followed_by(follower), :count).by(-1)
+    end
   end
 
   describe "when followed id is not present" do
