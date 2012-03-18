@@ -227,6 +227,10 @@ input, textarea, select, .uneditable-input {
   float: left;
   margin-right: 10px;
 }
+.counter {
+  color: $grayLight;
+  float: right;
+}
 aside {
   textarea {
     height: 100px;
