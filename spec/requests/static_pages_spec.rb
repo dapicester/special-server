@@ -20,19 +20,27 @@ describe "StaticPages" do
       let(:user) { Factory(:user) }
       before do
         Factory(:micropost, user: user, content: "Lorem ipsum")
-        Factory(:micropost, user: user, content: "Dolor si amet")
+        Factory(:micropost, user: user, content: "Dolor sit amet")
         sign_in user
         visit root_path
       end
 
       it "should render the user's feed" do
         user.feed.each do |item|
-          page.should have_selector("tr##{item.id}", text: item.content)
+          page.should have_selector("li##{item.id}", text: item.content)
         end
       end
 
       it "should display the microposts count" do
-        page.should have_selector('span.microposts', content: "#{plural(user.microposts.count, "micropost")}")
+        page.should have_selector('span', content: "#{plural(user.microposts.count, "micropost")}")
+      end
+
+      describe "follower/following counts" do
+        let(:other_user) { Factory(:user) }
+        before { user.follow!(other_user) }
+
+        it { should have_selector('a', href: following_user_path(user), content: "0 following") }
+        it { should have_selector('a', href: followers_user_path(user), content: "1 follower") }
       end
     end
   end

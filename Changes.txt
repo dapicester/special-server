@@ -1,3 +1,7 @@
+2012-03-18  User Feeds
+            Follow/Unfollow users
+            Restyling
+
 2012-02-26  Microposts
 
 2012-02-19  Edit user profile

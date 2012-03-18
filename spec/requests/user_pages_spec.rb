@@ -82,6 +82,56 @@ describe "User pages" do
       it { should have_content(m2.content) }
       it { should have_content(user.microposts.count) }
     end
+
+    describe "follow/unfollow buttons" do
+      let(:other_user) { Factory(:user) }
+      before { sign_in(user) }
+
+      describe "following a user" do
+        before { visit user_path(other_user) }
+
+        it "should increment the followed count" do
+          expect do
+            click_button "Follow"
+          end.to change(user.followed_users, :count).by(1)
+        end
+
+        it "should increment the other user's followers count" do
+          expect do
+            click_button "Follow"
+          end.to change(other_user.followers, :count).by(1)
+        end
+
+        describe "toggling the button" do
+          before { click_button "Follow" } 
+          it { should have_selector('input', value: 'Unfollow') }
+        end
+      end
+
+      describe "unfollowing a user" do
+        before do
+          user.follow!(other_user)
+          visit user_path(other_user)
+        end
+
+        it "should decrement the followed user count" do
+          expect do
+            click_button "Unfollow"
+          end.to change(user.followed_users, :count).by(-1)
+        end
+
+        it "should decrement the other user's followers count" do
+          expect do
+            click_button "Unfollow"
+          end.to change(other_user.followers, :count).by(-1)
+        end
+
+        describe "toggling the button" do
+          before { click_button "Unfollow" }
+          it { should have_selector('input', value: 'Follow') }
+        end
+      end
+    end
   end
 
   describe "signup" do
@@ -89,17 +139,15 @@ describe "User pages" do
 
     describe "with invalid information" do
       it "should not create a user" do
-        expect { click_button "Sign up" }.not_to change(User, :count)
+        expect { click_button "Create my account" }.not_to change(User, :count)
       end
     end
 
     describe "error messages" do
-      before { click_button "Sign up" }
-
-      let(:error) { 'errors prohibited this user from being saved' }
+      before { click_button "Create my account" }
 
       it { should have_selector('title', text: 'Sign up') }
-      it { should have_content(error) }
+      it { should have_content('error') }
     end
 
     describe "with valid information" do
@@ -111,11 +159,11 @@ describe "User pages" do
       end
 
       it "should create a user" do
-        expect { click_button "Sign up" }.to change(User, :count).by(1)
+        expect { click_button "Create my account" }.to change(User, :count).by(1)
       end
 
       describe "after saving the user" do
-        before { click_button "Sign up" }
+        before { click_button "Create my account" }
         let (:user) { User.find_by_email('user@example.com') }
 
         it { should have_selector('title', text: user.name) }
@@ -139,10 +187,9 @@ describe "User pages" do
     end
 
     describe "with invalid information" do
-      let(:error) { '1 error prohibited this user from being saved' }
-      before { click_button "Update" }
+      before { click_button "Save changes" }
 
-      it { should have_content(error) }
+      it { should have_content('1 error') }
     end
 
     describe "with valid information" do
@@ -154,7 +201,7 @@ describe "User pages" do
         fill_in "Email",        with: new_email
         fill_in "Password",     with: user.password
         fill_in "Confirmation", with: user.password
-        click_button "Update"
+        click_button "Save changes"
       end
 
       it { should have_selector('title', text: new_name) }
@@ -165,4 +212,27 @@ describe "User pages" do
     end
   end
 
+  describe "following/followers" do
+    let(:user) { Factory(:user) }
+    let(:other_user) { Factory(:user) }
+    before { user.follow!(other_user) }
+
+    describe "followed users" do
+      before do
+        sign_in(user)
+        visit following_user_path(user)
+      end
+
+      it { should have_link(other_user.name, href: user_path(other_user)) }
+    end
+
+    describe "followers" do
+      before do
+        sign_in(other_user)
+        visit followers_user_path(other_user)
+      end
+
+      it { should have_link(user.name, href: user_path(user)) }
+    end
+  end
 end
