@@ -3,8 +3,8 @@
   <div class="field">
     <%= f.text_area :content, placeholder: "Compose new micropost ...", 
                               id: "micropost_form",
-                              onkeyup: "countChar(this)" %>
+                              onkeypress: "count(this)" %>
   </div>
   <%= f.submit "Post", class: "btn btn-large btn-primary" %>
-  <div class="counter"><strong id="charNum"></strong></div>
+  <div class="counter"></div>
 <% end %>
