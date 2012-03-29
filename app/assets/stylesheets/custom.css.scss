@@ -229,6 +229,7 @@ input, textarea, select, .uneditable-input {
   margin-right: 10px;
 }
 .counter {
+  color: $grayLight;
   font: {
     weight: bold;
   }
@@ -251,6 +252,10 @@ aside {
 
 .float-left {
   float: left;
+}
+
+.light-gray {
+  color: $grayLight;
 }
 
 .debug_dump {
