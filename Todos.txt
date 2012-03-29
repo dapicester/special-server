@@ -1,7 +1,5 @@
 # javascript
 - test
-  + using cucumber? 
-  + rspec with describe "test", type: :request do ... it "test" js: true, driver: :selenium do ...
 - use coffee whenever possible
 
 # edit profile
