@@ -2,9 +2,8 @@
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
     <%= f.text_area :content, placeholder: "Compose new micropost ...", 
-                              id: "micropost_form",
-                              onkeyup: "countChar(this)" %>
+                              id: "micropost_form" %>
   </div>
   <%= f.submit "Post", class: "btn btn-large btn-primary" %>
-  <div class="counter"><strong id="charNum"></strong></div>
+  <div id="counter" class="counter"></div>
 <% end %>

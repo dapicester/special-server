@@ -20,3 +20,4 @@ bundler_stubs/
 doc/
 *.swp
 *~
+.jhw-cache
