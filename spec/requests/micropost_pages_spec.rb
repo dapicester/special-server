@@ -25,7 +25,7 @@ describe "MicropostPages" do
 
     describe "with valid information" do
       
-      before { fill_in 'micropost_content', with: "Lorem ipsum" }
+      before { fill_in 'micropost_form', with: "Lorem ipsum" }
       it "should create a micropost" do
         expect { click_button "Post" }.should change(Micropost, :count).by(1)
       end

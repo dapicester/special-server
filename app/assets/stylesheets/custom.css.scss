@@ -3,6 +3,7 @@
 /* mixins, variables, etc. */
 
 $grayMediumLight: #eaeaea;
+$redLight: #ff0000;
 
 @mixin box_sizing {
   -moz-box-sizing: border-box; 
@@ -229,7 +230,12 @@ input, textarea, select, .uneditable-input {
 }
 .counter {
   color: $grayLight;
-  float: right;
+  font: {
+    weight: bold;
+  }
+}
+.counter-error {
+  color: $redLight;
 }
 aside {
   textarea {
@@ -239,6 +245,18 @@ aside {
 }
 
 /* miscellaneous */
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
+.light-gray {
+  color: $grayLight;
+}
 
 .debug_dump {
   clear: both;
