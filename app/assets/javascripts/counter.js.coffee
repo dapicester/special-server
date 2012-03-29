@@ -1,21 +1,28 @@
 MAXLEN = 140
-gray = "#999999"
-red = "red"
+errClass = "counter-error"
 
-update = (len) ->
-  counter = $(".counter")
-  counter.text(MAXLEN - len)
-  if len > MAXLEN
-    counter.css("color",red)
-  else
-    counter.css("color",gray)
+class Counter
+  constructor: (@form,@counter) ->
+    @.count()
+
+  count: ->
+    len = MAXLEN - @form.val().length
+    @counter.html(len)
+    if len >= 0
+      @counter.removeClass(errClass) if @counter.hasClass(errClass)
+    else
+      @counter.addClass(errClass) if not @counter.hasClass(errClass)
+    return
+
+$ ->
+  form = $("#micropost_form")
+  cc = new Counter(form, $("#counter"))
+
+  form.keyup ->
+    cc.count()
+    return
+  form.keydown ->
+    cc.count()
+    return
   return
 
-$(->
-  update($("#micropost_form").html().length)
-  return
-)
-
-window.count = (val) ->
-  update(val.value.length)
-  return
