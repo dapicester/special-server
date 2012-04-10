@@ -1,6 +1,6 @@
 source 'http://gems.gzruby.org'
 
-gem 'rails', '3.2.2'
+gem 'rails', '3.2.3'
 gem 'bootstrap-sass', '2.0.1'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.0.1'
@@ -26,7 +26,7 @@ end
 gem 'jquery-rails', '2.0.1'
 
 group :development, :test do
-  gem 'rspec-rails','2.8.1'
+  gem 'rspec-rails','2.9.0'
   gem 'jasmine', git: "git://github.com/pivotal/jasmine-gem.git"
   gem 'jasmine-headless-webkit', '0.8.4'
   gem 'guard-rspec', '0.6.0'
