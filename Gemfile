@@ -37,6 +37,7 @@ group :test do
   gem 'capybara', '1.1.2'
   gem 'factory_girl_rails', '1.6.0'
   gem 'database_cleaner', '~> 0.7.2'
+  gem 'simplecov', require: false
 
   # Mac OS X
   #gem 'rb-fsevent', '0.4.3.1', :require => false

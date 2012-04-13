@@ -17,6 +17,7 @@
 # Ignore other unneeded files.
 bin/
 bundler_stubs/
+coverage/
 doc/
 *.swp
 *~
