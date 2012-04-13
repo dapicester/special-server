@@ -1,3 +1,7 @@
+# user roles
+- add admin
+- use seeds for creating the admin
+
 # javascript
 - test
 - use coffee whenever possible
