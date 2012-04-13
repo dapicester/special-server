@@ -38,21 +38,28 @@ group :test do
   gem 'factory_girl_rails', '1.6.0'
   gem 'database_cleaner', '~> 0.7.2'
   gem 'simplecov', require: false
-
-  # Mac OS X
-  #gem 'rb-fsevent', '0.4.3.1', :require => false
-  #gem 'growl', '1.0.3'
-  
-  # Linux
-  gem 'rb-inotify', '0.8.8'
-  gem 'libnotify', '0.7.2'
-  
-  # Windows
-  #gem 'rb-fchange'
-  #gem 'rb-notifu'
-  #gem 'win32console'
 end
 
+# Gems used only on Linux.
+group :linux do
+  gem 'rb-inotify'
+  gem 'libnotify'
+end
+
+# Gems used only on Mac OS.
+group :mac do
+  gem 'rb-fsevent', :require => false
+  gem 'growl'
+end
+
+# Gems used only on Windows.
+group :windows do
+  gem 'rb-fchange'
+  gem 'rb-notifu'
+  gem 'win32console'
+end
+
+# Gems used only in production environment.
 group :production do
   gem 'pg'
 end
