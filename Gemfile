@@ -25,8 +25,8 @@ end
 
 group :development, :test do
   gem 'rspec-rails','2.9.0'
-  gem 'jasmine', git: "git://github.com/pivotal/jasmine-gem.git"
-  gem 'jasmine-headless-webkit', '0.8.4'
+  #gem 'jasmine', git: "git://github.com/pivotal/jasmine-gem.git"
+  #gem 'jasmine-headless-webkit', '0.8.4'
   gem 'guard-rspec', '0.6.0'
   gem 'guard-jasmine-headless-webkit'
   gem 'guard-spork', '0.5.2'
