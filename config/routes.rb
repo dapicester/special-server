@@ -1,4 +1,7 @@
 SpecialServer::Application.routes.draw do
+  # The priority is based upon order of creation:
+  # first created -> highest priority.
+
   resources :users do
     member do
       get :following, :followers
@@ -17,9 +20,6 @@ SpecialServer::Application.routes.draw do
   match '/contact', to: 'static_pages#contact'
 
   root to: "static_pages#home"
-
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

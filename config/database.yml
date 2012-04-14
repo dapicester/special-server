@@ -19,6 +19,12 @@ test:
   pool: 5
   timeout: 5000
 
+# PostgreSQL
+#   gem install pg
+#
+# Ensure the PostgreSQL gem is defined in your Gemfile
+#   gem 'pg'
+#
 production:
   adapter: postgres
   encoding: utf8
