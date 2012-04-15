@@ -32,6 +32,7 @@ group :development, :test do
   gem 'guard-jasmine-headless-webkit'
   gem 'guard-spork', '0.5.2'
   gem 'spork-rails', '3.2.0'
+  gem 'debugger', '1.1.1'
 end
 
 group :test do 
