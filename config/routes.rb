@@ -21,6 +21,12 @@ SpecialServer::Application.routes.draw do
 
   root to: "static_pages#home"
 
+  namespace :api do
+    namespace :v1 do
+      resources :users
+    end
+  end
+
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action

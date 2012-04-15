@@ -224,6 +224,7 @@ DEPENDENCIES
   guard-spork (= 0.5.2)
   heroku
   jquery-rails (= 2.0.1)
+  json
   libnotify
   pg
   rails (= 3.2.3)
