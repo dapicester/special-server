@@ -59,7 +59,7 @@ describe "/api/v1/users", type: :api do
   end
 
   shared_examples_for "user not found" do
-    it { last_response.status.should eql(400) }
+    it { last_response.status.should eql(404) }
     it { last_response.body.should eq({ error: "User not found." }.to_json) }
   end
 

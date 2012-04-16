@@ -12,7 +12,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     user = User.find(params[:id])
     respond_with api_user(user)
   rescue ActiveRecord::RecordNotFound
-    bad_request USER_NOT_FOUND 
+    bad_request USER_NOT_FOUND, 404 
   end
 
   def following
@@ -20,7 +20,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     followed_users = user.followed_users.paginate(page: get_page)
     respond_with api_users(followed_users)
   rescue ActiveRecord::RecordNotFound
-    bad_request USER_NOT_FOUND
+    bad_request USER_NOT_FOUND, 404
   end
 
   def followers
@@ -28,7 +28,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     followers = user.followers.paginate(page: get_page)
     respond_with api_users(followers)
   rescue ActiveRecord::RecordNotFound
-    bad_request USER_NOT_FOUND
+    bad_request USER_NOT_FOUND, 404
   end
 
 private
@@ -37,9 +37,9 @@ private
     params[:page] || 1
   end
 
-  def bad_request(message)
+  def bad_request(message, code)
     error = { error: message.to_s }
-    respond_with(error, status: 400, location: nil)
+    respond_with(error, status: code, location: nil)
   end
 
   def api_user(user)
