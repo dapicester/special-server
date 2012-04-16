@@ -7,7 +7,7 @@ describe "/api/v1/users", type: :api do
   context "index" do 
     let(:url) { "/api/v1/users" }
     it "json" do
-      get "#{url}.json"
+      get "#{url}.json", token: token
 
       users_json = User.all.to_json
       last_response.body.should eql(users_json)
