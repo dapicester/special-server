@@ -27,4 +27,29 @@ describe "/api/v1/users", type: :api do
       it { last_response.status.should eql(200) }
    end
   end
+
+  describe "following/followers" do
+    let(:other_user) { Factory(:user) }
+    before { user.follow!(other_user) }
+
+    describe "followed users" do
+      before { get "/api/v1/users/#{user.id}/following.json", token: token }
+
+      it { last_response.body.should eql([other_user].to_json) }
+      it { last_response.status.should eql(200) }
+    end
+
+    describe "followers" do
+      before { get "/api/v1/users/#{other_user.id}/followers.json", token: token }
+
+      it { last_response.body.should eql([user].to_json) }
+      it { last_response.status.should eql(200) }
+    end
+
+    describe "bad request" do
+      before { get "/api/v1/users/0/following.json", token: token }
+
+      it { last_response.status.should eql(400) }
+    end
+  end
 end
