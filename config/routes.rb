@@ -24,6 +24,9 @@ SpecialServer::Application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users
+      resources :authentication, only: :create
+
+      match '/signin', to: 'authentication#create'
     end
   end
 
