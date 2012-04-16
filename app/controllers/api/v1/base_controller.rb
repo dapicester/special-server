@@ -6,7 +6,7 @@ private
   def authenticate_user
     @current_user = User.find_by_remember_token(params[:token])
     unless @current_user
-      respond_with({ error: "Token is invalid." })
+      respond_with({ error: "Not authenticated." })
     end
   end
 

@@ -22,8 +22,14 @@ describe "API authentication", type: :api do
 
   describe "errors" do
     it "request with no token" do
-      get "/api/v1/users.json", token: ""
-      error = { error: "Token is invalid." }
+      get "/api/v1/users.json"
+      error = { error: "Not authenticated." }
+      last_response.body.should eql(error.to_json)
+    end
+    
+    it "request with invalid token" do
+      get "/api/v1/users.json", token: ''
+      error = { error: "Not authenticated." }
       last_response.body.should eql(error.to_json)
     end
   end
