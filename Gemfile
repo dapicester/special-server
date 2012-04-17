@@ -50,7 +50,7 @@ end
 
 # Gems used only on Mac OS.
 group :mac do
-  gem 'rb-fsevent', :require => false
+  gem 'rb-fsevent', git: 'git://github.com/ttilley/rb-fsevent.git', branch: 'pre-compiled-gem-one-off', require: false
   gem 'growl'
 end
 
