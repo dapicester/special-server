@@ -25,12 +25,13 @@ SpecialServer::Application.routes.draw do
     namespace :v1 do
       resources :users, only: [:index, :show] do
         member do
-          get :following, :followers
+          get :following, :followers, :microposts
         end
       end
       resources :authentication, only: :create
 
-      match '/signin', to: 'authentication#create'
+      get  '/feed',   to: 'users#feed'
+      post '/signin', to: 'authentication#create'
     end
   end
 
