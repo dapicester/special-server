@@ -1,3 +1,8 @@
+# subito!
+- Feed controller
+- routes constraints + specs
+- helpers (DRY the code) + specs
+
 # user roles
 - add admin
 - use seeds for creating the admin

@@ -3,7 +3,7 @@ class StaticPagesController < ApplicationController
 
   def home
     if signed_in?
-      @micropost  = current_user.microposts.build
+      @micropost  = current_user.microposts.build # add a micropost without saving it
       @feed_items = feed_for(current_user) 
     end
   end
