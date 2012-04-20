@@ -20,17 +20,22 @@ describe "API authentication", type: :api do
     end
   end
 
-  describe "errors" do
-    it "request with no token" do
-      get "/api/v1/users.json"
-      error = { error: "Not authenticated." }
-      last_response.body.should eql(error.to_json)
+  describe "authorization" do
+    let(:error) { { error: "Not authorized." } }
+
+    shared_examples_for "not authenticated" do 
+      it { last_response.body.should be_json_eql(error.to_json) }
+      it { last_response.status.should eql(401) }
     end
-    
-    it "request with invalid token" do
-      get "/api/v1/users.json", token: ''
-      error = { error: "Not authenticated." }
-      last_response.body.should eql(error.to_json)
+
+    describe "without token " do
+      before { get "/api/v1/users.json" }
+      it_should_behave_like "not authenticated"
+    end
+
+    describe "with invalid token" do
+      before { get "/api/v1/users.json", token: '' }
+      it_should_behave_like "not authenticated"
     end
   end
 end

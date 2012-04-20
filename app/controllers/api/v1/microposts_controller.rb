@@ -22,7 +22,7 @@ private
   def find_micropost
     @micropost = Micropost.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    error = { error: "Not found. "}
+    error = { error: "Not found."}
     #respond_with( error, location: nil, status: :not_found )
     render json: error, status: :not_found
   end

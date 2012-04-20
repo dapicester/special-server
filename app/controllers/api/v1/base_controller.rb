@@ -3,10 +3,11 @@ class Api::V1::BaseController < ActionController::Base
   before_filter :authenticate_user
   
 private
+
   def authenticate_user
     @current_user = User.find_by_remember_token(params[:token])
     unless @current_user
-      error = { error: "Not authenticated." }
+      error = { error: "Not authorized." }
       respond_with error, location: nil, status: :unauthorized
     end
   end

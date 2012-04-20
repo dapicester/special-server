@@ -10,7 +10,7 @@ describe Api::V1::MicropostsController , type: :api do
     it "should create a new micropost" do
       expect do
         post "#{url}.json", token: token, micropost: { content: "Lorem ipsum" } 
-      end.should change(user.microposts, :count).by(1) 
+      end.to change(user.microposts, :count).by(1) 
       last_response.status.should eql(201)
       micropost = user.microposts.first.to_json
       last_response.body.should be_json_eql(micropost)
@@ -19,9 +19,10 @@ describe Api::V1::MicropostsController , type: :api do
     it "should not create a new micropost" do
       expect do
         post "#{url}.json", token: token, micropost: {} 
-      end.should_not change(user.microposts, :count)
+      end.not_to change(Micropost, :count)
       last_response.status.should eql(422)
-      last_response.body.should eql({ content: ["can't be blank"] }.to_json)
+      error = { content: ["can't be blank"] }
+      last_response.body.should eql(error.to_json)
     end
   end
 
@@ -34,16 +35,19 @@ describe Api::V1::MicropostsController , type: :api do
       url = "/api/v1/microposts/#{micropost.id}"
       expect do
         delete "#{url}.json", token: token 
-      end.should change(user.microposts, :count).by(-1)
+      end.to change(user.microposts, :count).by(-1)
       last_response.status.should eql(200)
+      last_response.body.should be_json_eql(micropost.to_json)
     end
 
     it "should not delete a non-existing micropost" do
       expect do
         url = "/api/v1/microposts/0"
         delete "#{url}.json", token: token 
-      end.should_not change(user.microposts, :count)
+      end.not_to change(Micropost, :count)
       last_response.status.should eql(404)
+      error = { error: "Not found." }
+      last_response.body.should be_json_eql(error.to_json)
     end
 
     it "should not delete if not owner" do
@@ -51,8 +55,10 @@ describe Api::V1::MicropostsController , type: :api do
       expect do
         url = "/api/v1/microposts/#{other_micropost.id}"
         delete "#{url}.json", token: token
-      end.should_not change(other_user.microposts, :count)
+      end.not_to change(Micropost, :count)
       last_response.status.should eql(403)
+      error = { error: "Forbidden." }
+      last_response.body.should be_json_eql(error.to_json)
     end
   end
 end

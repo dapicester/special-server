@@ -25,7 +25,7 @@ describe "/api/v1/users", type: :api do
 
       it { last_response.body.should be_json_eql(second_page.to_json) }
       it { last_response.status.should eql(200) }
-   end
+    end
   end
 
   describe "show" do
