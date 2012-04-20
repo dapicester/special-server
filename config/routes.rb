@@ -30,7 +30,7 @@ SpecialServer::Application.routes.draw do
       end
       resources :authentication, only: :create
       resources :microposts,     only: [:create, :destroy]
-
+      resources :relationships,  only: [:create, :destroy]
       get  '/feed',   to: 'users#feed'
       post '/signin', to: 'authentication#create'
     end
