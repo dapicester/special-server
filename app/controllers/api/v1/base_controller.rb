@@ -12,7 +12,14 @@ private
     end
   end
 
+protected
+
   def current_user
     @current_user
   end
+
+  def page
+    params[:page] || 1
+  end
+
 end

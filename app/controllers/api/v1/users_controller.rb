@@ -1,11 +1,10 @@
 class Api::V1::UsersController < Api::V1::BaseController
-  before_filter :get_page,  only: [:index, :following, :followers, :microposts, :feed]
   before_filter :find_user, only: [:show, :following, :followers, :microposts]
 
   #TODO: https://github.com/fabrik42/acts_as_api
   
   def index
-    users = User.paginate(page: @page) 
+    users = User.paginate(page: page) 
     respond_with api_users(users)
   end
 
@@ -14,31 +13,27 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def following
-    followed_users = @user.followed_users.paginate(page: @page)
+    followed_users = @user.followed_users.paginate(page: page)
     respond_with api_users(followed_users)
   end
 
   def followers
-    followers = @user.followers.paginate(page: @page)
+    followers = @user.followers.paginate(page: page)
     respond_with api_users(followers)
   end
 
   def microposts
-    microposts = @user.microposts.paginate(page: @page)
+    microposts = @user.microposts.paginate(page: page)
     respond_with microposts
   end
 
   def feed
-    feeds = Micropost.from_users_followed_by(@current_user).paginate(page: @page)
+    feeds = Micropost.from_users_followed_by(@current_user).paginate(page: page)
     respond_with api_feeds(feeds)
   end
 
 private
  
-  def get_page
-    @page = params[:page] || 1
-  end
-
   def find_user
     @user = User.find(params[:id])
   rescue ActiveRecord::RecordNotFound
