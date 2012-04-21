@@ -7,7 +7,7 @@ gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
 
-#gem 'json'
+gem 'json'
 gem 'jquery-rails', '2.0.1'
 
 group :development do
@@ -28,6 +28,7 @@ group :development, :test do
   gem 'rspec-rails','2.9.0'
   #gem 'jasmine', git: "git://github.com/pivotal/jasmine-gem.git"
   #gem 'jasmine-headless-webkit', '0.8.4'
+  gem 'json_spec', '1.0.0'
   gem 'guard-rspec', '0.6.0'
   gem 'guard-jasmine-headless-webkit'
   gem 'guard-spork', '0.5.2'
@@ -50,7 +51,7 @@ end
 
 # Gems used only on Mac OS.
 group :mac do
-  gem 'rb-fsevent', :require => false
+  gem 'rb-fsevent', git: 'git://github.com/ttilley/rb-fsevent.git', branch: 'pre-compiled-gem-one-off', require: false
   gem 'growl'
 end
 

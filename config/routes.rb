@@ -21,6 +21,21 @@ SpecialServer::Application.routes.draw do
 
   root to: "static_pages#home"
 
+  namespace :api do
+    namespace :v1 do
+      resources :users, only: [:index, :show] do
+        member do
+          get :following, :followers, :microposts
+        end
+      end
+      resources :authentication, only: :create
+      resources :microposts,     only: [:create, :destroy]
+      resources :relationships,  only: [:create, :destroy]
+      get  '/feed',   to: 'users#feed'
+      post '/signin', to: 'authentication#create'
+    end
+  end
+
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action

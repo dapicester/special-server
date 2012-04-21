@@ -29,6 +29,9 @@ guard 'rspec', :version => 2, :all_after_pass => false, :cli => '--drb' do
      "spec/acceptance/#{m[1]}_spec.rb",
      "spec/requests/#{m[1].singularize}_pages_spec.rb"] 
   end
+  watch(%r{^app/controllers/api/(v[1-9])/(.+)_(controller)\.rb$}) do |m|
+    "spec/api/#{m[1]}/#{m[2]}_#{m[3]}_spec.rb" 
+  end
   watch(%r{^app/views/(.+)/}) do |m|
     "spec/requests/#{m[1].singularize}_pages_spec.rb"
   end
