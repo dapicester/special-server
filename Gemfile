@@ -43,24 +43,30 @@ group :test do
   gem 'simplecov', require: false
 end
 
+# Hack to make heroky not install special groups
+def hg(g)
+  (ENV['HOME'].gsub('/','') == 'app' ? 'test' : g)
+end
+
 # Gems used only on Linux.
-group :linux do
+group hg(:linux) do
   gem 'rb-inotify'
   gem 'libnotify'
 end
 
 # Gems used only on Mac OS.
-group :mac do
-  gem 'rb-fsevent', git: 'git://github.com/ttilley/rb-fsevent.git', branch: 'pre-compiled-gem-one-off', require: false
+group hg(:mac) do
+  gem 'rb-fsevent', git: 'git://github.com/ttilley/rb-fsevent.git', branch: 'pre-compiled-gem-one-off', 
+                    require: false
   gem 'growl'
 end
 
 # Gems used only on Windows.
-group :windows do
-  gem 'rb-fchange'
-  gem 'rb-notifu'
-  gem 'win32console'
-end
+#group hg(:windows) do
+#  gem 'rb-fchange'
+#  gem 'rb-notifu'
+#  gem 'win32console'
+#end
 
 # Gems used only in production environment.
 group :production do

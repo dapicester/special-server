@@ -5,7 +5,8 @@ This is the server of the Special Social Network.
 -- Development
 
 After cloning the repository, run
-$ bundle install 
+$ bundle install --without production
+
 Use the following options:
 --binstubs=./bundlerstubs
   set the binstubs directory, used when enabling RVM hooks)
