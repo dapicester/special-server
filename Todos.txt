@@ -26,7 +26,6 @@
 - use more JavaScript in order to avoid page reloads
 
 # New Features (to be evaluated)
-- REST API, via XML/JSON
 - Replies: posts beginning with "@user"
 - Private Messaging: posts beginning with "d"
 - Follower notification: send email notification (configurable on/off)
