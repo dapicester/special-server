@@ -1,9 +1,9 @@
-en:
+it:
   special: Special
   workplaces: Workplaces
 
-  new_user: New user?
-  signup_now: Sign up now!
+  new_user: Sei un nuovo utente?
+  signup_now: Registrati ora!
   
   activerecord:
     attributes:

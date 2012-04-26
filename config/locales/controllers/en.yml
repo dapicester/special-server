@@ -1,0 +1,4 @@
+en:
+  sessions:
+    create:
+      invalid_combination: Invalid email/password combination

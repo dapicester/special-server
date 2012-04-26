@@ -1,0 +1,7 @@
+it:
+  layouts:
+    footer:
+      application_by: Applicazione di esempio di
+    header:
+      profile: Profilo
+      settings: Impostazioni
