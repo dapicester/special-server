@@ -1,0 +1,24 @@
+it:
+  users:
+    fields:
+      name: Nome
+      email: Email
+      password: Password
+      confirmation: Conferma
+    microposts: Micropost
+    show_profile: Mostra profilo
+    new:
+      title: Registrazione
+      button: Crea nuovo account
+    edit:
+      title: Modifica profilo
+      button: Salva modifiche
+    index:
+      title: Lista utenti
+    follow:
+      button: Segui
+    unfollow:
+      button: Non seguire
+    delete:
+      button: Elimina
+      confirm: Sei sicuro?

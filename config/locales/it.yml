@@ -1,6 +1,5 @@
 it:
-  special: Special
-  workplaces: Workplaces
+  appname: Special Workplaces
 
   new_user: Sei un nuovo utente?
   signup_now: Registrati ora!

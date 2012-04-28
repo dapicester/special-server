@@ -2,5 +2,5 @@
              html: { method: :delete },
              remote: true do |f| %>
   <div><%= f.hidden_field :followed_id %></div>
-  <%= f.submit "Unfollow", class: "btn btn-large" %>
+  <%= f.submit t('.button'), class: "btn btn-large" %>
 <% end %>
