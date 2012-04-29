@@ -81,3 +81,7 @@ gem 'thin', '1.3.1'
 
 # Deployment platform
 gem 'heroku'
+
+# I18n
+gem 'will-paginate-i18n', '0.1.1'
+gem 'rails-i18n', '0.6.3'

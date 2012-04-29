@@ -9,3 +9,8 @@ it:
     attributes:
       user:
         password_digest: "Password"
+
+  will_paginate:
+    next_label: Successivo →
+    page_gap: ! '&hellip;'
+    previous_label: ← Precedente
