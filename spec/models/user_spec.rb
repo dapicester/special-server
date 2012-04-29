@@ -63,7 +63,7 @@ describe User do
   end
 
   describe "when name is too long" do
-    before { @user.name = "a" * 51 }
+    before { @user.name = "a" * (User::NAME_MAX_LEN + 1) }
     it { should_not be_valid }
   end
 

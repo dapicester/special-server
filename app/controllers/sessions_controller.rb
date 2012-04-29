@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       sign_in user
       redirect_back_or user
     else
-      flash.now[:error] = I18n.t 'sessions.create.invalid_combination'
+      flash.now[:error] = I18n.t('sessions.create.invalid_combination')
       render 'new'
     end
   end

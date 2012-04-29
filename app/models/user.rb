@@ -28,15 +28,17 @@ class User < ActiveRecord::Base
 
   before_save :create_remember_token
 
+  NAME_MAX_LEN = 50
   validates :name, presence: true,
-                   length: { maximum: 50 }
+                   length: { maximum: NAME_MAX_LEN }
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true,
-                    format: { with: VALID_EMAIL_REGEX },
+                    format: { with: EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
 
-  validates :password, length: { minimum: 6 }
+  PASSWORD_MIN_LEN = 6
+  validates :password, length: { minimum: PASSWORD_MIN_LEN }
 
   def feed
     Micropost.from_users_followed_by(self)

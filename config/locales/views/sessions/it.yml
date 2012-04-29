@@ -1,8 +1,0 @@
-it:
-  sessions:
-    new:
-      title: Login
-      button: Accedi
-    destroy: Logout
-    notice:
-      signin: Fai prima login.

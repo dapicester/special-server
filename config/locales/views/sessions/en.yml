@@ -1,8 +1,0 @@
-en:
-  sessions:
-    new:
-      title: Sign in
-      button: Sign in
-    destroy: Sign out
-    notice:
-      signin: Please sign in.

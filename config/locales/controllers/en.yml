@@ -14,3 +14,9 @@ en:
       title: Following
     followers:
       title: Followers
+
+  microposts:
+    create:
+      success: Micropost created!
+    delete:
+      success: Micropost deleted!

@@ -8,7 +8,7 @@
           <li><%= link_to t('static_pages.home.title'), root_path %></li>
           <li><%= link_to t('static_pages.help.title'), help_path %></li>
           <% if signed_in? %>
-            <li><%= link_to t('.users'), users_path %></li>
+            <li><%= link_to t('users.index.title'), users_path %></li>
             <li id="fat-menu" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <%= current_user.email %> <b class="caret"></b>
@@ -17,11 +17,11 @@
                 <li><%= link_to t('.profile'), current_user %></li>
                 <li><%= link_to t('.settings'), edit_user_path(current_user) %></li>
                 <li class="divider"></li>
-                <li><%= link_to t('sessions.destroy'), signout_path, method: :delete %></li>
+                <li><%= link_to t('.signout'), signout_path, method: :delete %></li>
               </ul>
             </li>
           <% else %>
-            <li><%= link_to t('sessions.new.title'), signin_path %></li>
+            <li><%= link_to t('.signin'), signin_path %></li>
           <% end %>
         </ul>
       </nav>

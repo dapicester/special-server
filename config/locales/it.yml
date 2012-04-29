@@ -3,13 +3,9 @@ it:
 
   new_user: Sei un nuovo utente?
   signup_now: Registrati ora!
-  
+
   activerecord:
     attributes:
       user:
-        password_digest: "Password"
-
-  will_paginate:
-    next_label: Successivo →
-    page_gap: ! '&hellip;'
-    previous_label: ← Precedente
+        name: Nome
+        password_digest: Password

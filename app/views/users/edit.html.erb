@@ -9,6 +9,8 @@
       <%= f.submit t('.button'), class: "btn btn-large btn-primary" %>
     <% end %>
     <%= gravatar_for(@user) %>
-    <a href="http://gravatar.com/emails" target="_blank">change</a>
+    <a href="http://gravatar.com/emails" target="_blank">
+      <%= t('.change_avatar') %>
+    </a>
   </div>
 </div>

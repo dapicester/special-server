@@ -24,7 +24,7 @@ module SessionsHelper
   def signed_in_user
     unless signed_in?
       store_location
-      redirect_to signin_path, notice: t('sessions.notice.signin')
+      redirect_to signin_path, notice: I18n.t('sessions.notice.signin')
     end
   end
 
