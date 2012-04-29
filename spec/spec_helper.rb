@@ -47,6 +47,20 @@ Spork.prefork do
     # rspec-rails.
     config.infer_base_class_for_anonymous_controllers = false
   end
+
+  require 'action_view/test_case'
+  
+  class ActionView::TestCase::TestController
+    def default_url_options(options={})
+      { locale: I18n.default_locale }
+    end
+  end
+
+  class ActionDispatch::Routing::RouteSet
+    def default_url_options(options={})
+      { locale: I18n.default_locale }
+    end
+  end
 end
 
 Spork.each_run do
