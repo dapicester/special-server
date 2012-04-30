@@ -1,0 +1,21 @@
+zh-CN:
+  sessions:
+    create:
+      invalid_combination: 出错了！邮箱或者密码不正确
+  users:
+    create:
+      success: 欢迎使用 Special Workplaces！
+    update:
+      success: 个人信息已更新
+    destroy:
+      success: 用户已删除
+    following:
+      title: 关注
+    followers:
+      title: 粉丝
+
+  microposts:
+    create:
+      success: 微播已生成！
+    delete:
+      success: 微播已删除！

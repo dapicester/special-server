@@ -1,0 +1,82 @@
+zh-CN:
+  layouts:
+    footer:
+      application_by: Application by
+    header:
+      signin: 登录
+      profile: 用户信息
+      settings: 设置
+      signout: 退出
+
+  sessions:
+    new:
+      title: 登录
+      button: 登录
+    notice:
+      signin: 请先登陆。
+
+  static_pages:
+    about:
+      title: 关于
+      content: 这里将有一些和Special Workplaces相关的信息。
+    contact:
+      title: 联系我们
+      content: 这里将有一些如何联系我们的信息。
+    help:
+      title: 帮助
+      content: 这里将有一些如何使用Special Workplaces的帮助信息。
+    home:
+      title: 主页
+    home_unsigned_in:
+      title_html: 欢迎使用<br/>Special Workplaces
+      subtitle_html: 这里是Special Workplaces的主页。
+    home_signed_in:
+      micropost_feed:  友邻广播
+
+  shared:
+    delete_post:
+      delete: 删除
+      confirm: 你确定吗？
+    error_messages:
+      contains: 表格上有
+      errors:
+        other: "%{count} 处错误 "
+    stats:
+      following: 关注
+      followers: 粉丝
+    user_info:
+      view_profile: 我的信息
+      microposts:
+        other: "%{count} 条微播"
+
+  users:
+    fields:
+      name: 姓名
+      email: 邮箱
+      password: 密码
+      confirmation: 确认
+    new:
+      title: 注册
+      button: 创建新用户
+    edit:
+      title: 修改个人信息
+      button: 保存修改
+      change_avatar: 更改头像
+    show:
+      profile: 显示个人信息
+      microposts: 我的微播
+    index:
+      title: 用户列表
+    follow:
+      button: 关注
+    unfollow:
+      button: 取消关注
+    delete:
+      button: 删除
+      confirm: 你确定吗？
+
+  microposts:
+    micropost:
+      posted: 发布于 %{time} 前。
+      placeholder: 发布一条新微播
+      button: 发布
