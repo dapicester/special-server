@@ -1,3 +1,4 @@
+# encoding: utf-8
 module ApplicationHelper
 
   # Returns the logo.
@@ -17,7 +18,9 @@ module ApplicationHelper
 
   # Returns the a hash of supported locales.
   def supported_locales
-    { en: "English", it: "Italiano" }
+    { "en"    => "English",
+      "it"    => "Italiano",
+      "zh-CN" => "中文" }
   end
 
   # Return the locale's flag.
