@@ -20,7 +20,7 @@ private
   def check_params
     @relationship = params[:relationship]
     if @relationship.nil? || @relationship[:followed_id].nil?
-      error = { error: "Bad request." } # TODO
+      error = { error: I18n.t('unprocessable') }
       respond_with error, status: :unprocessable_entity, location: nil
     end
   end
@@ -28,21 +28,21 @@ private
   def new_followed
     @user = User.find(@relationship[:followed_id])
   rescue ActiveRecord::RecordNotFound
-    error = { error: "User not found." }
+    error = { error: I18n.t('not_found', name: I18n.t('user')) }
     respond_with error, status: :not_found, location: nil
   end
 
   def get_followed
     @relationship = Relationship.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    error = { error: "Relationship not found." }
+    error = { error: I18n.t('not_found', name: I18n.t('relationship')) }
     #respond_with error, status: :not_found, location: nil
     render json: error, status: :not_found
   end
 
   def correct_user
     unless @current_user == @relationship.follower
-      error = { error: "Forbidden." }
+      error = { error: I18n.t('forbidden') }
       render json: error, status: :forbidden
     end
     @user = @relationship.followed

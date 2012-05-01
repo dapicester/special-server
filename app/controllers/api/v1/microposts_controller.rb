@@ -22,14 +22,14 @@ private
   def find_micropost
     @micropost = Micropost.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    error = { error: "Not found."}
+    error = { error: I18n.t('not_found', name: I18n.t('micropost')) }
     #respond_with( error, location: nil, status: :not_found )
     render json: error, status: :not_found
   end
 
   def correct_user
     unless @current_user == @micropost.user
-      error = { error: "Forbidden." } 
+      error = { error: I18n.t('forbidden') } 
       #respond_with( error, location: nil, status: :forbidden )
       render json: error, status: :forbidden
     end

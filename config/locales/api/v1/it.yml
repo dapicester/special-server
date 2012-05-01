@@ -1,0 +1,11 @@
+it:
+  authentication_error: Credenziali non valide.
+  bad_request: Richiesta errata.
+  forbidden: Accesso negato.
+  not_authorized: Non autorizzato.
+  not_found: "%{name} non trovato."
+  unprocessable: Richiesta non valida.
+
+  user: Utente
+  micropost: Micropost
+  relationship: Associazione

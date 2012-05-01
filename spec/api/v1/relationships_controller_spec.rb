@@ -3,11 +3,11 @@ require 'spec_helper'
 describe Api::V1::RelationshipsController, type: :api do
   let(:user)       { Factory(:user) }
   let(:token)      { user.remember_token }
-  
+
   let(:other_user) { Factory(:user) }
 
   let(:url) { "/api/v1/relationships" } 
-  
+
   describe "#create" do
     let(:relationship) { { followed_id: other_user.id } }
 
@@ -23,6 +23,8 @@ describe Api::V1::RelationshipsController, type: :api do
         post "#{url}.json", token: token, relationship: {}
       end.not_to change(Relationship, :count)
       last_response.status.should eql(422)
+      error = { error: I18n.t('unprocessable') }
+      last_response.body.should be_json_eql(error.to_json)
     end
   end
 
@@ -47,6 +49,8 @@ describe Api::V1::RelationshipsController, type: :api do
         delete "#{url}/0.json", token: token
       end.not_to change(Relationship, :count)
       last_response.status.should eql(404)
+      error = { error: I18n.t('not_found', name: I18n.t('relationship')) }
+      last_response.body.should be_json_eql(error.to_json)
     end
 
     it "should not delete if not owner" do
@@ -54,6 +58,8 @@ describe Api::V1::RelationshipsController, type: :api do
         delete "#{url}/#{other_relationship.id}.json", token: token
       end.not_to change(Relationship, :count)
       last_response.status.should eql(403)
+      error = { error: I18n.t('forbidden') }
+      last_response.body.should be_json_eql(error.to_json)
     end
   end
 end

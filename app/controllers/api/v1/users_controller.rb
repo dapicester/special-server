@@ -4,7 +4,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   before_filter :find_user, only: [:show, :following, :followers, :microposts]
 
   #TODO: https://github.com/fabrik42/acts_as_api
-  
+
   def index
     users = User.paginate(page: page) 
     respond_with api_user_list(users)
@@ -35,12 +35,12 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
 private
- 
+
   def find_user
     @user = User.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    error = { error: "User not found." }
-    respond_with(error, status: :not_found, location: nil)
+    error = { error: I18n.t('not_found', name: I18n.t('user')) }
+    respond_with error, status: :not_found
   end
 
 end

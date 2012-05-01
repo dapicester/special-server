@@ -33,7 +33,7 @@ describe "/api/v1/users", type: :api do
 
     describe "should not show private data" do
       before { get "#{url}.json", token: token }
-    
+
       it { last_response.body.should be_json_eql(api_user(user).to_json) }
       it { last_response.status.should eql(200) }
     end
@@ -67,13 +67,13 @@ describe "/api/v1/users", type: :api do
 
     it { last_response.body.should be_json_eql(user.microposts.to_json) }
     it { last_response.status.should eql(200) }
-  
+
     describe "feed" do
       let(:other_user) { Factory(:user) }
       let(:m3)         { Factory(:micropost, user: other_user) }
 
       let(:url) { "/api/v1/feed" }
-      
+
       before { user.follow!(other_user) }
       before { get "#{url}.json", token: token }
 
@@ -84,7 +84,7 @@ describe "/api/v1/users", type: :api do
 
   shared_examples_for "user not found" do
     it { last_response.status.should eql(404) }
-    it { last_response.body.should eq({ error: "User not found." }.to_json) }
+    it { last_response.body.should eq({ error: I18n.t('not_found', name: I18n.t('user')) }.to_json) }
   end
 
   describe "bad requests" do
@@ -102,7 +102,7 @@ describe "/api/v1/users", type: :api do
       before { get "/api/v1/users/0/followers.json", token: token }
       it_should_behave_like "user not found"
     end
- 
+
     describe "microposts" do
       before { get "/api/v1/users/0/microposts.json", token: token }
       it_should_behave_like "user not found"

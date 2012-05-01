@@ -1,0 +1,11 @@
+en:
+  authentication_error: Authentication error.
+  bad_request: Bad request.
+  forbidden: Access denied.
+  not_authorized: Not authorized.
+  not_found: "%{name} not found."
+  unprocessable: Invalid request.
+
+  user: User
+  micropost: Micropost
+  relationship: Relationship
