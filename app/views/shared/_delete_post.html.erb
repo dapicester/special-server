@@ -1,6 +1,7 @@
 <% if current_user?(post.user) %>
-  <%= link_to "delete", post,  method: :delete, 
-                              confirm: "Are you sure?",
-                                title: post.content, 
-                                class: "light-gray float-right" %> 
+  <%= link_to t('.delete'), post,  
+       method: :delete, 
+      confirm: t('.confirm'),
+        title: post.content, 
+        class: "light-gray float-right" %> 
 <% end %>

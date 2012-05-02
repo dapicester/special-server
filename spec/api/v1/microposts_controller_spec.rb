@@ -21,7 +21,7 @@ describe Api::V1::MicropostsController , type: :api do
         post "#{url}.json", token: token, micropost: {} 
       end.not_to change(Micropost, :count)
       last_response.status.should eql(422)
-      error = { content: ["can't be blank"] }
+      error = { content: [I18n.t('errors.messages.blank')] }
       last_response.body.should eql(error.to_json)
     end
   end
@@ -46,7 +46,7 @@ describe Api::V1::MicropostsController , type: :api do
         delete "#{url}.json", token: token 
       end.not_to change(Micropost, :count)
       last_response.status.should eql(404)
-      error = { error: "Not found." }
+      error = { error: I18n.t('not_found', name: I18n.t('micropost')) }
       last_response.body.should be_json_eql(error.to_json)
     end
 
@@ -57,7 +57,7 @@ describe Api::V1::MicropostsController , type: :api do
         delete "#{url}.json", token: token
       end.not_to change(Micropost, :count)
       last_response.status.should eql(403)
-      error = { error: "Forbidden." }
+      error = { error: I18n.t('forbidden') }
       last_response.body.should be_json_eql(error.to_json)
     end
   end

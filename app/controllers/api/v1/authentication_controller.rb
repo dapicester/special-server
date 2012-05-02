@@ -4,10 +4,10 @@ class Api::V1::AuthenticationController < ActionController::Base
   def create
     user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
-      token = user.remember_token.to_json
+      token = { token: user.remember_token }
       respond_with token, location: nil, status: :ok 
     else
-      error = { error: "Invalid email/password combination." } 
+      error = { error: I18n.t('authentication_error') } 
       respond_with error, location: nil, status: :unauthorized
     end
   end

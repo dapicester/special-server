@@ -7,7 +7,7 @@ describe "API authentication", type: :api do
 
     it "with invalid information" do
       post "#{url}.json"
-      error = { error: "Invalid email/password combination." }
+      error = { error: I18n.t('authentication_error') }
       last_response.body.should eql(error.to_json)
       last_response.status.should eql(401)
     end
@@ -15,27 +15,28 @@ describe "API authentication", type: :api do
     it "with valid information" do
       post "#{url}.json", email: user.email,
                           password: user.password
-      last_response.body.should eql(user.remember_token.to_json)
+      token = { token: user.remember_token }
+      last_response.body.should eql(token.to_json)
       last_response.status.should eql(200)
     end
   end
 
   describe "authorization" do
-    let(:error) { { error: "Not authorized." } }
+    let(:error) { { error: I18n.t('not_authorized') } }
 
-    shared_examples_for "not authenticated" do 
+    shared_examples_for "not authorized" do 
       it { last_response.body.should be_json_eql(error.to_json) }
       it { last_response.status.should eql(401) }
     end
 
     describe "without token " do
       before { get "/api/v1/users.json" }
-      it_should_behave_like "not authenticated"
+      it_should_behave_like "not authorized"
     end
 
     describe "with invalid token" do
       before { get "/api/v1/users.json", token: '' }
-      it_should_behave_like "not authenticated"
+      it_should_behave_like "not authorized"
     end
   end
 end
