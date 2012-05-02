@@ -35,7 +35,7 @@ describe "Authentication" do
       it { should have_link(t('layouts.header.signout'),  href: signout_path) }
 
       it { should_not have_link(t('layouts.header.signin'), href: signin_path) }
-       
+
       describe "followed by signout" do
         before { click_link t('layouts.header.signout') }
         it { should have_link(t('layouts.header.signin')) }
@@ -73,7 +73,7 @@ describe "Authentication" do
           fill_in "Password", with: user.password
           click_button t('sessions.new.button')
         end
-          
+
         describe "after signing in" do
           it "should render the desired protected page" do
             should have_selector('title', text: t('users.edit.title'))
@@ -93,7 +93,7 @@ describe "Authentication" do
           end
         end
       end
- 
+
       describe "visiting user index" do
         before { visit users_path }
         it { should have_selector('title', text: t('layouts.header.signin')) }
@@ -104,7 +104,7 @@ describe "Authentication" do
           before { visit edit_user_path(user) }
           it { should have_selector('title', text: t('layouts.header.signin')) }
         end
-        
+
         describe "submitting to the update action" do
           before { put user_path(user) }
           specify { response.should redirect_to(signin_path) }
@@ -141,7 +141,7 @@ describe "Authentication" do
           before { post relationships_path }
           specify { response.should redirect_to(signin_path) }
         end
-        
+
         describe "submitting to the destroy action" do
           before { delete relationship_path(1) }
           specify { response.should redirect_to(signin_path) }
@@ -179,9 +179,9 @@ describe "Authentication" do
 
     describe "as admin user" do
       let(:admin) { Factory(:admin) }
-    
+
       before { sign_in admin }
-     
+
       describe "submitting a DELETE request for himself" do
         before { delete user_path(admin) }
         specify { response.should redirect_to(root_path) }

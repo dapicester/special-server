@@ -17,7 +17,7 @@ describe "User pages" do
     describe "pagination" do
       before(:all) { 30.times { Factory(:user) } }
       after(:all)  { User.delete_all }
-      
+
       let(:first_page)  { User.paginate(page: 1) }
       let(:second_page) { User.paginate(page: 2) }
 
