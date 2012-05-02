@@ -1,32 +1,32 @@
 require 'spec_helper'
 
 describe "Authentication" do
-  
+
   subject { page }
 
   describe "signin" do
     before { visit signin_path }
-   
+
     it { should_not have_link(t('layouts.header.profile')) }
     it { should_not have_link(t('layouts.header.settings')) }
-     
+
     describe "with invalid information" do
       before { click_button t('sessions.new.button') }
 
       it { should have_selector('title', text: t('sessions.new.title')) }  
       it { should have_message(:error, 'Invalid') }
-      
+
       describe "after visiting another page" do
         before { click_link t('static_pages.home.title') }
         it { should_not have_message(:error) }
       end
     end
- 
+
     describe "with valid information" do
       let(:user) { Factory(:user) }
       before { sign_in user }
 
-      it { should have_selector('title', text: user.name) }
+      it { should have_selector('title', text: t('static_pages.home.title')) }
 
       it { should have_link(t('users.index.title'), href: users_path) }
       it { should have_link("#{user.email}", href: '#') }
@@ -84,11 +84,11 @@ describe "Authentication" do
               visit signin_path
               fill_in "Email",    with: user.email
               fill_in "Password", with: user.password
-              click_button "Sign in"
+              click_button t('sessions.new.button')
             end
 
-            it "should render the default (profile) page" do
-              should have_selector('title', text: user.name)
+            it "should render the default (home) page" do
+              should have_selector('title', text: t('static_pages.home.title'))
             end
           end
         end
