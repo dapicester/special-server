@@ -1,3 +1,6 @@
+2012-05-02  Localization (en, it, zh-CN)
+            REST API
+
 2012-03-29  Javascript
 
 2012-03-18  User Feeds
