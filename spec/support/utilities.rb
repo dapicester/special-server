@@ -1,5 +1,5 @@
 def full_title(page_title)
-  base_title = "Special Workplaces"
+  base_title = t('appname')
   if page_title.empty?
     base_title
   else
@@ -19,4 +19,8 @@ end
 include ActionView::Helpers::TextHelper
 def plural(count, word)
   pluralize(count, word)
+end
+
+def t(key, options={})
+  I18n.translate key, options
 end

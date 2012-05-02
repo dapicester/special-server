@@ -7,6 +7,12 @@ Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
+  
+  # Test coverage tool
+  unless ENV['DRB']
+    require 'simplecov'
+    SimpleCov.start 'rails'
+  end
 
   # This file is copied to spec/ when you run 'rails generate rspec:install'
   ENV["RAILS_ENV"] ||= 'test'
@@ -41,11 +47,30 @@ Spork.prefork do
     # rspec-rails.
     config.infer_base_class_for_anonymous_controllers = false
   end
+
+  require 'action_view/test_case'
+  
+  class ActionView::TestCase::TestController
+    def default_url_options(options={})
+      { locale: I18n.default_locale }
+    end
+  end
+
+  class ActionDispatch::Routing::RouteSet
+    def default_url_options(options={})
+      { locale: I18n.default_locale }
+    end
+  end
 end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
 
+  # Test coverage tool
+  if ENV['DRB']
+    require 'simplecov'
+    SimpleCov.start 'rails'
+  end
 end
 
 # --- Instructions ---

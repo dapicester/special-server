@@ -1,0 +1,84 @@
+it:
+  layouts:
+    footer:
+      application_by: Applicazione realizzata da
+    header:
+      signin: Login
+      profile: Profilo
+      settings: Impostazioni
+      signout: Logout
+
+  sessions:
+    new:
+      title: Login
+      button: Accedi
+    notice:
+      signin: Fai prima login.
+
+  static_pages:
+    about:
+      title: Informazioni
+      content: Qui dovrebbero esserci alcune informazioni su Special Workplaces.
+    contact:
+      title: Contatti
+      content: Qui dovrebbero esserci alcune informationi su come fare per contattarci.
+    help:
+      title: Aiuto
+      content: Qui dovrebbero esserci alcune informazioni utili su come utilizzare Special Workplaces.
+    home:
+      title: Home
+    home_unsigned_in:
+      title_html: Benvenuti su<br/>Special Workplaces
+      subtitle_html: Questa è la home page di Special Workplaces.
+    home_signed_in:
+      micropost_feed: Micropost feed
+
+  shared:
+    delete_post:
+      delete: elimina
+      confirm: Sei sicuro?
+    error_messages:
+      contains: Questo form contiene
+      errors:
+        one: "1 errore"
+        other: "%{count} errori"
+    stats:
+      following: following
+      followers: followers
+    user_info:
+      view_profile: Vai al mio profilo
+      microposts:
+        one: "1 micropost"
+        other: "%{count} micropost"
+
+  users:
+    fields:
+      name: Nome
+      email: Email
+      password: Password
+      confirmation: Conferma
+    new:
+      title: Registrazione
+      button: Crea nuovo account
+    edit:
+      title: Modifica profilo
+      button: Salva modifiche
+      change_avatar: Cambia avatar
+    show:
+      profile: Mostra profilo
+      microposts: Micropost
+    index:
+      title: Lista utenti
+    follow:
+      button: Segui
+    unfollow:
+      button: Non seguire
+    delete:
+      button: Elimina
+      confirm: Sei sicuro?
+
+  microposts:
+    micropost:
+      posted: Creato %{time} fa.
+      placeholder: Scrivi un nuovo micropost ...
+      button: Pubblica

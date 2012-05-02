@@ -1,0 +1,22 @@
+en:
+  sessions:
+    create:
+      invalid_combination: Invalid email/password combination
+
+  users:
+    create:
+      success: Welcome to Special Workplaces!
+    update:
+      success: Profile updated
+    destroy:
+      success: User deleted
+    following:
+      title: Following
+    followers:
+      title: Followers
+
+  microposts:
+    create:
+      success: Micropost created!
+    delete:
+      success: Micropost deleted!

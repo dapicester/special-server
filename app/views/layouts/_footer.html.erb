@@ -1,12 +1,12 @@
 <footer class="footer">
   <small>
-    Sample Application by 
+    <%= t('.application_by') %>
     <a href="mailto:paolo.dapice@gmail.com?subject=Sample Application">Paolo D'Apice</a>
   </small>
   <nav>
     <ul>
-      <li><%= link_to "About",   about_path %></li>
-      <li><%= link_to "Contact", contact_path %></li>
+      <li><%= link_to t('static_pages.about.title'),   about_path %></li>
+      <li><%= link_to t('static_pages.contact.title'), contact_path %></li>
     </ul>
   </nav>
 </footer>

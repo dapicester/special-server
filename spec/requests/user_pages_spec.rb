@@ -12,7 +12,7 @@ describe "User pages" do
       visit users_path
     end
 
-    it { should have_selector('title', text: 'All users') }
+    it { should have_selector('title', text: t('users.index.title')) }
 
     describe "pagination" do
       before(:all) { 30.times { Factory(:user) } }
@@ -21,7 +21,7 @@ describe "User pages" do
       let(:first_page)  { User.paginate(page: 1) }
       let(:second_page) { User.paginate(page: 2) }
 
-      it { should have_link('Next') }
+      it { should have_link("Next") }
       it { should have_link('2') }
 
       it "should list each user" do
@@ -42,7 +42,7 @@ describe "User pages" do
         end
       end
 
-      it { should_not have_link('delete') }
+      it { should_not have_link(t('users.delete.button')) }
 
       describe "as an admin user" do
         let(:admin) { Factory(:admin) }
@@ -51,11 +51,11 @@ describe "User pages" do
           visit users_path
         end
 
-        it { should have_link('delete', href: user_path(User.first)) }
+        it { should have_link(t('users.delete.button'), href: user_path(User.first)) }
         it "should be able to delete another user" do
-          expect { click_link('delete') }.to change(User, :count).by(-1)
+          expect { click_link(t('users.delete.button')) }.to change(User, :count).by(-1)
         end
-        it { should_not have_link('delete', href: user_path(admin)) }
+        it { should_not have_link(t('users.delete.button'), href: user_path(admin)) }
       end
     end
   end
@@ -63,8 +63,8 @@ describe "User pages" do
   describe "signup page" do
     before { visit signup_path }
 
-    it { should have_selector('h1', text: 'Sign up') }
-    it { should have_selector('title', text: full_title('Sign up')) }
+    it { should have_selector('h1', text: t('users.new.title')) }
+    it { should have_selector('title', text: full_title(t('users.new.title'))) }
   end
 
   describe "profile page" do
@@ -92,19 +92,19 @@ describe "User pages" do
 
         it "should increment the followed count" do
           expect do
-            click_button "Follow"
+            click_button t('users.follow.button')
           end.to change(user.followed_users, :count).by(1)
         end
 
         it "should increment the other user's followers count" do
           expect do
-            click_button "Follow"
+            click_button t('users.follow.button')
           end.to change(other_user.followers, :count).by(1)
         end
 
         describe "toggling the button" do
-          before { click_button "Follow" } 
-          it { should have_selector('input', value: 'Unfollow') }
+          before { click_button t('users.follow.button') } 
+          it { should have_selector('input', value: t('users.unfollow.button')) }
         end
       end
 
@@ -116,19 +116,19 @@ describe "User pages" do
 
         it "should decrement the followed user count" do
           expect do
-            click_button "Unfollow"
+            click_button t('users.unfollow.button')
           end.to change(user.followed_users, :count).by(-1)
         end
 
         it "should decrement the other user's followers count" do
           expect do
-            click_button "Unfollow"
+            click_button t('users.unfollow.button')
           end.to change(other_user.followers, :count).by(-1)
         end
 
         describe "toggling the button" do
-          before { click_button "Unfollow" }
-          it { should have_selector('input', value: 'Follow') }
+          before { click_button t('users.unfollow.button') }
+          it { should have_selector('input', value: t('users.follow.button')) }
         end
       end
     end
@@ -139,36 +139,36 @@ describe "User pages" do
 
     describe "with invalid information" do
       it "should not create a user" do
-        expect { click_button "Create my account" }.not_to change(User, :count)
+        expect { click_button t('users.new.button') }.not_to change(User, :count)
       end
     end
 
     describe "error messages" do
-      before { click_button "Create my account" }
+      before { click_button t('users.new.button') }
 
-      it { should have_selector('title', text: 'Sign up') }
+      it { should have_selector('title', text: t('users.new.title')) }
       it { should have_content('error') }
     end
 
     describe "with valid information" do
       before do
-        fill_in "Name",         with: "Example User"
-        fill_in "Email",        with: "user@example.com"
-        fill_in "Password",     with: "foobar"
-        fill_in "Confirmation", with: "foobar"
+        fill_in t('users.fields.name'),         with: "Example User"
+        fill_in t('users.fields.email'),        with: "user@example.com"
+        fill_in t('users.fields.password'),     with: "foobar"
+        fill_in t('users.fields.confirmation'), with: "foobar"
       end
 
       it "should create a user" do
-        expect { click_button "Create my account" }.to change(User, :count).by(1)
+        expect { click_button t('users.new.button') }.to change(User, :count).by(1)
       end
 
       describe "after saving the user" do
-        before { click_button "Create my account" }
+        before { click_button t('users.new.button') }
         let (:user) { User.find_by_email('user@example.com') }
 
         it { should have_selector('title', text: user.name) }
-        it { should have_message(:success, 'Welcome') }
-        it { should have_link('Sign out') }
+        it { should have_message(:success, t('users.create.success')) }
+        it { should have_link(t('layouts.header.signout')) }
       end
     end
   end
@@ -181,15 +181,15 @@ describe "User pages" do
     end
 
     describe "page" do
-      it { should have_selector('h1', text: "Edit user") }
-      it { should have_selector('title', text: "Edit user") }
-      it { should have_link('change', href: 'http://gravatar.com/emails', target: "_blank") }
+      it { should have_selector('h1', text: t('users.edit.title')) }
+      it { should have_selector('title', text: t('users.edit.title')) }
+      it { should have_link(t('users.edit.change_avatar'), href: 'http://gravatar.com/emails', target: "_blank") }
     end
 
     describe "with invalid information" do
-      before { click_button "Save changes" }
+      before { click_button t('users.edit.button') }
 
-      it { should have_content('1 error') }
+      it { should have_content(t('shared.error_messages.errors', count: 1)) }
     end
 
     describe "with valid information" do
@@ -197,16 +197,16 @@ describe "User pages" do
       let(:new_name) { "New name" }
       let(:new_email) { "new@example.com" }
       before do
-        fill_in "Name",         with: new_name
-        fill_in "Email",        with: new_email
-        fill_in "Password",     with: user.password
-        fill_in "Confirmation", with: user.password
-        click_button "Save changes"
+        fill_in t('users.fields.name'),         with: new_name
+        fill_in t('users.fields.email'),        with: new_email
+        fill_in t('users.fields.password'),     with: user.password
+        fill_in t('users.fields.confirmation'), with: user.password
+        click_button t('users.edit.button')
       end
 
       it { should have_selector('title', text: new_name) }
       it { should have_message(:success) }
-      it { should have_link('Sign out', href: signout_path) }
+      it { should have_link(t('layouts.header.signout'), href: signout_path) }
       specify { user.reload.name.should == new_name }
       specify { user.reload.email.should == new_email }
     end

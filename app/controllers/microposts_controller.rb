@@ -7,7 +7,7 @@ class MicropostsController < ApplicationController
   def create
     @micropost = current_user.microposts.build(params[:micropost])
     if @micropost.save
-      flash[:success] = "Micropost created!"
+      flash[:success] = I18n.t('microposts.create.success')
       redirect_to root_path
     else
       @feed_items = feed_for(current_user)
@@ -17,7 +17,7 @@ class MicropostsController < ApplicationController
 
   def destroy
     @micropost.destroy
-    flash[:success] = "Micropost deleted!"
+    flash[:success] = I18n.t('microposts.delete.success')
     redirect_back_or root_path
   end
 

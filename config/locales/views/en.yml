@@ -1,0 +1,84 @@
+en:
+  layouts:
+    footer:
+      application_by: Application by
+    header:
+      signin: Sign in
+      profile: Profile
+      settings: Settings
+      signout: Sign out
+
+  sessions:
+    new:
+      title: Sign in
+      button: Sign in
+    notice:
+      signin: Please sign in.
+
+  static_pages:
+    about:
+      title: About
+      content: Here there should be some useful information about the Special Workplaces.
+    contact: 
+      title: Contact
+      content: Here there should be some information about how to contact us.
+    help:
+      title: Help
+      content: Here there should be some useful information about how to use Special Workplaces. 
+    home:
+      title: Home
+    home_unsigned_in:
+      title_html: Welcome to<br/>Special Workplaces
+      subtitle_html: This is the home page for the Special Workplaces.
+    home_signed_in:
+      micropost_feed: Micropost feed
+
+  shared:
+    delete_post:
+      delete: delete
+      confirm: Are you sure?
+    error_messages:
+      contains: This form contains
+      errors:
+        one: "1 error"
+        other: "%{count} errors"
+    stats:
+      following: following
+      followers: followers
+    user_info:
+      view_profile: View my profile
+      microposts: 
+        one: "1 micropost"
+        other: "%{count} microposts"
+
+  users:
+    fields:
+      name: Name
+      email: Email
+      password: Password
+      confirmation: Confirmation
+    new:
+      title: Sign up
+      button: Create my account
+    edit:
+      title: Edit profile
+      button: Save changes
+      change_avatar: Change avatar
+    show:
+      profile: Show profile
+      microposts: Microposts
+    index:
+      title: All users
+    follow:
+      button: Follow
+    unfollow:
+      button: Unfollow
+    delete:
+      button: Delete
+      confirm: Are you sure?
+
+  microposts:
+    micropost:
+      posted: Posted %{time} ago.
+      placeholder: Compose a new micropost ...
+      button: Post

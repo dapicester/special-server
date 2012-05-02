@@ -1,25 +1,42 @@
 SpecialServer::Application.routes.draw do
-  resources :users do
-    member do
-      get :following, :followers
-    end
-  end
-  resources :sessions,      only: [:new, :create, :destroy]
-  resources :microposts,    only: [:create, :destroy]
-  resources :relationships, only: [:create, :destroy]
-
-  match '/signup',  to: 'users#new'
-  match '/signin',  to: 'sessions#new'
-  match '/signout', to: 'sessions#destroy'
-
-  match '/help',    to: 'static_pages#help'
-  match '/about',   to: 'static_pages#about'
-  match '/contact', to: 'static_pages#contact'
-
-  root to: "static_pages#home"
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
+
+  scope '(:locale)', locale: /en|it|zh-CN/ do
+    resources :users do
+      member do
+        get :following, :followers
+      end
+    end
+    resources :sessions,      only: [:new, :create, :destroy]
+    resources :microposts,    only: [:create, :destroy]
+    resources :relationships, only: [:create, :destroy]
+
+    match '/signup',  to: 'users#new'
+    match '/signin',  to: 'sessions#new'
+    match '/signout', to: 'sessions#destroy'
+
+    match '/help',    to: 'static_pages#help'
+    match '/about',   to: 'static_pages#about'
+    match '/contact', to: 'static_pages#contact'
+
+    root to: "static_pages#home"
+  end
+
+  namespace :api do
+    namespace :v1 do
+      resources :users, only: [:index, :show] do
+        member do
+          get :following, :followers, :microposts
+        end
+      end
+      resources :authentication, only: :create
+      resources :microposts,     only: [:create, :destroy]
+      resources :relationships,  only: [:create, :destroy]
+      get  '/feed',   to: 'users#feed'
+      post '/signin', to: 'authentication#create'
+    end
+  end
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
