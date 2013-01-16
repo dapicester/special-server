@@ -1,3 +1,5 @@
+2013-01-16  Update to Rails 3.2.11
+
 2012-05-02  Localization (en, it, zh-CN)
             REST API
 
