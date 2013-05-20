@@ -1,4 +1,5 @@
-source 'http://gems.gzruby.org'
+source 'http://ruby.taobao.org'
+#source 'http://gems.gzruby.org'
 
 gem 'rails', '3.2.11'
 gem 'bootstrap-sass', '2.0.1'
