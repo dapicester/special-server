@@ -1,6 +1,8 @@
 source 'http://ruby.taobao.org'
 #source 'http://gems.gzruby.org'
 
+ruby '2.0.0'
+
 gem 'rails', '3.2.11'
 gem 'bootstrap-sass', '2.0.1'
 gem 'bcrypt-ruby', '3.0.1'
@@ -34,7 +36,7 @@ group :development, :test do
   gem 'guard-jasmine-headless-webkit'
   gem 'guard-spork', '0.5.2'
   gem 'spork-rails', '3.2.0'
-  gem 'debugger', '1.1.1'
+  gem 'debugger', '1.6.0'
 end
 
 group :test do 
