@@ -13,7 +13,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation
+  attr_accessor :name, :email, :password, :password_confirmation
   has_secure_password
   has_many :microposts, dependent: :destroy
   has_many :relationships, foreign_key: "follower_id", 
@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
                                    dependent:   :destroy
   has_many :followers, through: :reverse_relationships, 
                        source: :follower
+
+  before_save { self.email = email.downcase }
 
   before_save :create_remember_token
 
@@ -38,6 +40,7 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
 
   PASSWORD_MIN_LEN = 6
+  #validates :password_confirmation, presence: true
   validates :password, length: { minimum: PASSWORD_MIN_LEN }
 
   def feed

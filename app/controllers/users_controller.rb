@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
-  before_filter :signed_in_user,
+  before_action :signed_in_user,
                 only: [:index, :edit, :update, :following, :followers]
-  before_filter :correct_user,           only: [:edit, :update]
-  before_filter :already_signed_in_user, only: [:new, :create] 
-  before_filter :admin_user,             only: :destroy
-  before_filter :self_delete,            only: :destroy
+  before_action :correct_user,           only: [:edit, :update]
+  before_action :already_signed_in_user, only: [:new, :create] 
+  before_action :admin_user,             only: :destroy
+  before_action :self_delete,            only: :destroy
 
   def new
     @user = User.new
