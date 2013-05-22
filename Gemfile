@@ -43,7 +43,7 @@ end
 
 group :test do
   gem 'capybara', '1.1.2'
-  gem 'factory_girl_rails', '1.6.0'
+  gem 'factory_girl_rails', '~> 4.0'
   gem 'database_cleaner', '~> 0.7.2'
   gem 'simplecov', require: false
 end

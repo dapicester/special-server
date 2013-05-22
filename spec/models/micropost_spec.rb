@@ -13,7 +13,7 @@ require 'spec_helper'
 
 describe Micropost do
   
-  let(:user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
   before { @micropost = user.microposts.build(content: "Lorem ipsum") }
 
   subject { @micropost }
@@ -41,9 +41,9 @@ describe Micropost do
   end
 
   describe "from users followed by" do
-    let(:user)       { Factory(:user) }
-    let(:other_user) { Factory(:user) }
-    let(:third_user) { Factory(:user) }
+    let(:user)       { FactoryGirl.create(:user) }
+    let(:other_user) { FactoryGirl.create(:user) }
+    let(:third_user) { FactoryGirl.create(:user) }
 
     before { user.follow!(other_user) }
 

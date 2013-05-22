@@ -12,8 +12,8 @@
 require 'spec_helper'
 
 describe Relationship do
-  let(:follower) { Factory(:user) }
-  let(:followed) { Factory(:user) }
+  let(:follower) { FactoryGirl.create(:user) }
+  let(:followed) { FactoryGirl.create(:user) }
   let(:relationship) do
     follower.relationships.build(followed_id: followed.id)
   end
@@ -24,7 +24,7 @@ describe Relationship do
 
   describe "follower methods" do
     before { relationship.save }
-    before { Factory(:micropost, user: followed) }
+    before { FactoryGirl.create(:micropost, user: followed) }
 
     it { should respond_to(:follower) }
     it { should respond_to(:followed) }

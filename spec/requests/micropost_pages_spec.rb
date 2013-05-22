@@ -4,7 +4,7 @@ describe "MicropostPages" do
   
   subject { page }
 
-  let(:user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
   before { sign_in user }
 
   describe "micropost creation" do
@@ -34,7 +34,7 @@ describe "MicropostPages" do
   end
 
   describe "micropost destruction" do
-    before { Factory(:micropost, user: user) }
+    before { FactoryGirl.create(:micropost, user: user) }
 
     describe "as correct user" do
       before { visit root_path }

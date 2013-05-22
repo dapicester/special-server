@@ -5,7 +5,7 @@ describe "User pages" do
   subject { page }
 
   describe "index" do
-    let(:user) { Factory(:user) }
+    let(:user) { FactoryGirl.create(:user) }
 
     before do
       sign_in user
@@ -15,7 +15,7 @@ describe "User pages" do
     it { should have_selector('title', text: t('users.index.title')) }
 
     describe "pagination" do
-      before(:all) { 30.times { Factory(:user) } }
+      before(:all) { 30.times { FactoryGirl.create(:user) } }
       after(:all)  { User.delete_all }
 
       let(:first_page)  { User.paginate(page: 1) }
@@ -45,7 +45,7 @@ describe "User pages" do
       it { should_not have_link(t('users.delete.button')) }
 
       describe "as an admin user" do
-        let(:admin) { Factory(:admin) }
+        let(:admin) { FactoryGirl.create(:admin) }
         before do 
           sign_in admin
           visit users_path
@@ -68,9 +68,9 @@ describe "User pages" do
   end
 
   describe "profile page" do
-    let(:user) { Factory(:user) }
-    let!(:m1) { Factory(:micropost, user: user, content: "Foo") }
-    let!(:m2) { Factory(:micropost, user: user, content: "Bar") }
+    let(:user) { FactoryGirl.create(:user) }
+    let!(:m1) { FactoryGirl.create(:micropost, user: user, content: "Foo") }
+    let!(:m2) { FactoryGirl.create(:micropost, user: user, content: "Bar") }
 
     before { visit user_path(user) }
 
@@ -84,7 +84,7 @@ describe "User pages" do
     end
 
     describe "follow/unfollow buttons" do
-      let(:other_user) { Factory(:user) }
+      let(:other_user) { FactoryGirl.create(:user) }
       before { sign_in(user) }
 
       describe "following a user" do
@@ -174,7 +174,7 @@ describe "User pages" do
   end
 
   describe "edit" do
-    let(:user) { Factory(:user) }
+    let(:user) { FactoryGirl.create(:user) }
     before do
       sign_in user
       visit edit_user_path(user)
@@ -193,7 +193,7 @@ describe "User pages" do
     end
 
     describe "with valid information" do
-      let(:user) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
       let(:new_name) { "New name" }
       let(:new_email) { "new@example.com" }
       before do
@@ -213,8 +213,8 @@ describe "User pages" do
   end
 
   describe "following/followers" do
-    let(:user) { Factory(:user) }
-    let(:other_user) { Factory(:user) }
+    let(:user) { FactoryGirl.create(:user) }
+    let(:other_user) { FactoryGirl.create(:user) }
     before { user.follow!(other_user) }
 
     describe "followed users" do

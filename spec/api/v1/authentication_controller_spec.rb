@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "API authentication", type: :api do
   describe "signin" do
-    let(:user) { Factory(:user) }
+    let(:user) { FactoryGirl.create(:user) }
     let(:url) { "/api/v1/signin" }
 
     it "with invalid information" do

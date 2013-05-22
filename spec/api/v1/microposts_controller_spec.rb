@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Api::V1::MicropostsController , type: :api do
-  let(:user)  { Factory(:user) }
+  let(:user)  { FactoryGirl.create(:user) }
   let(:token) { user.remember_token }
 
   describe "#create" do
@@ -27,9 +27,9 @@ describe Api::V1::MicropostsController , type: :api do
   end
 
   describe "#destroy" do
-    let(:micropost) { Factory(:micropost, user: user, content: "Lorem ipsum") }
-    let(:other_user) { Factory(:user) }
-    let(:other_micropost) { Factory(:micropost, user: other_user, content: "Lorem ipsum") }
+    let(:micropost) { FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum") }
+    let(:other_user) { FactoryGirl.create(:user) }
+    let(:other_micropost) { FactoryGirl.create(:micropost, user: other_user, content: "Lorem ipsum") }
 
     it "should delete a micropost" do
       url = "/api/v1/microposts/#{micropost.id}"

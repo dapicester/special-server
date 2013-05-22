@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe "/api/v1/users", type: :api do
-  let(:user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
   let(:token) { user.remember_token }
 
   describe "index" do
     let(:url) { "/api/v1/users" }
 
-    before(:all) { 30.times { Factory(:user) } }
+    before(:all) { 30.times { FactoryGirl.create(:user) } }
     after(:all)  { User.delete_all }
 
     let(:first_page)  { api_users User.paginate(page: 1) }
@@ -40,7 +40,7 @@ describe "/api/v1/users", type: :api do
   end
 
   describe "following/followers" do
-    let(:other_user) { Factory(:user) }
+    let(:other_user) { FactoryGirl.create(:user) }
     before { user.follow!(other_user) }
 
     describe "followed users" do
@@ -59,8 +59,8 @@ describe "/api/v1/users", type: :api do
   end
 
   describe "microposts" do
-    let(:m1) { Factory(:micropost, user: user, content: "Foo") }
-    let(:m2) { Factory(:micropost, user: user, content: "Bar") }
+    let(:m1) { FactoryGirl.create(:micropost, user: user, content: "Foo") }
+    let(:m2) { FactoryGirl.create(:micropost, user: user, content: "Bar") }
     let(:url) { "/api/v1/users/#{user.id}/microposts" }
 
     before { get "#{url}.json", token: token }
@@ -69,8 +69,8 @@ describe "/api/v1/users", type: :api do
     it { response.status.should eql(200) }
 
     describe "feed" do
-      let(:other_user) { Factory(:user) }
-      let(:m3)         { Factory(:micropost, user: other_user) }
+      let(:other_user) { FactoryGirl.create(:user) }
+      let(:m3)         { FactoryGirl.create(:micropost, user: other_user) }
 
       let(:url) { "/api/v1/feed" }
 

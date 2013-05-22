@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Api::V1::RelationshipsController, type: :api do
-  let(:user)       { Factory(:user) }
+  let(:user)       { FactoryGirl.create(:user) }
   let(:token)      { user.remember_token }
 
-  let(:other_user) { Factory(:user) }
+  let(:other_user) { FactoryGirl.create(:user) }
 
   let(:url) { "/api/v1/relationships" } 
 

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe RelationshipsController do
-  let(:user) { Factory(:user) }
-  let(:other_user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:other_user) { FactoryGirl.create(:user) }
 
   before { sign_in(user) }
 

@@ -23,7 +23,7 @@ describe "Authentication" do
     end
 
     describe "with valid information" do
-      let(:user) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
       before { sign_in user }
 
       it { should have_selector('title', text: t('static_pages.home.title')) }
@@ -45,8 +45,8 @@ describe "Authentication" do
     end
 
     describe "for signed-in users" do
-      let(:user) { Factory(:user) }
-      let(:another) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
+      let(:another) { FactoryGirl.create(:user) }
 
       before { sign_in user }
 
@@ -64,7 +64,7 @@ describe "Authentication" do
 
   describe "authorization" do
     describe "for non-signed-in users" do
-      let(:user) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
 
       describe "when attempting to visit a protected page" do
         before do
@@ -129,7 +129,7 @@ describe "Authentication" do
 
         describe "submitting to the destroy action" do
           before do
-            micropost = Factory(:micropost)
+            micropost = FactoryGirl.create(:micropost)
             delete micropost_path(micropost)
           end
           specify { response.should redirect_to(signin_path) }
@@ -150,8 +150,8 @@ describe "Authentication" do
     end
 
     describe "as wrong user" do
-      let(:user) { Factory(:user) }
-      let(:wrong_user) { Factory(:user, email: "wrong@example.com") }
+      let(:user) { FactoryGirl.create(:user) }
+      let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
       before { sign_in user }
 
       describe "visiting users#edit page" do
@@ -166,8 +166,8 @@ describe "Authentication" do
     end
 
     describe "as non-admin user" do
-      let(:user) { Factory(:user) }
-      let(:non_admin) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
+      let(:non_admin) { FactoryGirl.create(:user) }
 
       before { sign_in non_admin }
 
@@ -178,7 +178,7 @@ describe "Authentication" do
     end
 
     describe "as admin user" do
-      let(:admin) { Factory(:admin) }
+      let(:admin) { FactoryGirl.create(:admin) }
 
       before { sign_in admin }
 
