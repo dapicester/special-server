@@ -1,10 +1,11 @@
 source 'http://ruby.taobao.org'
 #source 'http://gems.gzruby.org'
+#source :rubygems
 
 ruby '2.0.0'
 
-gem 'rails', '3.2.11'
-gem 'bootstrap-sass', '2.0.1'
+gem 'rails', '3.2.13'
+gem 'bootstrap-sass', '2.3.0.1'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
@@ -36,10 +37,10 @@ group :development, :test do
   gem 'guard-jasmine-headless-webkit'
   gem 'guard-spork', '0.5.2'
   gem 'spork-rails', '3.2.0'
-  gem 'debugger', '1.1.1'
+  gem 'debugger', '1.6.0'
 end
 
-group :test do 
+group :test do
   gem 'capybara', '1.1.2'
   gem 'factory_girl_rails', '1.6.0'
   gem 'database_cleaner', '~> 0.7.2'

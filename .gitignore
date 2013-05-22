@@ -16,11 +16,9 @@
 
 # Ignore other unneeded files.
 bin/
-bundler_stubs/
 coverage/
 doc/
 ERD.pdf
 *.swp
 *~
 .jhw-cache
-/nbproject
