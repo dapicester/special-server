@@ -7,25 +7,26 @@ ruby '2.0.0'
 gem 'rails', '3.2.13'
 gem 'bootstrap-sass', '2.3.0.1'
 gem 'bcrypt-ruby', '3.0.1'
-gem 'faker', '1.0.1'
-gem 'will_paginate', '3.0.3'
-gem 'bootstrap-will_paginate', '0.0.6'
+gem 'faker', '1.1.2'
+gem 'will_paginate', '3.0.4'
+gem 'bootstrap-will_paginate', '0.0.9'
 
-gem 'json'
-gem 'jquery-rails', '2.0.1'
+gem 'jquery-rails', '2.2.1'
+gem 'turbolinks', '1.0.0'
+gem 'jbuilder', '1.0.1'
 
 group :development do
-  gem 'sqlite3','1.3.5'
-  gem 'annotate', '~> 2.4.1.beta'
-  gem 'rails-erd', '~> 0.4.5'
+  gem 'sqlite3','1.3.7'
+  gem 'annotate', '2.5.0'
+  gem 'rails-erd', '1.1.0'
 end
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', '3.2.4'
+  gem 'sass-rails', '3.2.6'
   gem 'coffee-rails', '3.2.2'
-  gem 'uglifier', '1.2.3'
+  gem 'uglifier', '2.1.1'
 end
 
 group :development, :test do
@@ -54,15 +55,15 @@ end
 
 # Gems used only on Linux.
 group hg(:linux) do
-  gem 'rb-inotify'
-  gem 'libnotify'
+  gem 'rb-inotify', '0.9.0'
+  gem 'libnotify', '0.8.0'
 end
 
 # Gems used only on Mac OS.
 group hg(:mac) do
   gem 'rb-fsevent', git: 'git://github.com/ttilley/rb-fsevent.git', branch: 'pre-compiled-gem-one-off', 
                     require: false
-  gem 'growl'
+  gem 'growl', '1.0.3'
 end
 
 # Gems used only on Windows.
