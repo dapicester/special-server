@@ -1,0 +1,9 @@
+- provide :title, t('.title')
+%h1= t('.title')
+
+= will_paginate
+
+%ul.users
+  = render @users
+
+= will_paginate
