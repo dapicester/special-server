@@ -104,6 +104,13 @@ GEM
       childprocess (>= 0.2.3)
       guard (>= 1.1)
       spork (>= 0.8.4)
+    haml (4.0.2)
+      tilt
+    haml-rails (0.4)
+      actionpack (>= 3.1, < 4.1)
+      activesupport (>= 3.1, < 4.1)
+      haml (>= 3.1, < 4.1)
+      railties (>= 3.1, < 4.1)
     heroku (2.39.3)
       heroku-api (~> 0.3.7)
       launchy (>= 0.3.2)
@@ -267,6 +274,7 @@ DEPENDENCIES
   guard-jasmine-headless-webkit
   guard-rspec (= 2.5.0)
   guard-spork (= 1.5.0)
+  haml-rails (= 0.4)
   heroku
   jbuilder (= 1.0.1)
   jquery-rails (= 2.2.1)
