@@ -30,7 +30,7 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'rspec-rails','2.9.0'
+  gem 'rspec-rails','2.13.1'
   #gem 'jasmine', git: "git://github.com/pivotal/jasmine-gem.git"
   #gem 'jasmine-headless-webkit', '0.8.4'
   gem 'json_spec', '1.0.0'

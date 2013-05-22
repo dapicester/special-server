@@ -16,15 +16,15 @@ describe "/api/v1/users", type: :api do
     describe "default pagination" do
       before { get "#{url}.json", token: token }
 
-      it { last_response.body.should be_json_eql(first_page.to_json) }
-      it { last_response.status.should eql(200) }
+      it { response.body.should be_json_eql(first_page.to_json) }
+      it { response.status.should eql(200) }
     end
 
     describe "explicit pagination" do
       before { get "#{url}.json", token: token, page: 2 }
 
-      it { last_response.body.should be_json_eql(second_page.to_json) }
-      it { last_response.status.should eql(200) }
+      it { response.body.should be_json_eql(second_page.to_json) }
+      it { response.status.should eql(200) }
     end
   end
 
@@ -34,8 +34,8 @@ describe "/api/v1/users", type: :api do
     describe "should not show private data" do
       before { get "#{url}.json", token: token }
 
-      it { last_response.body.should be_json_eql(api_user(user).to_json) }
-      it { last_response.status.should eql(200) }
+      it { response.body.should be_json_eql(api_user(user).to_json) }
+      it { response.status.should eql(200) }
     end
   end
 
@@ -46,15 +46,15 @@ describe "/api/v1/users", type: :api do
     describe "followed users" do
       before { get "/api/v1/users/#{user.id}/following.json", token: token }
 
-      it { last_response.body.should be_json_eql(api_users([ other_user ]).to_json) }
-      it { last_response.status.should eql(200) }
+      it { response.body.should be_json_eql(api_users([ other_user ]).to_json) }
+      it { response.status.should eql(200) }
     end
 
     describe "followers" do
       before { get "/api/v1/users/#{other_user.id}/followers.json", token: token }
 
-      it { last_response.body.should be_json_eql(api_users([ user ]).to_json) }
-      it { last_response.status.should eql(200) }
+      it { response.body.should be_json_eql(api_users([ user ]).to_json) }
+      it { response.status.should eql(200) }
     end
   end
 
@@ -65,8 +65,8 @@ describe "/api/v1/users", type: :api do
 
     before { get "#{url}.json", token: token }
 
-    it { last_response.body.should be_json_eql(user.microposts.to_json) }
-    it { last_response.status.should eql(200) }
+    it { response.body.should be_json_eql(user.microposts.to_json) }
+    it { response.status.should eql(200) }
 
     describe "feed" do
       let(:other_user) { Factory(:user) }
@@ -77,14 +77,14 @@ describe "/api/v1/users", type: :api do
       before { user.follow!(other_user) }
       before { get "#{url}.json", token: token }
 
-      it { last_response.body.should be_json_eql(api_feeds(other_user.microposts).to_json) }
-      it { last_response.status.should eql(200) }
+      it { response.body.should be_json_eql(api_feeds(other_user.microposts).to_json) }
+      it { response.status.should eql(200) }
     end
   end
 
   shared_examples_for "user not found" do
-    it { last_response.status.should eql(404) }
-    it { last_response.body.should eq({ error: I18n.t('not_found', name: I18n.t('user')) }.to_json) }
+    it { response.status.should eql(404) }
+    it { response.body.should eq({ error: I18n.t('not_found', name: I18n.t('user')) }.to_json) }
   end
 
   describe "bad requests" do

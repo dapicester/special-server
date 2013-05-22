@@ -8,16 +8,16 @@ describe "API authentication", type: :api do
     it "with invalid information" do
       post "#{url}.json"
       error = { error: I18n.t('authentication_error') }
-      last_response.body.should eql(error.to_json)
-      last_response.status.should eql(401)
+      response.body.should eql(error.to_json)
+      response.status.should eql(401)
     end
 
     it "with valid information" do
       post "#{url}.json", email: user.email,
                           password: user.password
       token = { token: user.remember_token }
-      last_response.body.should eql(token.to_json)
-      last_response.status.should eql(200)
+      response.body.should eql(token.to_json)
+      response.status.should eql(200)
     end
   end
 
@@ -25,8 +25,8 @@ describe "API authentication", type: :api do
     let(:error) { { error: I18n.t('not_authorized') } }
 
     shared_examples_for "not authorized" do 
-      it { last_response.body.should be_json_eql(error.to_json) }
-      it { last_response.status.should eql(401) }
+      it { response.body.should be_json_eql(error.to_json) }
+      it { response.status.should eql(401) }
     end
 
     describe "without token " do
