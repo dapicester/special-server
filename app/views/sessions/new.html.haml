@@ -1,0 +1,18 @@
+- provide :title, t('.title')
+%h1= t('.title')
+
+.row
+  .span6.offset3
+    = form_tag sessions_path do
+      = label_tag :email
+      %br/
+      = text_field_tag :email, params[:email]
+
+      = label_tag :password
+      %br/
+      = password_field_tag :password
+
+      = submit_tag t('.button'), class: "btn btn-large btn-primary"
+    %p
+      = t('new_user')
+      = link_to t('signup_now'), signup_path
