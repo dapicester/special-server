@@ -61,8 +61,7 @@ end
 
 # Gems used only on Mac OS.
 group hg(:mac) do
-  gem 'rb-fsevent', git: 'git://github.com/ttilley/rb-fsevent.git', branch: 'pre-compiled-gem-one-off', 
-                    require: false
+  gem 'rb-fsevent', '~> 0.9'
   gem 'growl', '1.0.3'
 end
 

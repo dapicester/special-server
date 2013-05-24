@@ -5,13 +5,6 @@ GIT
     spork-rails (3.2.1)
       spork (>= 1.0rc0)
 
-GIT
-  remote: git://github.com/ttilley/rb-fsevent.git
-  revision: f36a8cd01b49a6ce2a26d9e1083b5f6e6722c470
-  branch: pre-compiled-gem-one-off
-  specs:
-    rb-fsevent (0.4.3.1pre1)
-
 GEM
   remote: http://ruby.taobao.org/
   specs:
@@ -189,6 +182,7 @@ GEM
       thor (>= 0.14.6, < 2.0)
     rainbow (1.1.4)
     rake (10.0.4)
+    rb-fsevent (0.9.3)
     rb-inotify (0.9.0)
       ffi (>= 0.5.0)
     rdoc (3.12.2)
@@ -282,7 +276,7 @@ DEPENDENCIES
   rails (= 3.2.13)
   rails-erd (= 1.1.0)
   rails-i18n (= 0.6.3)
-  rb-fsevent!
+  rb-fsevent (~> 0.9)
   rb-inotify (= 0.9.0)
   rspec-rails (= 2.13.1)
   sass-rails (= 3.2.6)
