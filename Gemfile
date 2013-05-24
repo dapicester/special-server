@@ -5,6 +5,7 @@ source 'http://ruby.taobao.org'
 ruby '2.0.0'
 
 gem 'rails', '3.2.13'
+gem 'haml-rails', '0.4'
 gem 'bootstrap-sass', '2.3.0.1'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.1.2'

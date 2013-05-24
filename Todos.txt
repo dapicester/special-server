@@ -6,6 +6,9 @@
 - add admin
 - use seeds for creating the admin
 
+# CSS
+- thoroughly check the appearance
+
 # javascript
 - test
 - use coffee whenever possible
@@ -19,7 +22,7 @@
 - check that delete link doesn't appear for other users' posts
 - fix layout for long word (wrap)
 
-# all 
+# all
 - refactoring the pages so that are similar with the homepage
 - remove magic values
 - use more JavaScript in order to avoid page reloads

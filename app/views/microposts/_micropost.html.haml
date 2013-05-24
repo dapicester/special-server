@@ -1,0 +1,5 @@
+%li
+  %span.content= micropost.content
+  %span.timestamp
+    = t '.posted', time: time_ago_in_words(micropost.created_at)
+  = render partial: 'shared/delete_post', locals: { post: micropost }
