@@ -281,7 +281,7 @@ DEPENDENCIES
   heroku
   jbuilder (= 1.0.1)
   jquery-rails (= 2.2.1)
-  jquery-turbolinks
+  jquery-turbolinks (= 1.0.0)
   json_spec (= 1.0.0)
   libnotify (= 0.8.0)
   pg
