@@ -56,9 +56,17 @@ class User < ActiveRecord::Base
     relationships.find_by_followed_id(other_user.id).destroy
   end
 
+  def send_password_reset
+    self.password_reset_token = SecureRandom.urlsafe_base64 #if User.exists? column: :password_reset_token
+    self.password_reset_sent_at = Time.zone.now
+    save! validate: false
+    UserMailer.password_reset(self).deliver
+  end
+
 private
 
   def create_remember_token
     self.remember_token = SecureRandom.urlsafe_base64
   end
+
 end

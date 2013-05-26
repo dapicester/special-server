@@ -1,0 +1,13 @@
+- provide :title, 'Reset Password'
+%h1= 'Reset Password'
+
+.row
+  .span6.offset3
+    = form_tag password_resets_path, method: :post do
+      = label_tag :email
+      %br/
+      = text_field_tag :email, params[:email]
+
+      = submit_tag 'Reset', class: 'btn btn-large btn-primary'
+    %p
+      We will send you an email with instruction on how to change you password.
