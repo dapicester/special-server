@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
   end
 
   def send_password_reset
-    self.password_reset_token = SecureRandom.urlsafe_base64 #if User.exists? column: :password_reset_token
+    token_for :password_reset_token
     self.password_reset_sent_at = Time.zone.now
     save! validate: false
     UserMailer.password_reset(self).deliver
@@ -68,7 +68,11 @@ class User < ActiveRecord::Base
 private
 
   def create_remember_token
-    self.remember_token = SecureRandom.urlsafe_base64
+    token_for :remember_token
+  end
+
+  def token_for(field)
+    self[field] = SecureRandom.urlsafe_base64
   end
 
 end

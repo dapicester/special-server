@@ -1,8 +1,11 @@
 class PasswordResetsController < ApplicationController
+
   def new
   end
 
   def create
+    # TODO validate email as in user (extract module)
+    # TODO create model withoud db: ActiveModel
     user = User.find_by_email(params[:email])
     user.send_password_reset unless user.nil?
     # always send confirmation so nobody can exploit this function and found existing emails
