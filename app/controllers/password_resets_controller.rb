@@ -6,11 +6,16 @@ class PasswordResetsController < ApplicationController
   def create
     # TODO validate email as in user (extract module)
     # TODO create model withoud db: ActiveModel
-    user = User.find_by_email(params[:email])
-    user.send_password_reset unless user.nil?
-    # always send confirmation so nobody can exploit this function and found existing emails
-    flash[:success] = 'Email sent with password reset instructions' #I18n.t('sessions.create.invalid_combination')
-    redirect_to signin_path
+    if params[:email].empty?
+      flash[:error] = 'Email is empty'
+      render :new
+    else
+      user = User.find_by_email(params[:email])
+      user.send_password_reset unless user.nil?
+      # always send confirmation so nobody can exploit this function and found existing emails
+      flash[:success] = 'Email sent with password reset instructions' #I18n.t('sessions.create.invalid_combination')
+      redirect_to signin_path
+    end
   end
 
   def edit

@@ -9,6 +9,13 @@ describe PasswordResetsController do
     click_link "password"
   end
 
+  describe "without email" do
+    it "should display an error message" do
+      click_button 'Reset'
+      page.should have_message :error, 'empty'
+    end
+  end
+
   describe "with invalid password" do
     it "should not send the email" do
       fill_in "Email", with: 'some@email.net'
