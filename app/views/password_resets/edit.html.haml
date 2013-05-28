@@ -1,14 +1,14 @@
 %h1 Reset Password
 
 = form_for @user, url: password_reset_path(params[:id]) do |f|
-  / Display errors...
+  / TODO Display errors with partial
   - if @user.errors.any?
     .error_messages
       %h2 Form is invalid
       %ul
         - for message in @user.errors.full_messages
           %li= message
-  / User form for password
+  / TODO User form for password partial
   = f.label :password
   = f.password_field :password
 

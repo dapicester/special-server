@@ -3,11 +3,12 @@
 
 .row
   .span6.offset3
-    = form_tag password_resets_path, method: :post do
-      = label_tag :email
+    = form_for(@form) do |f|
+      = render 'shared/error_messages', object: f.object
+      = f.label :email
       %br/
-      = text_field_tag :email, params[:email]
+      = f.text_field :email
 
-      = submit_tag 'Reset', class: 'btn btn-large btn-primary'
+      = f.submit 'Reset', class: 'btn btn-large btn-primary'
     %p
       We will send you an email with instruction on how to change you password.
