@@ -34,13 +34,10 @@ class User < ActiveRecord::Base
   validates :name, presence: true,
                    length: { maximum: NAME_MAX_LEN }
 
-  EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence: true,
-                    format: { with: EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }
+  include EmailValidations
+  validates :email, uniqueness: { case_sensitive: false }
 
-  PASSWORD_MIN_LEN = 6
-  validates :password, length: { minimum: PASSWORD_MIN_LEN }
+  include PasswordValidations
 
   def feed
     Micropost.from_users_followed_by(self)
