@@ -1,18 +1,21 @@
+- provide :title, 'Reset Password'
 %h1 Reset Password
 
-= form_for @user, url: password_reset_path(params[:id]) do |f|
-  / TODO Display errors with partial
-  - if @user.errors.any?
-    .error_messages
-      %h2 Form is invalid
-      %ul
-        - for message in @user.errors.full_messages
-          %li= message
-  / TODO User form for password partial
-  = f.label :password
-  = f.password_field :password
+.row
+  .span6.offset4
+    = form_for @user, url: password_reset_path(params[:id]) do |f|
+      -#= render 'shared/error_messages', object: f
+      / TODO User form for password partial
+      = f.label :email
+      %br/
+      = f.text_field :email, readonly: true
 
-  = f.label :password_confirmation
-  = f.password_field :password_confirmation
+      = f.label :password
+      %br/
+      = f.password_field :password
 
-  = f.submit 'Update Password', class: 'btn'
+      = f.label :password_confirmation
+      %br/
+      = f.password_field :password_confirmation
+
+      = f.submit 'Change password', class: 'btn btn-large btn-primary'
