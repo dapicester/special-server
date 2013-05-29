@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20130526101805) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["password_reset_token"], :name => "index_users_on_password_reset_token"
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
 
 end
