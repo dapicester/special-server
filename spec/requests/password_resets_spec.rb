@@ -6,41 +6,42 @@ describe PasswordResetsController do
 
   before do
     visit signin_path
-    click_link "password"
+    click_link t('sessions.new.forgot')
   end
 
   describe "without email" do
     it "should display an error message" do
-      click_button 'Reset'
+      click_button t('password_resets.new.button')
       page.should have_message :error, 'errors'
     end
   end
 
   describe "with invalid email" do
     it "should not send the email" do
-      fill_in "Email", with: 'kajshd sad'
-      click_button 'Reset'
+      fill_in t('users.fields.email'), with: 'kajshd sad'
+      click_button t('password_resets.new.button')
       page.should have_message :error, 'error'
     end
   end
 
   describe "with email not bound to any user" do
+    let(:email) { 'some@email.net' }
     it "should not send the email" do
-      fill_in "Email", with: 'some@email.net'
-      click_button 'Reset'
-      page.should have_content "Email sent"
+      fill_in "Email", with: email
+      click_button t('password_resets.new.button')
+      page.should have_content t('password_resets.email.sent', email: email)
       last_email.should be_nil # no email sent even if we say so
-      page.should have_selector('title', text: 'Sign in')
+      page.should have_selector('title', text: t('sessions.new.title'))
     end
   end
 
   describe "with valid email" do
     it "should send the reset email password" do
       fill_in "Email", with: user.email
-      click_button 'Reset'
-      page.should have_content "Email sent"
+      click_button t('password_resets.new.button')
+      page.should have_content t('password_resets.email.sent', email: user.email)
       last_email.to.should include(user.email)
-      page.should have_selector('title', text: 'Sign in')
+      page.should have_selector('title', text: t('sessions.new.title'))
     end
 
     describe "when changing the password" do
@@ -54,9 +55,9 @@ describe PasswordResetsController do
         # TODO common spec for concern
         fill_in "Password", with: "newfoobar"
         fill_in "Password confirmation", with: "newfoobar"
-        click_button 'Change password'
-        page.should have_message :success, 'Password has been changed.'
-        page.should have_selector('title', text: 'Sign in')
+        click_button t('password_resets.edit.button')
+        page.should have_message :success, t('password_resets.changed')
+        page.should have_selector('title', text: t('sessions.new.title'))
       end
       describe "if the token is expired" do
         before do
@@ -64,12 +65,12 @@ describe PasswordResetsController do
           user.save
         end
         it "should not change the password" do
-          #TODO helpers for fill-in and click
+          # TODO helpers for fill-in and click
           fill_in "Password", with: "newfoobar"
           fill_in "Password confirmation", with: "newfoobar"
-          click_button 'Change password'
-          page.should have_message :error, 'Your password reset request has espired.'
-          page.should have_selector 'title', text: 'Reset Password'
+          click_button t('password_resets.edit.button')
+          page.should have_message :error, t('password_resets.expired')
+          page.should have_selector 'title', text: t('password_resets.new.title')
         end
       end
     end

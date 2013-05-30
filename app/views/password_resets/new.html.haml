@@ -1,5 +1,5 @@
-- provide :title, 'Reset Password'
-%h1= 'Reset Password'
+- provide :title, t('.title')
+%h1= t('.title')
 
 .row
   .span6.offset3
@@ -10,6 +10,6 @@
       %br/
       = f.text_field :email
 
-      = f.submit 'Reset', class: 'btn btn-large btn-primary'
+      = f.submit t('.button'), class: 'btn btn-large btn-primary'
     %p
-      We will send you an email with instruction on how to change you password.
+      = t('.description')

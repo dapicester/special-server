@@ -15,6 +15,12 @@ en:
     followers:
       title: Followers
 
+  password_resets:
+    changed: Password has been changed.
+    expired: Your password reset request has espired.
+    email:
+      sent: Email sent to %{email} with password reset instructions.
+
   microposts:
     create:
       success: Micropost created!

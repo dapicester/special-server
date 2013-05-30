@@ -12,6 +12,7 @@ it:
     new:
       title: Login
       button: Accedi
+      forgot: Password dimenticata?
     notice:
       signin: Fai prima login.
 
@@ -76,6 +77,15 @@ it:
     delete:
       button: Elimina
       confirm: Sei sicuro?
+
+  password_resets:
+    new:
+      title: Password Dimenticata
+      button: Invia
+      description: Ti invieremo una email con le istruzioni su come cambiare la password.
+    edit:
+      title: Reimposta Password
+      button: Cambia
 
   microposts:
     micropost:

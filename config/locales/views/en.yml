@@ -12,6 +12,7 @@ en:
     new:
       title: Sign in
       button: Sign in
+      forgot: Forgot password?
     notice:
       signin: Please sign in.
 
@@ -19,7 +20,7 @@ en:
     about:
       title: About
       content: Here there should be some useful information about the Special Workplaces.
-    contact: 
+    contact:
       title: Contact
       content: Here there should be some information about how to contact us.
     help:
@@ -47,7 +48,7 @@ en:
       followers: followers
     user_info:
       view_profile: View my profile
-      microposts: 
+      microposts:
         one: "1 micropost"
         other: "%{count} microposts"
 
@@ -76,6 +77,15 @@ en:
     delete:
       button: Delete
       confirm: Are you sure?
+
+  password_resets:
+    new:
+      title: Forgot Password
+      button: Send
+      description: We will send you an email with instruction on how to change you password.
+    edit:
+      title: Reset Password
+      button: Change
 
   microposts:
     micropost:
