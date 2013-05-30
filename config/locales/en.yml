@@ -3,7 +3,16 @@ en:
 
   new_user: New user?
   signup_now: Sign up now!
-  
+
+  user_mailer:
+    password_reset:
+      subject: password reset instructions
+      body:
+        link: To reset your password click the URL below.
+        ignore: -|
+          If you did not request your password to be reset please ignore
+          this email and your password will stay as it is.
+
   activerecord:
     attributes:
       user:
