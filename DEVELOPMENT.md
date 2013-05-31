@@ -28,7 +28,11 @@ Checkout the code
         $ git clone git@git.assembla.com:special-server.git
         $ cd special-server
 
- 2. Switch to the `develop` branch
+    or pull the last version
+
+        $ git pull
+
+ 2. Switch to the `develop` branch (or whatever branch you need)
 
         $ git checkout develop
 
@@ -42,9 +46,10 @@ Checkout the code
 
     if on Mac OS.
 
-   * Note: some libraries may be required
+   * It may be required to install some libraries
+   * The `--without` option is required only the first time
 
- 4. Setup the database
+ 4. Create and update the database
 
         $ rake db:create
         $ rake db:migrate
@@ -67,14 +72,28 @@ Checkout the code
 Development Session
 ---
 
- 1. Launch the Guard for file monitoring
+ 1. Launch Guard for file monitoring
 
         $ guard
 
  2. Hack the code!
     When a file change is detected, related tests run _automatically_.
 
-    * Note: sometimes may be required to restart Guard
+    * Note: sometimes may be required to reload Guard
+
+### Git-flow model
+
+Any developer should work on its local feature branch.
+When the feature is completed it can be merged into the `develop` branch.
+The `master` branch _shall_ not be used, it will be updated during the
+release process.
+The `git-flow` plugin greatly simplifies dealing with this model.
+
+References:
+
+- [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/)
+- [Why aren't you using git-flow?](http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/)
+- [On the path with git-flow](http://codesherpas.com/screencasts/on_the_path_gitflow.mov)
 
 ### Test Driver Development
 
