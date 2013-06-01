@@ -8,10 +8,10 @@ it:
     password_reset:
       subject: istruzioni cambio password
       body:
-        link: Per reimpostare la password segui il link qui sotto.
-        ignore: -|
+        link: Per reimpostare la password segui il link qui sotto
+        ignore: >
           Se non hai richiesto di reimpostare la password puoi ignorare
-          questo messaggio e la tua password non cambierà
+          questo messaggio e la tua password non cambierà.
 
   activerecord:
     attributes:
