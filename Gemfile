@@ -21,6 +21,7 @@ group :development do
   gem 'sqlite3','1.3.7'
   gem 'annotate', '2.5.0'
   gem 'rails-erd', '1.1.0'
+  gem 'email_preview', '1.5.3'
 end
 
 # Gems used only for assets and not required
