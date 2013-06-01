@@ -4,17 +4,17 @@
 .row
   .span6.offset4
     = form_for @user, url: password_reset_path(params[:id]) do |f|
-      -#= render 'shared/error_messages', object: f
+      = render 'shared/error_messages', object: @user
       / TODO User form for password partial
-      = f.label :email
+      = f.label :email, t('.email')
       %br/
       = f.text_field :email, readonly: true
 
-      = f.label :password
+      = f.label :password, t('.password')
       %br/
       = f.password_field :password
 
-      = f.label :password_confirmation
+      = f.label :password_confirmation, t('.confirmation')
       %br/
       = f.password_field :password_confirmation
 
