@@ -48,6 +48,10 @@ SpecialServer::Application.configure do
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += %w( counter.js )
 
+  # Set the mailer
+  # FIXME use real domain
+  #config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 

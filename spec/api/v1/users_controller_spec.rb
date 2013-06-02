@@ -84,7 +84,7 @@ describe "/api/v1/users", type: :api do
 
   shared_examples_for "user not found" do
     it { response.status.should eql(404) }
-    it { response.body.should eq({ error: I18n.t('not_found', name: I18n.t('user')) }.to_json) }
+    it { response.body.should eq({ error: t('not_found', name: t('user')) }.to_json) }
   end
 
   describe "bad requests" do

@@ -15,6 +15,12 @@ it:
     followers:
       title: Followers
 
+  password_resets:
+    changed: La password è stata cambiata.
+    expired: La richiesta è scaduta.
+    email:
+      sent: Le instruzioni per cambiare la password sono state inviate all'indirizzo %{email}.
+
   microposts:
     create:
       success: Micropost pubblicato!

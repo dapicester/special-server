@@ -2,14 +2,16 @@
 #
 # Table name: users
 #
-#  id              :integer         not null, primary key
-#  name            :string(255)
-#  email           :string(255)
-#  created_at      :datetime        not null
-#  updated_at      :datetime        not null
-#  password_digest :string(255)
-#  remember_token  :string(255)
-#  admin           :boolean         default(FALSE)
+#  id                     :integer          not null, primary key
+#  name                   :string(255)
+#  email                  :string(255)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  password_digest        :string(255)
+#  remember_token         :string(255)
+#  admin                  :boolean          default(FALSE)
+#  password_reset_token   :string(255)
+#  password_reset_sent_at :datetime
 #
 
 class User < ActiveRecord::Base
@@ -32,13 +34,10 @@ class User < ActiveRecord::Base
   validates :name, presence: true,
                    length: { maximum: NAME_MAX_LEN }
 
-  EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence: true,
-                    format: { with: EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }
+  include EmailValidations
+  validates :email, uniqueness: { case_sensitive: false }
 
-  PASSWORD_MIN_LEN = 6
-  validates :password, length: { minimum: PASSWORD_MIN_LEN }
+  include PasswordValidations
 
   def feed
     Micropost.from_users_followed_by(self)
@@ -56,9 +55,21 @@ class User < ActiveRecord::Base
     relationships.find_by_followed_id(other_user.id).destroy
   end
 
+  def send_password_reset
+    token_for :password_reset_token
+    self.password_reset_sent_at = Time.zone.now
+    save! validate: false
+    UserMailer.password_reset(self).deliver
+  end
+
 private
 
   def create_remember_token
-    self.remember_token = SecureRandom.urlsafe_base64
+    token_for :remember_token
   end
+
+  def token_for(field)
+    self[field] = SecureRandom.urlsafe_base64
+  end
+
 end

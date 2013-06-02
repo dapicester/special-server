@@ -46,6 +46,10 @@ Spork.prefork do
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
     config.infer_base_class_for_anonymous_controllers = false
+
+    # Configure mailers
+    config.include MailerMacros
+    config.before(:each) { reset_email }
   end
 
   require 'action_view/test_case'

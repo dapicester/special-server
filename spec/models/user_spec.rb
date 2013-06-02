@@ -2,14 +2,16 @@
 #
 # Table name: users
 #
-#  id              :integer         not null, primary key
-#  name            :string(255)
-#  email           :string(255)
-#  created_at      :datetime        not null
-#  updated_at      :datetime        not null
-#  password_digest :string(255)
-#  remember_token  :string(255)
-#  admin           :boolean         default(FALSE)
+#  id                     :integer          not null, primary key
+#  name                   :string(255)
+#  email                  :string(255)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  password_digest        :string(255)
+#  remember_token         :string(255)
+#  admin                  :boolean          default(FALSE)
+#  password_reset_token   :string(255)
+#  password_reset_sent_at :datetime
 #
 
 require 'spec_helper'
@@ -33,6 +35,7 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:send_password_reset) }
   it { should respond_to(:microposts) }
   it { should respond_to(:feed) }
   it { should respond_to(:relationships) }
@@ -128,7 +131,25 @@ describe User do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
   end
-  
+
+  describe "password reset" do
+    before { @user.send_password_reset }
+
+    it "generates a unique password_reset_token each time" do
+      last_token = @user.password_reset_token
+      @user.send_password_reset
+      @user.password_reset_token.should_not eq(last_token)
+    end
+
+    it "saves the time the password reset was sent" do
+      @user.reload.password_reset_sent_at.should be_present
+    end
+
+    it "delivers email to user" do
+      last_email.to.should include @user.email
+    end
+  end
+
   describe "micropost associations" do
     
     before { @user.save }
