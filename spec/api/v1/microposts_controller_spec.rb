@@ -9,8 +9,8 @@ describe Api::V1::MicropostsController , type: :api do
 
     it "should create a new micropost" do
       expect do
-        post "#{url}.json", token: token, micropost: { content: "Lorem ipsum" } 
-      end.to change(user.microposts, :count).by(1) 
+        post "#{url}.json", token: token, micropost: { content: "Lorem ipsum" }
+      end.to change(user.microposts, :count).by(1)
       response.status.should eql(201)
       micropost = user.microposts.first.to_json
       response.body.should be_json_eql(micropost)
@@ -18,10 +18,10 @@ describe Api::V1::MicropostsController , type: :api do
 
     it "should not create a new micropost" do
       expect do
-        post "#{url}.json", token: token, micropost: {} 
+        post "#{url}.json", token: token, micropost: {}
       end.not_to change(Micropost, :count)
       response.status.should eql(422)
-      error = { content: [I18n.t('errors.messages.blank')] }
+      error = { content: [t('errors.messages.blank')] }
       response.body.should eql(error.to_json)
     end
   end
@@ -34,7 +34,7 @@ describe Api::V1::MicropostsController , type: :api do
     it "should delete a micropost" do
       url = "/api/v1/microposts/#{micropost.id}"
       expect do
-        delete "#{url}.json", token: token 
+        delete "#{url}.json", token: token
       end.to change(user.microposts, :count).by(-1)
       response.status.should eql(200)
       response.body.should be_json_eql(micropost.to_json)
@@ -43,10 +43,10 @@ describe Api::V1::MicropostsController , type: :api do
     it "should not delete a non-existing micropost" do
       expect do
         url = "/api/v1/microposts/0"
-        delete "#{url}.json", token: token 
+        delete "#{url}.json", token: token
       end.not_to change(Micropost, :count)
       response.status.should eql(404)
-      error = { error: I18n.t('not_found', name: I18n.t('micropost')) }
+      error = { error: t('not_found', name: t('micropost')) }
       response.body.should be_json_eql(error.to_json)
     end
 
@@ -57,7 +57,7 @@ describe Api::V1::MicropostsController , type: :api do
         delete "#{url}.json", token: token
       end.not_to change(Micropost, :count)
       response.status.should eql(403)
-      error = { error: I18n.t('forbidden') }
+      error = { error: t('forbidden') }
       response.body.should be_json_eql(error.to_json)
     end
   end

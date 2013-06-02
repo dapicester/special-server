@@ -6,7 +6,7 @@ describe Api::V1::RelationshipsController, type: :api do
 
   let(:other_user) { FactoryGirl.create(:user) }
 
-  let(:url) { "/api/v1/relationships" } 
+  let(:url) { "/api/v1/relationships" }
 
   describe "#create" do
     let(:relationship) { { followed_id: other_user.id } }
@@ -23,7 +23,7 @@ describe Api::V1::RelationshipsController, type: :api do
         post "#{url}.json", token: token, relationship: {}
       end.not_to change(Relationship, :count)
       response.status.should eql(422)
-      error = { error: I18n.t('unprocessable') }
+      error = { error: t('unprocessable') }
       response.body.should be_json_eql(error.to_json)
     end
   end
@@ -49,7 +49,7 @@ describe Api::V1::RelationshipsController, type: :api do
         delete "#{url}/0.json", token: token
       end.not_to change(Relationship, :count)
       response.status.should eql(404)
-      error = { error: I18n.t('not_found', name: I18n.t('relationship')) }
+      error = { error: t('not_found', name: t('relationship')) }
       response.body.should be_json_eql(error.to_json)
     end
 
@@ -58,7 +58,7 @@ describe Api::V1::RelationshipsController, type: :api do
         delete "#{url}/#{other_relationship.id}.json", token: token
       end.not_to change(Relationship, :count)
       response.status.should eql(403)
-      error = { error: I18n.t('forbidden') }
+      error = { error: t('forbidden') }
       response.body.should be_json_eql(error.to_json)
     end
   end
