@@ -8,10 +8,10 @@ SpecialServer::Application.routes.draw do
         get :following, :followers
       end
     end
-    resources :sessions,      only: [:new, :create, :destroy]
+    resources :sessions,        only: [:new, :create, :destroy]
     resources :password_resets, only: [:new, :create, :edit, :update]
-    resources :microposts,    only: [:create, :destroy]
-    resources :relationships, only: [:create, :destroy]
+    resources :microposts,      only: [:create, :destroy]
+    resources :relationships,   only: [:create, :destroy]
 
     match '/signup',  to: 'users#new'
     match '/signin',  to: 'sessions#new'
@@ -32,6 +32,7 @@ SpecialServer::Application.routes.draw do
         end
       end
       resources :authentication, only: :create
+      resources :password_resets, only: [:create, :update]
       resources :microposts,     only: [:create, :destroy]
       resources :relationships,  only: [:create, :destroy]
       get  '/feed',   to: 'users#feed'
