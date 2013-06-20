@@ -13,7 +13,7 @@ describe "Authentication" do
     describe "with invalid information" do
       before { click_button t('sessions.new.button') }
 
-      it { should have_selector('title', text: t('sessions.new.title')) }  
+      it { should have_selector('title', text: t('sessions.new.title')) }
       it { should have_message(:error, 'Invalid') }
 
       describe "after visiting another page" do
@@ -23,24 +23,40 @@ describe "Authentication" do
     end
 
     describe "with valid information" do
-      let(:user) { FactoryGirl.create(:user) }
-      before { sign_in user }
+      let(:user) { FactoryGirl.create(:user, active: false) }
 
-      it { should have_selector('title', text: t('static_pages.home.title')) }
+      describe "but not activated" do
+        before { sign_in user }
 
-      it { should have_link(t('users.index.title'), href: users_path) }
-      it { should have_link("#{user.email}", href: '#') }
-      it { should have_link(t('layouts.header.profile'),  href: user_path(user)) }
-      it { should have_link(t('layouts.header.settings'), href: edit_user_path(user)) }
-      it { should have_link(t('layouts.header.signout'),  href: signout_path) }
+        it { should have_selector('title', text: t('sessions.new.title')) }
 
-      it { should_not have_link(t('layouts.header.signin'), href: signin_path) }
+        it { should_not have_link(t('users.index.title'), href: users_path) }
+        it { should_not have_link("#{user.email}", href: '#') }
+        it { should have_link(t('layouts.header.signin'),  href: signin_path) }
+      end
 
-      describe "followed by signout" do
-        before { click_link t('layouts.header.signout') }
-        it { should have_link(t('layouts.header.signin')) }
-        it { should_not have_link(t('layouts.header.profile')) }
-        it { should_not have_link(t('layouts.header.settings')) }
+      describe "and activated" do
+        before do
+          user.activate!
+          sign_in user
+        end
+
+        it { should have_selector('title', text: t('static_pages.home.title')) }
+
+        it { should have_link(t('users.index.title'), href: users_path) }
+        it { should have_link("#{user.email}", href: '#') }
+        it { should have_link(t('layouts.header.profile'),  href: user_path(user)) }
+        it { should have_link(t('layouts.header.settings'), href: edit_user_path(user)) }
+        it { should have_link(t('layouts.header.signout'),  href: signout_path) }
+
+        it { should_not have_link(t('layouts.header.signin'), href: signin_path) }
+
+        describe "followed by signout" do
+          before { click_link t('layouts.header.signout') }
+          it { should have_link(t('layouts.header.signin')) }
+          it { should_not have_link(t('layouts.header.profile')) }
+          it { should_not have_link(t('layouts.header.settings')) }
+        end
       end
     end
 

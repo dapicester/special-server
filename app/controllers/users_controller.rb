@@ -13,12 +13,16 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      sign_in @user
-      flash[:success] = I18n.t('users.create.success')
-      redirect_to @user
+      @user.send_activation
+      flash[:success] = I18n.t('users.create.success', email: @user.email)
+      redirect_to root_path
     else
       render 'new'
     end
+  end
+
+  def confirm
+    @user = User.find_by_activation_token! params[:id]
   end
 
   def edit

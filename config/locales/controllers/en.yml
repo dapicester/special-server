@@ -3,9 +3,13 @@ en:
     create:
       invalid_combination: Invalid email/password combination
 
+  activations:
+    success: Welcome to Special Workplaces!
+    expired: Your activation request has expired.
+
   users:
     create:
-      success: Welcome to Special Workplaces!
+      success: Email sent to %{email} with activation instructions.
     update:
       success: Profile updated
     destroy:
@@ -17,7 +21,7 @@ en:
 
   password_resets:
     changed: Password has been changed.
-    expired: Your password reset request has espired.
+    expired: Your password reset request has expired.
     email:
       sent: Email sent to %{email} with password reset instructions.
 

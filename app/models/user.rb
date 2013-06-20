@@ -33,6 +33,9 @@ class User < ActiveRecord::Base
 
   before_save :create_remember_token
 
+  scope :active, where(active: true)
+  # TODO admin scope
+
   NAME_MAX_LEN = 50
   validates :name, presence: true,
                    length: { maximum: NAME_MAX_LEN }
@@ -63,6 +66,24 @@ class User < ActiveRecord::Base
     self.password_reset_sent_at = Time.zone.now
     save! validate: false
     UserMailer.password_reset(self).deliver
+  end
+
+  def send_activation
+    token_for :activation_token
+    self.activation_sent_at = Time.zone.now
+    save! validate: false
+    UserMailer.activation(self).deliver
+  end
+
+  def activate!
+    self.active = true
+    self.activation_token = nil
+    self.activation_sent_at = nil
+    save! validate: false
+  end
+
+  def active?
+    self.active
   end
 
 private

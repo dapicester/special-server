@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %meta(content="text/html; charset=UTF-8" http-equiv="Content-Type")
+  %body
+    %h1 #{@user.name},
+    %p
+      #{t('.body.link')}:
+      %br/
+      - link = activation_url id: @user.activation_token
+      %a{href: link}= link
+    %p
+      = t('.body.ignore')

@@ -13,7 +13,7 @@ def sign_in(user)
   fill_in "Password", with: user.password
   click_button "Sign in"
   # sign in when not using capybara as well
-  cookies[:remember_token] = user.remember_token
+  cookies[:remember_token] = user.remember_token if user.active?
 end
 
 include ActionView::Helpers::TextHelper

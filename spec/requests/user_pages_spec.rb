@@ -4,6 +4,65 @@ describe "User pages" do
 
   subject { page }
 
+  describe "signup" do
+    before { visit signup_path }
+
+    it { should have_selector('h1', text: t('users.new.title')) }
+    it { should have_selector('title', text: full_title(t('users.new.title'))) }
+
+    describe "with invalid information" do
+      # empty form
+
+      it "should not create a user" do
+        expect { click_button t('users.new.button') }.not_to change(User, :count)
+      end
+
+      describe "error messages" do
+        before { click_button t('users.new.button') }
+        it { should have_selector('title', text: t('users.new.title')) }
+        it { should have_content('error') }
+      end
+    end
+
+    describe "with valid information" do
+      before do
+        fill_in t('users.fields.name'),         with: "Example User"
+        fill_in t('users.fields.email'),        with: "user@example.com"
+        fill_in t('users.fields.password'),     with: "foobar"
+        fill_in t('users.fields.confirmation'), with: "foobar"
+      end
+
+      it "should create a user" do
+        expect { click_button t('users.new.button') }.to change(User, :count).by(1)
+      end
+
+      describe "should send the activation email" do
+        before { click_button t('users.new.button') }
+        let (:user) { User.find_by_email('user@example.com') }
+
+        it { user.active.should be_false }
+        it { user.activation_token.should_not be_nil }
+        it { last_email.to.should include(user.email) }
+
+        it { should have_selector('title', text: t('static_pages.home.title')) }
+        it { should have_message(:success, t('users.create.success', email: user.email)) }
+        it { should_not have_link(t('layouts.header.signout')) }
+
+        describe "and signin in upon activation" do
+          before { visit activation_url(id: user.activation_token) }
+
+          specify { user.reload.active.should be_true }
+          specify { user.reload.activation_token.should be_nil }
+          specify { user.reload.activation_sent_at.should be_nil }
+
+          it { should have_selector('title', text: user.name) }
+          it { should have_message(:success, t('activations.success')) }
+          it { should have_link(t('layouts.header.signout')) }
+        end
+      end
+    end
+  end
+
   describe "index" do
     let(:user) { FactoryGirl.create(:user) }
 
@@ -58,13 +117,6 @@ describe "User pages" do
         it { should_not have_link(t('users.delete.button'), href: user_path(admin)) }
       end
     end
-  end
-
-  describe "signup page" do
-    before { visit signup_path }
-
-    it { should have_selector('h1', text: t('users.new.title')) }
-    it { should have_selector('title', text: full_title(t('users.new.title'))) }
   end
 
   describe "profile page" do
@@ -130,45 +182,6 @@ describe "User pages" do
           before { click_button t('users.unfollow.button') }
           it { should have_selector('input', value: t('users.follow.button')) }
         end
-      end
-    end
-  end
-
-  describe "signup" do
-    before { visit signup_path }
-
-    describe "with invalid information" do
-      it "should not create a user" do
-        expect { click_button t('users.new.button') }.not_to change(User, :count)
-      end
-    end
-
-    describe "error messages" do
-      before { click_button t('users.new.button') }
-
-      it { should have_selector('title', text: t('users.new.title')) }
-      it { should have_content('error') }
-    end
-
-    describe "with valid information" do
-      before do
-        fill_in t('users.fields.name'),         with: "Example User"
-        fill_in t('users.fields.email'),        with: "user@example.com"
-        fill_in t('users.fields.password'),     with: "foobar"
-        fill_in t('users.fields.confirmation'), with: "foobar"
-      end
-
-      it "should create a user" do
-        expect { click_button t('users.new.button') }.to change(User, :count).by(1)
-      end
-
-      describe "after saving the user" do
-        before { click_button t('users.new.button') }
-        let (:user) { User.find_by_email('user@example.com') }
-
-        it { should have_selector('title', text: user.name) }
-        it { should have_message(:success, t('users.create.success')) }
-        it { should have_link(t('layouts.header.signout')) }
       end
     end
   end

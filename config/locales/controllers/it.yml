@@ -3,9 +3,13 @@ it:
     create:
       invalid_combination: Combinazione email/password non valida
 
+  activations:
+    success: Benvenuto in Special Workplaces!
+    expired: La tua richiesta di attivazione è scaduta.
+
   users:
     create:
-      success: Benvenuto in Special Workplaces!
+      success: Le istruzioni per confermare la registrazone sono state inviate all'indirizzo %{email}.
     update:
       success: Profilo aggiornato
     destroy:

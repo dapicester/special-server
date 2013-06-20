@@ -14,6 +14,7 @@ SpecialServer::Application.routes.draw do
     resources :relationships,   only: [:create, :destroy]
 
     match '/signup',  to: 'users#new'
+    match '/activation/:id', to: 'activations#update', as: :activation
     match '/signin',  to: 'sessions#new'
     match '/signout', to: 'sessions#destroy'
 

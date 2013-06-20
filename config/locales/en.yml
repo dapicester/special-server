@@ -9,6 +9,12 @@ en:
   signup_now: Sign up now!
 
   user_mailer:
+    activation:
+      subject: Welcome to Special Workplaces
+      body:
+        link: To activate your account click the URL below
+        ignore: If you did not signup please ignore this email.
+
     password_reset:
       subject: password reset instructions
       body:

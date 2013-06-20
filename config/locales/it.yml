@@ -9,6 +9,12 @@ it:
   signup_now: Registrati ora!
 
   user_mailer:
+    activation:
+      subject: Benvuto in Special Workplaces
+      body:
+        link: Per attivare il tuo account segui il link qui sotto
+        ignore: Se non ha effettuato la registrazione puoi ignorare questo messaggio.
+
     password_reset:
       subject: istruzioni cambio password
       body:

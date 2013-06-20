@@ -12,6 +12,9 @@
 #  admin                  :boolean          default(FALSE)
 #  password_reset_token   :string(255)
 #  password_reset_sent_at :datetime
+#  activation_token       :string(255)
+#  activation_sent_at     :datetime
+#  active                 :boolean
 #
 
 require 'spec_helper'
@@ -38,6 +41,11 @@ describe User do
   it { should respond_to(:send_password_reset) }
   it { should respond_to(:password_reset_token) }
   it { should respond_to(:password_reset_sent_at) }
+  it { should respond_to(:send_activation) }
+  it { should respond_to(:activation_token) }
+  it { should respond_to(:activation_sent_at) }
+  it { should respond_to(:active?) }
+  it { should respond_to(:activate!) }
   it { should respond_to(:microposts) }
   it { should respond_to(:feed) }
   it { should respond_to(:relationships) }
@@ -49,11 +57,17 @@ describe User do
   it { should respond_to(:unfollow!) }
 
   it { should be_valid }
+  it { should_not be_active }
   it { should_not be_admin }
 
   describe "with admin attribute set to 'true'" do
     before { @user.toggle!(:admin) }
     it { should be_admin }
+  end
+
+  describe "activated" do
+    before { @user.activate! }
+    it { should be_active }
   end
 
   describe "when name is not present" do
@@ -144,6 +158,26 @@ describe User do
 
     it "saves the time the password reset was sent" do
       @user.reload.password_reset_sent_at.should be_present
+    end
+
+    it "delivers email to user" do
+      last_email.to.should include @user.email
+    end
+  end
+
+  # TODO: shared_examples and should_behave_like
+
+  describe "activation" do
+    before { @user.send_activation }
+
+    it "generates a unique activation token" do
+      last_token = @user.activation_token
+      @user.send_activation
+      @user.activation_token.should_not eq(last_token)
+    end
+
+    it "saves the time the activation was sent" do
+      @user.reload.activation_sent_at.should be_present
     end
 
     it "delivers email to user" do
