@@ -46,7 +46,7 @@ describe "User pages" do
 
       describe "as an admin user" do
         let(:admin) { FactoryGirl.create(:admin) }
-        before do 
+        before do
           sign_in admin
           visit users_path
         end
@@ -103,7 +103,7 @@ describe "User pages" do
         end
 
         describe "toggling the button" do
-          before { click_button t('users.follow.button') } 
+          before { click_button t('users.follow.button') }
           it { should have_selector('input', value: t('users.unfollow.button')) }
         end
       end

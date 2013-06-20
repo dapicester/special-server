@@ -19,9 +19,9 @@ require 'spec_helper'
 describe User do
 
   before do
-    @user = User.new(name: "Example user", 
+    @user = User.new(name: "Example user",
                      email: "user@example.com",
-                     password: "foobar", 
+                     password: "foobar",
                      password_confirmation: "foobar")
   end
 
@@ -36,6 +36,8 @@ describe User do
   it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:send_password_reset) }
+  it { should respond_to(:password_reset_token) }
+  it { should respond_to(:password_reset_sent_at) }
   it { should respond_to(:microposts) }
   it { should respond_to(:feed) }
   it { should respond_to(:relationships) }
@@ -51,7 +53,6 @@ describe User do
 
   describe "with admin attribute set to 'true'" do
     before { @user.toggle!(:admin) }
-
     it { should be_admin }
   end
 
@@ -92,7 +93,7 @@ describe User do
       user_with_same_email.email = @user.email.upcase
       user_with_same_email.save
     end
-    
+
     it { should_not be_valid }
   end
 
@@ -135,7 +136,7 @@ describe User do
   describe "password reset" do
     before { @user.send_password_reset }
 
-    it "generates a unique password_reset_token each time" do
+    it "generates a unique password_reset_token" do
       last_token = @user.password_reset_token
       @user.send_password_reset
       @user.password_reset_token.should_not eq(last_token)
@@ -151,7 +152,6 @@ describe User do
   end
 
   describe "micropost associations" do
-    
     before { @user.save }
 
     let!(:older_micropost) do
@@ -182,7 +182,7 @@ describe User do
       before do
         @user.follow!(followed_user)
         3.times { followed_user.microposts.create(content: "Lorem ipsum") }
-      end    
+      end
 
       its(:feed) { should include(newer_micropost) }
       its(:feed) { should include(older_micropost) }
