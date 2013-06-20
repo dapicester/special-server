@@ -12,6 +12,9 @@
 #  admin                  :boolean          default(FALSE)
 #  password_reset_token   :string(255)
 #  password_reset_sent_at :datetime
+#  activation_token       :string(255)
+#  activation_sent_at     :datetime
+#  active                 :boolean
 #
 
 class User < ActiveRecord::Base
