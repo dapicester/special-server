@@ -3,5 +3,5 @@
     = flag I18n.locale
     %b.caret
   %ul.dropdown-menu
-    - supported_locales.each do |locale, description|
-      %li= link_to flag(locale) + '  ' + description, locale: locale
+    - I18n.available_locales.each do |locale|
+      %li= link_to flag(locale) + '  ' + I18n.name_for_locale(locale), locale: locale

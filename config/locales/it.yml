@@ -1,4 +1,8 @@
 it:
+  i18n:
+    language:
+      name: Italiano
+
   appname: Special Workplaces
 
   new_user: Sei un nuovo utente?

@@ -16,13 +16,6 @@ module ApplicationHelper
     end
   end
 
-  # Returns the a hash of supported locales.
-  def supported_locales
-    { "en"    => "English",
-      "it"    => "Italiano",
-      "zh-CN" => "中文" }
-  end
-
   # Return the locale's flag.
   def flag(locale)
     image_tag("#{locale}.png", alt: locale)

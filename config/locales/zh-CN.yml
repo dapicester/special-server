@@ -1,4 +1,8 @@
 zh-CN:
+  i18n:
+    language:
+      name: 中文
+
   appname: Special Workplaces
 
   new_user: 还没注册？

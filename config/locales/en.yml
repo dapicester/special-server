@@ -1,4 +1,8 @@
 en:
+  i18n:
+    language:
+      name: English
+
   appname: Special Workplaces
 
   new_user: New user?
