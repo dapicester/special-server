@@ -62,23 +62,20 @@ class User < ActiveRecord::Base
   end
 
   def send_password_reset
-    token_for :password_reset_token
-    self.password_reset_sent_at = Time.zone.now
+    token_for :password_reset_token, :password_reset_sent_at
     save! validate: false
     UserMailer.password_reset(self).deliver
   end
 
   def send_activation
-    token_for :activation_token
-    self.activation_sent_at = Time.zone.now
+    token_for :activation_token, :activation_sent_at
     save! validate: false
     UserMailer.activation(self).deliver
   end
 
   def activate!
     self.active = true
-    self.activation_token = nil
-    self.activation_sent_at = nil
+    clear_token :activation_token, :activation_sent_at
     save! validate: false
   end
 
@@ -86,14 +83,25 @@ class User < ActiveRecord::Base
     self.active
   end
 
+  def clear_password_token!
+    clear_token :password_reset_token, :password_reset_sent_at
+    save! validate: false
+  end
+
 private
 
   def create_remember_token
-    token_for :remember_token
+    token_for :remember_token, nil
   end
 
-  def token_for(field)
-    self[field] = SecureRandom.urlsafe_base64
+  def token_for(token_field, sent_field)
+    self[token_field] = SecureRandom.urlsafe_base64
+    self[sent_field] = Time.zone.now if sent_field
+  end
+
+  def clear_token(token_field, sent_field)
+    self[token_field] = nil
+    self[sent_field] = nil
   end
 
 end

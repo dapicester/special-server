@@ -28,7 +28,7 @@ class PasswordResetsController < ApplicationController
       flash[:error] = I18n.t('password_resets.expired')
       redirect_to new_password_reset_path
     elsif @user.update_attributes params[:user]
-      # TODO empty the token and time
+      @user.clear_password_token!
       flash[:success] = I18n.t('password_resets.changed')
       redirect_to signin_path
     else
