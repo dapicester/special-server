@@ -41,7 +41,8 @@ group :development, :test do
   gem 'guard-jasmine-headless-webkit'
   gem 'guard-spork', '1.5.0'
   gem 'spork-rails', github: 'railstutorial/spork-rails'
-  gem 'debugger', '1.6.0'
+  #gem 'debugger', '1.6.0' # has issues with Ruby 2.0
+  gem 'byebug', '1.4.1'
 end
 
 group :test do
