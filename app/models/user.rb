@@ -33,8 +33,8 @@ class User < ActiveRecord::Base
 
   before_save :create_remember_token
 
+  scope :admins, where(admin: true)
   scope :active, where(active: true)
-  # TODO admin scope
 
   NAME_MAX_LEN = 50
   validates :name, presence: true,
