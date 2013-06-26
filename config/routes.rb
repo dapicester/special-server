@@ -13,16 +13,16 @@ SpecialServer::Application.routes.draw do
     resources :microposts,      only: [:create, :destroy]
     resources :relationships,   only: [:create, :destroy]
 
-    match '/signup',  to: 'users#new'
-    match '/activation/:id', to: 'activations#update', as: :activation
-    match '/signin',  to: 'sessions#new'
-    match '/signout', to: 'sessions#destroy'
+    get '/signup',         to: 'users#new'
+    get '/activation/:id', to: 'activations#update', as: :activation
+    get '/signin',         to: 'sessions#new'
+    delete '/signout',     to: 'sessions#destroy'
 
-    match '/help',    to: 'static_pages#help'
-    match '/about',   to: 'static_pages#about'
-    match '/contact', to: 'static_pages#contact'
+    get '/help',    to: 'static_pages#help'
+    get '/about',   to: 'static_pages#about'
+    get '/contact', to: 'static_pages#contact'
 
-    root to: "static_pages#home"
+    root to: "static_pages#home", via: :get
   end
 
   namespace :api do
