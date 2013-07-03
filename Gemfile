@@ -1,5 +1,4 @@
 source 'http://ruby.taobao.org'
-#source 'http://gems.gzruby.org'
 #source :rubygems
 
 ruby '2.0.0'
@@ -41,6 +40,7 @@ group :development, :test do
   gem 'guard-jasmine-headless-webkit'
   gem 'guard-spork', '1.5.0'
   gem 'spork-rails', github: 'railstutorial/spork-rails'
+  # gem 'ruby-debug'
   #gem 'debugger', '1.6.0' # has issues with Ruby 2.0
   gem 'byebug', '1.4.1'
 end
@@ -52,7 +52,7 @@ group :test do
   gem 'simplecov', require: false
 end
 
-# Hack to make heroky not install special groups
+# Hack to make heroku not install special groups
 def hg(g)
   (ENV['HOME'].gsub('/','') == 'app' ? 'test' : g)
 end
@@ -81,14 +81,11 @@ group :production do
   gem 'pg'
 end
 
-# To use debugger
-# gem 'ruby-debug'
-
 # Use Thin webserver
 gem 'thin', '1.3.1'
 
-# Deployment platform
-gem 'heroku'
+# Deployment platform 
+#gem 'heroku' # deprecated, see https://toolbelt.heroku.com
 
 # I18n
 gem 'will-paginate-i18n', '0.1.1'
