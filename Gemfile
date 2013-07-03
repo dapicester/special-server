@@ -2,6 +2,8 @@ source 'http://ruby.taobao.org'
 #source 'http://gems.gzruby.org'
 #source :rubygems
 
+# Set the proper Ruby version:
+# - for JRuby either export JRUBY_OPTS=--2.0 or set compat.version=2.0 in ~/.jrubyrc
 ruby '2.0.0'
 
 gem 'rails', '3.2.13'
@@ -18,7 +20,8 @@ gem 'jquery-turbolinks', '1.0.0'
 gem 'jbuilder', '1.0.1'
 
 group :development do
-  gem 'sqlite3','1.3.7'
+  gem 'sqlite3','1.3.7', platform: :ruby
+  gem 'activerecord-jdbcsqlite3-adapter', '1.2.9', platform: :jruby
   gem 'annotate', '2.5.0'
   gem 'rails-erd', '1.1.0'
   gem 'email_preview', '1.5.3'
@@ -41,8 +44,9 @@ group :development, :test do
   gem 'guard-jasmine-headless-webkit'
   gem 'guard-spork', '1.5.0'
   gem 'spork-rails', github: 'railstutorial/spork-rails'
+  #gem 'ruby-debug'
   #gem 'debugger', '1.6.0' # has issues with Ruby 2.0
-  gem 'byebug', '1.4.1'
+  gem 'byebug', '1.4.1', platform: :ruby
 end
 
 group :test do
@@ -81,11 +85,9 @@ group :production do
   gem 'pg'
 end
 
-# To use debugger
-# gem 'ruby-debug'
-
-# Use Thin webserver
-gem 'thin', '1.3.1'
+platform :jruby do
+  gem 'jruby-openssl', '0.8.8', platform: :jruby
+end
 
 # Deployment platform
 gem 'heroku'
@@ -93,3 +95,7 @@ gem 'heroku'
 # I18n
 gem 'will-paginate-i18n', '0.1.1'
 gem 'rails-i18n', '0.6.3'
+
+# Web server
+gem 'thin', '1.3.1', platform: :ruby
+gem 'puma', '2.1.1', platform: :jruby # start with "rails server puma"
