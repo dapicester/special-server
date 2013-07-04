@@ -49,7 +49,10 @@ group :test do
   gem 'capybara', '1.1.2'
   gem 'factory_girl_rails', '~> 4.0'
   gem 'database_cleaner', '~> 0.7.2'
+  # metrics
   gem 'simplecov', require: false
+  gem 'simplecov-rcov-text', require: false
+  gem 'metric_fu', require: false
 end
 
 # Hack to make heroku not install special groups

@@ -3,16 +3,23 @@ require 'spork'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
 
+def setup_simplecov
+  require 'simplecov'
+  require 'simplecov-rcov-text'
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::RcovTextFormatter
+  ]
+  SimpleCov.start 'rails'
+end
+
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
-  
+
   # Test coverage tool
-  unless ENV['DRB']
-    require 'simplecov'
-    SimpleCov.start 'rails'
-  end
+  setup_simplecov unless ENV['DRB']
 
   # This file is copied to spec/ when you run 'rails generate rspec:install'
   ENV["RAILS_ENV"] ||= 'test'
@@ -53,7 +60,7 @@ Spork.prefork do
   end
 
   require 'action_view/test_case'
-  
+
   class ActionView::TestCase::TestController
     def default_url_options(options={})
       { locale: I18n.default_locale }
@@ -71,10 +78,7 @@ Spork.each_run do
   # This code will be run each time you run your specs.
 
   # Test coverage tool
-  if ENV['DRB']
-    require 'simplecov'
-    SimpleCov.start 'rails'
-  end
+  setup_simplecov if ENV['DRB']
 end
 
 # --- Instructions ---
