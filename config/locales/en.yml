@@ -26,4 +26,5 @@ en:
   activerecord:
     attributes:
       user:
+        name: Name
         password_digest: Password
