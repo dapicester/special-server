@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'spork'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
@@ -47,12 +46,19 @@ Spork.prefork do
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
-    config.use_transactional_fixtures = true
+    config.use_transactional_fixtures = false
 
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
     config.infer_base_class_for_anonymous_controllers = false
+
+    # Set CatabaseCleaner actions
+    config.before(:suite)          { DatabaseCleaner.clean_with :truncation }
+    config.before(:each)           { DatabaseCleaner.strategy = :transaction }
+    config.before(:each, js: true) { DatabaseCleaner.strategy = :truncation }
+    config.before(:each)           { DatabaseCleaner.start }
+    config.after (:each)           { DatabaseCleaner.clean }
 
     # Configure mailers
     config.include MailerMacros
