@@ -1,5 +1,5 @@
 - content_for :head do
-  = javascript_include_tag 'counter'
+  = javascript_include_tag 'counter', 'data-turbolinks-track' => true
 
 = form_for(@micropost) do |f|
   = render 'shared/error_messages', object: f.object
@@ -8,3 +8,8 @@
                             id: 'micropost_form'
   = f.submit t('microposts.micropost.button'), class: 'btn btn-large btn-primary'
   #counter.counter.float-right
+
+:javascript
+  $(function() {
+    $("#micropost_form").countAvailable();
+  });
