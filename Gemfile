@@ -33,11 +33,11 @@ end
 
 group :development, :test do
   gem 'rspec-rails','2.13.1'
-  #gem 'jasmine', git: "git://github.com/pivotal/jasmine-gem.git"
-  #gem 'jasmine-headless-webkit', '0.8.4'
   gem 'json_spec', '1.0.0'
+  gem "jasminerice", github: 'bradphelan/jasminerice'
+  gem 'jasmine-rails', '0.4.2'
   gem 'guard-rspec', '2.5.0'
-  gem 'guard-jasmine-headless-webkit'
+  gem 'guard-jasmine', '1.17.0'
   gem 'guard-spork', '1.5.0'
   gem 'spork-rails', github: 'railstutorial/spork-rails'
   # gem 'ruby-debug'

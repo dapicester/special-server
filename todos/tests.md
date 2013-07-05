@@ -5,5 +5,3 @@
 - routes
   - constraints on HTTP methods
   - specs
-- javascript
-  - jasmine-headless
