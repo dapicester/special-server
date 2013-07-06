@@ -8,12 +8,13 @@
   avail: (text) ->
     MAXLEN - text.length
 
+# adds "countAvailable" method to this
+# requires an element with id = this.id + "_counter" 
 jQuery ->
   $.fn.countAvailable = ->
     $(this).on 'input propertychange', ->
-      #TODO this + _counter
       len = Counter.avail( $(this).val() )
-      counter = $('#counter')
+      counter = $('#' + this.id + '_counter')
       counter.text len
       if len >= 0
         counter.removeClass(ERRCLASS) if counter.hasClass(ERRCLASS)

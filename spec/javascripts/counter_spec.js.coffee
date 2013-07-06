@@ -15,7 +15,7 @@ describe "Character counter", ->
     loadFixtures("counter-div")
 
     FORM_ID = '#micropost_form'
-    COUNTER_ID = '#counter'
+    COUNTER_ID = FORM_ID + '_counter'
     EVENT = 'input'
 
     form = $(FORM_ID)
