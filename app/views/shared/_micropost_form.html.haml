@@ -9,7 +9,6 @@
   = f.submit t('microposts.micropost.button'), class: 'btn btn-large btn-primary'
   #counter.counter.float-right
 
-:javascript
-  $(function() {
-    $("#micropost_form").countAvailable();
-  });
+:coffee
+  $ ->
+    $('#micropost_form').countAvailable();
