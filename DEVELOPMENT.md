@@ -20,6 +20,14 @@ Set up integration with Bundler
 
     $ chmod +x $rvm_path/hooks/after_cd_bundler
 
+External dependencies
+---
+
+In order to run the tests, a JavaScript engine is required, for
+example [Node.js](http://nodejs.org/).
+
+Headless JavaScript tests requires [PhantomJS](http://phantomjs.org/).
+
 Checkout the code
 ---
 
@@ -65,9 +73,17 @@ Checkout the code
  5. Run tests
 
         $ rspec
+        $ guard-jasmine
 
     Then, it is also possible to browse coverage results
     in `coverage/index.html`.
+
+    More metrics are available in `tmp/metric_fu/output' running
+
+        $ metric_fu -r
+
+    * The above command may fail due to a bug affecting the `rake stats` task.
+      See commit `c166045` for how to fix, or disable with `--no-stats`.
 
 Development Session
 ---
