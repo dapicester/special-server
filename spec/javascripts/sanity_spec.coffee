@@ -1,28 +1,28 @@
 describe "Sanity check", ->
   it "passes", ->
-    expect(true).toBe(true)
+    expect(true).toBe true
 
   xit "is disabled", ->
-    expect(true).toBe(false)
+    expect(true).toBe false
 
   it "uses jQuery", ->
-    expect(typeof jQuery).not.toEqual('undefined')
-    expect(typeof $).not.toEqual('undefined')
+    expect(typeof jQuery).not.toEqual 'undefined'
+    expect(typeof $).not.toEqual 'undefined'
     expect(typeof jQuery).toEqual(typeof $)
 
 
 describe "Fixture check", ->
   beforeEach ->
-    loadFixtures('sanity')
+    loadFixtures 'sanity'
 
   it "loads the fixture", ->
-    expect($('#title')).toHaveText('Test fixture')
-    #FIXME expect($('#par').text()).toHaveText(/Test paragraph/)
+    expect($ '#title').toHaveText 'Test fixture'
+    expect($('#par').text()).toMatch /Test paragraph/
 
-  it "set the text", ->
-    $('#par').text('New content')
-    expect($('#par')).toHaveText('New content')
+  it "sets the text with strings", ->
+    $('#par').text 'New content'
+    expect($ '#par').toHaveText 'New content'
 
-  it "set the number", ->
-    $('#par').text(123)
-    expect($('#par')).toHaveText('123')
+  it "sets the text with numbers", ->
+    $('#par').text 123
+    expect($ '#par').toHaveText '123'

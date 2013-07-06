@@ -9,8 +9,8 @@
     MAXLEN - text.length
 
 # adds "countAvailable" method to this
-# requires an element with id = this.id + "_counter" 
-jQuery ->
+# requires an element with id = this.id + "_counter"
+$ ->
   $.fn.countAvailable = ->
     $(this).on 'input propertychange', ->
       len = Counter.avail( $(this).val() )
