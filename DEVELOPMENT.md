@@ -119,3 +119,14 @@ It is strongly suggested to follow the Red-Green coding, that is:
  2. Ensure that test fails (Red)
  3. Write the code for new function until test passes (Green)
 
+### Emails
+
+Email previews are available at the url `http//localhost:3000/email_preview.
+
+It is possible to user [MailCatcher](http://mailcatcher.me) to test email
+sending. One just need to
+1. install with `gem install mailcatcher`
+1. start the daemon `mailcatcher`
+1. use `smtp://localhost:1025` for sending emails
+1. check `http://localhost:1080`
+
