@@ -16,7 +16,7 @@ it:
         ignore: Se non ha effettuato la registrazione puoi ignorare questo messaggio.
 
     password_reset:
-      subject: istruzioni cambio password
+      subject: Istruzioni cambio password
       body:
         link: Per reimpostare la password segui il link qui sotto
         ignore: >

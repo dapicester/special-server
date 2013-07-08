@@ -16,7 +16,7 @@ en:
         ignore: If you did not signup please ignore this email.
 
     password_reset:
-      subject: password reset instructions
+      subject: Password reset instructions
       body:
         link: To reset your password click the URL below
         ignore: >
