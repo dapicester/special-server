@@ -1,52 +1,68 @@
 require 'spec_helper'
 
 describe "Authentication" do
-  
+
   subject { page }
 
   describe "signin" do
     before { visit signin_path }
-   
+
     it { should_not have_link(t('layouts.header.profile')) }
     it { should_not have_link(t('layouts.header.settings')) }
-     
+
     describe "with invalid information" do
       before { click_button t('sessions.new.button') }
 
-      it { should have_selector('title', text: t('sessions.new.title')) }  
+      it { should have_selector('title', text: t('sessions.new.title')) }
       it { should have_message(:error, 'Invalid') }
-      
+
       describe "after visiting another page" do
         before { click_link t('static_pages.home.title') }
         it { should_not have_message(:error) }
       end
     end
- 
+
     describe "with valid information" do
-      let(:user) { Factory(:user) }
-      before { sign_in user }
+      let(:user) { FactoryGirl.create(:user, active: false) }
 
-      it { should have_selector('title', text: user.name) }
+      describe "but not activated" do
+        before { sign_in user }
 
-      it { should have_link(t('users.index.title'), href: users_path) }
-      it { should have_link("#{user.email}", href: '#') }
-      it { should have_link(t('layouts.header.profile'),  href: user_path(user)) }
-      it { should have_link(t('layouts.header.settings'), href: edit_user_path(user)) }
-      it { should have_link(t('layouts.header.signout'),  href: signout_path) }
+        it { should have_selector('title', text: t('sessions.new.title')) }
 
-      it { should_not have_link(t('layouts.header.signin'), href: signin_path) }
-       
-      describe "followed by signout" do
-        before { click_link t('layouts.header.signout') }
-        it { should have_link(t('layouts.header.signin')) }
-        it { should_not have_link(t('layouts.header.profile')) }
-        it { should_not have_link(t('layouts.header.settings')) }
+        it { should_not have_link(t('users.index.title'), href: users_path) }
+        it { should_not have_link("#{user.email}", href: '#') }
+        it { should have_link(t('layouts.header.signin'),  href: signin_path) }
+      end
+
+      describe "and activated" do
+        before do
+          user.activate!
+          sign_in user
+        end
+
+        it { should have_selector('title', text: t('static_pages.home.title')) }
+
+        it { should have_link(t('users.index.title'), href: users_path) }
+        it { should have_link("#{user.email}", href: '#') }
+        it { should have_link(t('layouts.header.profile'),  href: user_path(user)) }
+        it { should have_link(t('layouts.header.settings'), href: edit_user_path(user)) }
+        it { should have_link(t('layouts.header.signout'),  href: signout_path) }
+
+        it { should_not have_link(t('layouts.header.signin'), href: signin_path) }
+
+        describe "followed by signout" do
+          before { click_link t('layouts.header.signout') }
+          it { should have_link(t('layouts.header.signin')) }
+          it { should_not have_link(t('layouts.header.profile')) }
+          it { should_not have_link(t('layouts.header.settings')) }
+        end
       end
     end
 
     describe "for signed-in users" do
-      let(:user) { Factory(:user) }
-      let(:another) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
+      let(:another) { FactoryGirl.create(:user) }
 
       before { sign_in user }
 
@@ -64,7 +80,7 @@ describe "Authentication" do
 
   describe "authorization" do
     describe "for non-signed-in users" do
-      let(:user) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
 
       describe "when attempting to visit a protected page" do
         before do
@@ -73,7 +89,7 @@ describe "Authentication" do
           fill_in "Password", with: user.password
           click_button t('sessions.new.button')
         end
-          
+
         describe "after signing in" do
           it "should render the desired protected page" do
             should have_selector('title', text: t('users.edit.title'))
@@ -84,16 +100,16 @@ describe "Authentication" do
               visit signin_path
               fill_in "Email",    with: user.email
               fill_in "Password", with: user.password
-              click_button "Sign in"
+              click_button t('sessions.new.button')
             end
 
-            it "should render the default (profile) page" do
-              should have_selector('title', text: user.name)
+            it "should render the default (home) page" do
+              should have_selector('title', text: t('static_pages.home.title'))
             end
           end
         end
       end
- 
+
       describe "visiting user index" do
         before { visit users_path }
         it { should have_selector('title', text: t('layouts.header.signin')) }
@@ -104,7 +120,7 @@ describe "Authentication" do
           before { visit edit_user_path(user) }
           it { should have_selector('title', text: t('layouts.header.signin')) }
         end
-        
+
         describe "submitting to the update action" do
           before { put user_path(user) }
           specify { response.should redirect_to(signin_path) }
@@ -129,7 +145,7 @@ describe "Authentication" do
 
         describe "submitting to the destroy action" do
           before do
-            micropost = Factory(:micropost)
+            micropost = FactoryGirl.create(:micropost)
             delete micropost_path(micropost)
           end
           specify { response.should redirect_to(signin_path) }
@@ -141,7 +157,7 @@ describe "Authentication" do
           before { post relationships_path }
           specify { response.should redirect_to(signin_path) }
         end
-        
+
         describe "submitting to the destroy action" do
           before { delete relationship_path(1) }
           specify { response.should redirect_to(signin_path) }
@@ -150,8 +166,8 @@ describe "Authentication" do
     end
 
     describe "as wrong user" do
-      let(:user) { Factory(:user) }
-      let(:wrong_user) { Factory(:user, email: "wrong@example.com") }
+      let(:user) { FactoryGirl.create(:user) }
+      let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
       before { sign_in user }
 
       describe "visiting users#edit page" do
@@ -166,8 +182,8 @@ describe "Authentication" do
     end
 
     describe "as non-admin user" do
-      let(:user) { Factory(:user) }
-      let(:non_admin) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
+      let(:non_admin) { FactoryGirl.create(:user) }
 
       before { sign_in non_admin }
 
@@ -178,10 +194,10 @@ describe "Authentication" do
     end
 
     describe "as admin user" do
-      let(:admin) { Factory(:admin) }
-    
+      let(:admin) { FactoryGirl.create(:admin) }
+
       before { sign_in admin }
-     
+
       describe "submitting a DELETE request for himself" do
         before { delete user_path(admin) }
         specify { response.should redirect_to(root_path) }

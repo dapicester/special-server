@@ -1,18 +1,10 @@
-== Special
+Special
+==
 
 This is the server of the Special Social Network.
 
--- Development
+Development
+--
 
-After cloning the repository, run
-$ bundle install --without production
-
-Use the following options:
---binstubs=./bundlerstubs
-  set the binstubs directory, used when enabling RVM hooks)
--- without [group]
-  disables one or more groups (see the Gemfile)
-
-Create the database:
-$ rake db:migrate
-$ rake db:test:prepare
+For information on how to properly set the development environment
+please refer to the `DEVELOPMENT.md` file.

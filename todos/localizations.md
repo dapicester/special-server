@@ -1,0 +1,2 @@
+# Localizations
+- split locale files

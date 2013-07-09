@@ -16,16 +16,14 @@ module ApplicationHelper
     end
   end
 
-  # Returns the a hash of supported locales.
-  def supported_locales
-    { "en"    => "English",
-      "it"    => "Italiano",
-      "zh-CN" => "中文" }
-  end
-
-  # Return the locale's flag.
+  # Returns the locale's flag.
   def flag(locale)
     image_tag("#{locale}.png", alt: locale)
+  end
+
+  # Returns the link to MailCatcher
+  def mailcatcher_web
+    link_to 'MailCatcher', 'http://localhost:1080', target: '_blank'
   end
 
 end

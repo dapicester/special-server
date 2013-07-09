@@ -4,8 +4,67 @@ describe "User pages" do
 
   subject { page }
 
+  describe "signup" do
+    before { visit signup_path }
+
+    it { should have_selector('h1', text: t('users.new.title')) }
+    it { should have_selector('title', text: full_title(t('users.new.title'))) }
+
+    describe "with invalid information" do
+      # empty form
+
+      it "should not create a user" do
+        expect { click_button t('users.new.button') }.not_to change(User, :count)
+      end
+
+      describe "error messages" do
+        before { click_button t('users.new.button') }
+        it { should have_selector('title', text: t('users.new.title')) }
+        it { should have_content('error') }
+      end
+    end
+
+    describe "with valid information" do
+      before do
+        fill_in t('users.fields.name'),         with: "Example User"
+        fill_in t('users.fields.email'),        with: "user@example.com"
+        fill_in t('users.fields.password'),     with: "foobar"
+        fill_in t('users.fields.confirmation'), with: "foobar"
+      end
+
+      it "should create a user" do
+        expect { click_button t('users.new.button') }.to change(User, :count).by(1)
+      end
+
+      describe "should send the activation email" do
+        before { click_button t('users.new.button') }
+        let (:user) { User.find_by_email('user@example.com') }
+
+        it { user.active.should be_false }
+        it { user.activation_token.should_not be_nil }
+        it { last_email.to.should include(user.email) }
+
+        it { should have_selector('title', text: t('static_pages.home.title')) }
+        it { should have_message(:success, t('users.create.success', email: user.email)) }
+        it { should_not have_link(t('layouts.header.signout')) }
+
+        describe "and go to signin upon activation" do
+          before { visit activation_url(id: user.activation_token) }
+
+          specify { user.reload.active.should be_true }
+          specify { user.reload.activation_token.should be_nil }
+          specify { user.reload.activation_sent_at.should be_nil }
+
+          it { should_not have_selector('title', text: user.name) }
+          it { should have_message(:success, t('activations.success')) }
+          it { should_not have_link(t('layouts.header.signout')) }
+        end
+      end
+    end
+  end
+
   describe "index" do
-    let(:user) { Factory(:user) }
+    let(:user) { FactoryGirl.create(:user) }
 
     before do
       sign_in user
@@ -15,9 +74,9 @@ describe "User pages" do
     it { should have_selector('title', text: t('users.index.title')) }
 
     describe "pagination" do
-      before(:all) { 30.times { Factory(:user) } }
+      before(:all) { 30.times { FactoryGirl.create(:user) } }
       after(:all)  { User.delete_all }
-      
+
       let(:first_page)  { User.paginate(page: 1) }
       let(:second_page) { User.paginate(page: 2) }
 
@@ -45,8 +104,8 @@ describe "User pages" do
       it { should_not have_link(t('users.delete.button')) }
 
       describe "as an admin user" do
-        let(:admin) { Factory(:admin) }
-        before do 
+        let(:admin) { FactoryGirl.create(:admin) }
+        before do
           sign_in admin
           visit users_path
         end
@@ -60,17 +119,10 @@ describe "User pages" do
     end
   end
 
-  describe "signup page" do
-    before { visit signup_path }
-
-    it { should have_selector('h1', text: t('users.new.title')) }
-    it { should have_selector('title', text: full_title(t('users.new.title'))) }
-  end
-
   describe "profile page" do
-    let(:user) { Factory(:user) }
-    let!(:m1) { Factory(:micropost, user: user, content: "Foo") }
-    let!(:m2) { Factory(:micropost, user: user, content: "Bar") }
+    let(:user) { FactoryGirl.create(:user) }
+    let!(:m1) { FactoryGirl.create(:micropost, user: user, content: "Foo") }
+    let!(:m2) { FactoryGirl.create(:micropost, user: user, content: "Bar") }
 
     before { visit user_path(user) }
 
@@ -84,7 +136,7 @@ describe "User pages" do
     end
 
     describe "follow/unfollow buttons" do
-      let(:other_user) { Factory(:user) }
+      let(:other_user) { FactoryGirl.create(:user) }
       before { sign_in(user) }
 
       describe "following a user" do
@@ -103,7 +155,7 @@ describe "User pages" do
         end
 
         describe "toggling the button" do
-          before { click_button t('users.follow.button') } 
+          before { click_button t('users.follow.button') }
           it { should have_selector('input', value: t('users.unfollow.button')) }
         end
       end
@@ -134,47 +186,8 @@ describe "User pages" do
     end
   end
 
-  describe "signup" do
-    before { visit signup_path }
-
-    describe "with invalid information" do
-      it "should not create a user" do
-        expect { click_button t('users.new.button') }.not_to change(User, :count)
-      end
-    end
-
-    describe "error messages" do
-      before { click_button t('users.new.button') }
-
-      it { should have_selector('title', text: t('users.new.title')) }
-      it { should have_content('error') }
-    end
-
-    describe "with valid information" do
-      before do
-        fill_in t('users.fields.name'),         with: "Example User"
-        fill_in t('users.fields.email'),        with: "user@example.com"
-        fill_in t('users.fields.password'),     with: "foobar"
-        fill_in t('users.fields.confirmation'), with: "foobar"
-      end
-
-      it "should create a user" do
-        expect { click_button t('users.new.button') }.to change(User, :count).by(1)
-      end
-
-      describe "after saving the user" do
-        before { click_button t('users.new.button') }
-        let (:user) { User.find_by_email('user@example.com') }
-
-        it { should have_selector('title', text: user.name) }
-        it { should have_message(:success, t('users.create.success')) }
-        it { should have_link(t('layouts.header.signout')) }
-      end
-    end
-  end
-
   describe "edit" do
-    let(:user) { Factory(:user) }
+    let(:user) { FactoryGirl.create(:user) }
     before do
       sign_in user
       visit edit_user_path(user)
@@ -193,7 +206,7 @@ describe "User pages" do
     end
 
     describe "with valid information" do
-      let(:user) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
       let(:new_name) { "New name" }
       let(:new_email) { "new@example.com" }
       before do
@@ -213,8 +226,8 @@ describe "User pages" do
   end
 
   describe "following/followers" do
-    let(:user) { Factory(:user) }
-    let(:other_user) { Factory(:user) }
+    let(:user) { FactoryGirl.create(:user) }
+    let(:other_user) { FactoryGirl.create(:user) }
     before { user.follow!(other_user) }
 
     describe "followed users" do

@@ -1,28 +1,23 @@
-MAXLEN = 140
-errClass = "counter-error"
+# to avoid automatic closure wrappers use "@" which is synonym
+# for "this." and in this context means "window."
 
-class Counter
-  constructor: (@form,@counter) ->
-    @.count()
+@MAXLEN = 140
+@ERRCLASS = 'counter-error'
 
-  count: ->
-    len = MAXLEN - @form.val().length
-    @counter.html(len)
-    if len >= 0
-      @counter.removeClass(errClass) if @counter.hasClass(errClass)
-    else
-      @counter.addClass(errClass) if not @counter.hasClass(errClass)
-    return
+@Counter =
+  avail: (text) ->
+    MAXLEN - text.length
 
+# adds "countAvailable" method to this
+# requires an element with id = this.id + "_counter"
 $ ->
-  form = $("#micropost_form")
-  cc = new Counter(form, $("#counter"))
-
-  form.keyup ->
-    cc.count()
-    return
-  form.keydown ->
-    cc.count()
-    return
-  return
-
+  $.fn.countAvailable = ->
+    $(this).on 'input propertychange', ->
+      len = Counter.avail( $(this).val() )
+      counter = $('#' + this.id + '_counter')
+      counter.text len
+      if len >= 0
+        counter.removeClass(ERRCLASS) if counter.hasClass(ERRCLASS)
+      else
+        counter.addClass(ERRCLASS) unless counter.hasClass(ERRCLASS)
+    $(this).trigger 'input'

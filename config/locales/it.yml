@@ -1,8 +1,27 @@
 it:
+  i18n:
+    language:
+      name: Italiano
+
   appname: Special Workplaces
 
   new_user: Sei un nuovo utente?
   signup_now: Registrati ora!
+
+  user_mailer:
+    activation:
+      subject: Benvuto in Special Workplaces
+      body:
+        link: Per attivare il tuo account segui il link qui sotto
+        ignore: Se non ha effettuato la registrazione puoi ignorare questo messaggio.
+
+    password_reset:
+      subject: Istruzioni cambio password
+      body:
+        link: Per reimpostare la password segui il link qui sotto
+        ignore: >
+          Se non hai richiesto di reimpostare la password puoi ignorare
+          questo messaggio e la tua password non cambierà.
 
   activerecord:
     attributes:

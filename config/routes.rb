@@ -2,25 +2,27 @@ SpecialServer::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
-  scope '(:locale)', locale: /en|it|zh-CN/ do
+  scope '(:locale)', locale: /en|it/ do
     resources :users do
       member do
         get :following, :followers
       end
     end
-    resources :sessions,      only: [:new, :create, :destroy]
-    resources :microposts,    only: [:create, :destroy]
-    resources :relationships, only: [:create, :destroy]
+    resources :sessions,        only: [:new, :create, :destroy]
+    resources :password_resets, only: [:new, :create, :edit, :update]
+    resources :microposts,      only: [:create, :destroy]
+    resources :relationships,   only: [:create, :destroy]
 
-    match '/signup',  to: 'users#new'
-    match '/signin',  to: 'sessions#new'
-    match '/signout', to: 'sessions#destroy'
+    get '/signup',         to: 'users#new'
+    get '/activation/:id', to: 'activations#update', as: :activation
+    get '/signin',         to: 'sessions#new'
+    delete '/signout',     to: 'sessions#destroy'
 
-    match '/help',    to: 'static_pages#help'
-    match '/about',   to: 'static_pages#about'
-    match '/contact', to: 'static_pages#contact'
+    get '/help',    to: 'static_pages#help'
+    get '/about',   to: 'static_pages#about'
+    get '/contact', to: 'static_pages#contact'
 
-    root to: "static_pages#home"
+    root to: "static_pages#home", via: :get
   end
 
   namespace :api do
@@ -31,6 +33,7 @@ SpecialServer::Application.routes.draw do
         end
       end
       resources :authentication, only: :create
+      resources :password_resets, only: [:create, :update]
       resources :microposts,     only: [:create, :destroy]
       resources :relationships,  only: [:create, :destroy]
       get  '/feed',   to: 'users#feed'

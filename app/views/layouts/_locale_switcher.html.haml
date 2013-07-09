@@ -1,0 +1,7 @@
+%li#fat-menu.dropdown
+  %a(href="#" class="dropdown-toggle" data-toggle="dropdown")
+    = flag I18n.locale
+    %b.caret
+  %ul.dropdown-menu
+    - I18n.available_locales.each do |locale|
+      %li= link_to flag(locale) + '  ' + I18n.name_for_locale(locale), locale: locale

@@ -2,43 +2,48 @@
 #
 # Table name: users
 #
-#  id              :integer         not null, primary key
-#  name            :string(255)
-#  email           :string(255)
-#  created_at      :datetime        not null
-#  updated_at      :datetime        not null
-#  password_digest :string(255)
-#  remember_token  :string(255)
-#  admin           :boolean         default(FALSE)
+#  id                     :integer          not null, primary key
+#  name                   :string(255)
+#  email                  :string(255)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  password_digest        :string(255)
+#  remember_token         :string(255)
+#  admin                  :boolean          default(FALSE)
+#  password_reset_token   :string(255)
+#  password_reset_sent_at :datetime
+#  activation_token       :string(255)
+#  activation_sent_at     :datetime
+#  active                 :boolean
 #
 
 class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation
   has_secure_password
   has_many :microposts, dependent: :destroy
-  has_many :relationships, foreign_key: "follower_id", 
+  has_many :relationships, foreign_key: "follower_id",
                            dependent: :destroy
-  has_many :followed_users, through: :relationships, 
+  has_many :followed_users, through: :relationships,
                             source: :followed
-  has_many :reverse_relationships, foreign_key: "followed_id", 
+  has_many :reverse_relationships, foreign_key: "followed_id",
                                    class_name:  "Relationship",
                                    dependent:   :destroy
-  has_many :followers, through: :reverse_relationships, 
+  has_many :followers, through: :reverse_relationships,
                        source: :follower
 
   before_save :create_remember_token
+
+  scope :admins, where(admin: true)
+  scope :active, where(active: true)
 
   NAME_MAX_LEN = 50
   validates :name, presence: true,
                    length: { maximum: NAME_MAX_LEN }
 
-  EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence: true,
-                    format: { with: EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }
+  include EmailValidations
+  validates :email, uniqueness: { case_sensitive: false }
 
-  PASSWORD_MIN_LEN = 6
-  validates :password, length: { minimum: PASSWORD_MIN_LEN }
+  include PasswordValidations
 
   def feed
     Micropost.from_users_followed_by(self)
@@ -56,9 +61,47 @@ class User < ActiveRecord::Base
     relationships.find_by_followed_id(other_user.id).destroy
   end
 
+  def send_password_reset
+    token_for :password_reset_token, :password_reset_sent_at
+    save! validate: false
+    UserMailer.password_reset(self).deliver
+  end
+
+  def send_activation
+    token_for :activation_token, :activation_sent_at
+    save! validate: false
+    UserMailer.activation(self).deliver
+  end
+
+  def activate!
+    self.active = true
+    clear_token :activation_token, :activation_sent_at
+    save! validate: false
+  end
+
+  def active?
+    self.active
+  end
+
+  def clear_password_token!
+    clear_token :password_reset_token, :password_reset_sent_at
+    save! validate: false
+  end
+
 private
 
   def create_remember_token
-    self.remember_token = SecureRandom.urlsafe_base64
+    token_for :remember_token, nil
   end
+
+  def token_for(token_field, sent_field)
+    self[token_field] = SecureRandom.urlsafe_base64
+    self[sent_field] = Time.zone.now if sent_field
+  end
+
+  def clear_token(token_field, sent_field)
+    self[token_field] = nil
+    self[sent_field] = nil
+  end
+
 end

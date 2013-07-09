@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe RelationshipsController do
-  let(:user) { Factory(:user) }
-  let(:other_user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:other_user) { FactoryGirl.create(:user) }
 
   before { sign_in(user) }
 
@@ -10,7 +10,7 @@ describe RelationshipsController do
     it "should increment the Relationship count" do
       expect do
         xhr :post, :create, relationship: { followed_id: other_user.id }
-      end.should change(Relationship, :count).by(1)
+      end.to change(Relationship, :count).by(1)
     end
 
     it "should respond with success" do
@@ -26,7 +26,7 @@ describe RelationshipsController do
     it "should decrement the relationship count" do
       expect do
         xhr :delete, :destroy, id: relationship.id
-      end.should change(Relationship, :count).by(-1)
+      end.to change(Relationship, :count).by(-1)
     end
  
     it "should respond with success" do

@@ -1,0 +1,5 @@
+- if current_user? post.user
+  = link_to t('.delete'), post, method: :delete,
+                          confirm: t('.confirm'),
+                          title: post.content,
+                          class: 'light-gray float-right'

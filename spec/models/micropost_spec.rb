@@ -2,18 +2,18 @@
 #
 # Table name: microposts
 #
-#  id         :integer         not null, primary key
+#  id         :integer          not null, primary key
 #  content    :string(255)
 #  user_id    :integer
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 require 'spec_helper'
 
 describe Micropost do
   
-  let(:user) { Factory(:user) }
+  let(:user) { FactoryGirl.create(:user) }
   before { @micropost = user.microposts.build(content: "Lorem ipsum") }
 
   subject { @micropost }
@@ -41,9 +41,9 @@ describe Micropost do
   end
 
   describe "from users followed by" do
-    let(:user)       { Factory(:user) }
-    let(:other_user) { Factory(:user) }
-    let(:third_user) { Factory(:user) }
+    let(:user)       { FactoryGirl.create(:user) }
+    let(:other_user) { FactoryGirl.create(:user) }
+    let(:third_user) { FactoryGirl.create(:user) }
 
     before { user.follow!(other_user) }
 

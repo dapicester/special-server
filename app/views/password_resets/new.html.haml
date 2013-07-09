@@ -1,0 +1,15 @@
+- provide :title, t('.title')
+%h1= t('.title')
+
+.row
+  .span6.offset3
+    = form_for(@form) do |f|
+      = render 'shared/error_messages', object: f.object
+      -# TODO User form for password partial
+      = f.label :email
+      %br/
+      = f.text_field :email
+
+      = f.submit t('.button'), class: 'btn btn-large btn-primary'
+    %p
+      = t('.description')

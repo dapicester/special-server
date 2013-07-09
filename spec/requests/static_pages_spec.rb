@@ -14,10 +14,10 @@ describe "StaticPages" do
     let(:page_title) { t('static_pages.home.title') }
 
     describe "for signed-in users" do
-      let(:user) { Factory(:user) }
+      let(:user) { FactoryGirl.create(:user) }
       before do
-        Factory(:micropost, user: user, content: "Lorem ipsum")
-        Factory(:micropost, user: user, content: "Dolor sit amet")
+        FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")
+        FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet")
         sign_in user
         visit root_path
       end
@@ -33,7 +33,7 @@ describe "StaticPages" do
       end
 
       describe "follower/following counts" do
-        let(:other_user) { Factory(:user) }
+        let(:other_user) { FactoryGirl.create(:user) }
         before { user.follow!(other_user) }
 
         it { should have_selector('a', href: following_user_path(user), content: "0 following") }

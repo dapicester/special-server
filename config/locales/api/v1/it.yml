@@ -5,6 +5,7 @@ it:
   not_authorized: Non autorizzato.
   not_found: "%{name} non trovato."
   unprocessable: Richiesta non valida.
+  email_sent: "Email inviata a %{email}."
 
   user: Utente
   micropost: Micropost

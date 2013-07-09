@@ -2,14 +2,19 @@
 #
 # Table name: users
 #
-#  id              :integer         not null, primary key
-#  name            :string(255)
-#  email           :string(255)
-#  created_at      :datetime        not null
-#  updated_at      :datetime        not null
-#  password_digest :string(255)
-#  remember_token  :string(255)
-#  admin           :boolean         default(FALSE)
+#  id                     :integer          not null, primary key
+#  name                   :string(255)
+#  email                  :string(255)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  password_digest        :string(255)
+#  remember_token         :string(255)
+#  admin                  :boolean          default(FALSE)
+#  password_reset_token   :string(255)
+#  password_reset_sent_at :datetime
+#  activation_token       :string(255)
+#  activation_sent_at     :datetime
+#  active                 :boolean
 #
 
 require 'spec_helper'
@@ -17,9 +22,9 @@ require 'spec_helper'
 describe User do
 
   before do
-    @user = User.new(name: "Example user", 
+    @user = User.new(name: "Example user",
                      email: "user@example.com",
-                     password: "foobar", 
+                     password: "foobar",
                      password_confirmation: "foobar")
   end
 
@@ -33,6 +38,14 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:send_password_reset) }
+  it { should respond_to(:password_reset_token) }
+  it { should respond_to(:password_reset_sent_at) }
+  it { should respond_to(:send_activation) }
+  it { should respond_to(:activation_token) }
+  it { should respond_to(:activation_sent_at) }
+  it { should respond_to(:active?) }
+  it { should respond_to(:activate!) }
   it { should respond_to(:microposts) }
   it { should respond_to(:feed) }
   it { should respond_to(:relationships) }
@@ -44,12 +57,17 @@ describe User do
   it { should respond_to(:unfollow!) }
 
   it { should be_valid }
+  it { should_not be_active }
   it { should_not be_admin }
 
   describe "with admin attribute set to 'true'" do
     before { @user.toggle!(:admin) }
-
     it { should be_admin }
+  end
+
+  describe "activated" do
+    before { @user.activate! }
+    it { should be_active }
   end
 
   describe "when name is not present" do
@@ -89,7 +107,7 @@ describe User do
       user_with_same_email.email = @user.email.upcase
       user_with_same_email.save
     end
-    
+
     it { should_not be_valid }
   end
 
@@ -128,16 +146,53 @@ describe User do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
   end
-  
+
+  describe "password reset" do
+    before { @user.send_password_reset }
+
+    it "generates a unique password_reset_token" do
+      last_token = @user.password_reset_token
+      @user.send_password_reset
+      @user.password_reset_token.should_not eq(last_token)
+    end
+
+    it "saves the time the password reset was sent" do
+      @user.reload.password_reset_sent_at.should be_present
+    end
+
+    it "delivers email to user" do
+      last_email.to.should include @user.email
+    end
+  end
+
+  # TODO: shared_examples and should_behave_like
+
+  describe "activation" do
+    before { @user.send_activation }
+
+    it "generates a unique activation token" do
+      last_token = @user.activation_token
+      @user.send_activation
+      @user.activation_token.should_not eq(last_token)
+    end
+
+    it "saves the time the activation was sent" do
+      @user.reload.activation_sent_at.should be_present
+    end
+
+    it "delivers email to user" do
+      last_email.to.should include @user.email
+    end
+  end
+
   describe "micropost associations" do
-    
     before { @user.save }
 
     let!(:older_micropost) do
-      Factory(:micropost, user: @user, created_at: 1.day.ago)
+      FactoryGirl.create(:micropost, user: @user, created_at: 1.day.ago)
     end
     let!(:newer_micropost) do
-      Factory(:micropost, user: @user, created_at: 1.hour.ago)
+      FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago)
     end
 
     it "should have the rigth microposts in the right order" do
@@ -154,14 +209,14 @@ describe User do
 
     describe "status" do
       let(:unfollowed_post) do
-        Factory(:micropost, user: Factory(:user))
+        FactoryGirl.create(:micropost, user: FactoryGirl.create(:user))
       end
-      let(:followed_user) { Factory(:user) }
+      let(:followed_user) { FactoryGirl.create(:user) }
 
       before do
         @user.follow!(followed_user)
         3.times { followed_user.microposts.create(content: "Lorem ipsum") }
-      end    
+      end
 
       its(:feed) { should include(newer_micropost) }
       its(:feed) { should include(older_micropost) }
@@ -175,7 +230,7 @@ describe User do
   end
 
   describe "following" do
-    let(:other_user) { Factory(:user) }
+    let(:other_user) { FactoryGirl.create(:user) }
     before do
       @user.save
       @user.follow!(other_user)
