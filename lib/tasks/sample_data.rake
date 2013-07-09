@@ -1,50 +1,77 @@
 namespace :db do
-  desc "Fill database with sample data (for testing purposes)"
-  task populate: :environment do
-    Rake::Task['db:reset'].invoke
-    make_users
-    make_microposts
-    make_relationships
+  namespace :populate do
+
+    desc "Add the admin user"
+    task :admin => :environment do
+      make_admin
+    end
+
+    desc "Fill database with sample data (for testing purposes)"
+    task :samples => :environment do
+      Rake::Task['db:reset'].invoke
+      make_admin
+      make_users
+      make_microposts
+      make_relationships
+    end
+
   end
 end
 
-# Create 1 admin user and 99 users.
-def make_users
-  admin = User.create!(name:     "Administrator",
-                       email:    "admin@example.com",
-                       password: "administrator",
-                       password_confirmation: "administrator")
-  admin.activate!
+# Create the admin user.
+def make_admin
+  attributes = {
+    name:     "Administrator",
+    email:    "admin@example.com",
+    password: "admin123",
+    password_confirmation: "admin123"
+  }
+  admin = User.find_by_email 'admin@example.com'
+  unless admin
+    puts "Creating the Administrator user ..."
+    admin = User.create! attributes
+  else
+    puts "Updating the Administrator user ..."
+    admin.update_attributes! attributes
+  end
   admin.toggle!(:admin)
-  99.times do |n|
+  admin.activate!
+  puts "  email:\t#{admin.email}\n  password:\t#{admin.password}"
+end
+
+# Create users.
+def make_users(num_users = 99)
+  puts "Creating #{num_users} users ..."
+  num_users.times do |n|
     name = Faker::Name.name
     email = "example-#{n+1}@example.com"
     password = "password"
-    user = User.create!(name:     name,
-                 email:    email,
-                 password: password,
-                 password_confirmation: password)
+    user = User.create! name:     name,
+                        email:    email,
+                        password: password,
+                        password_confirmation: password
     user.activate!
   end
 end
 
-# Create 50 posts for the first 6 users.
-def make_microposts
-  users = User.all(limit: 6)
-  50.times do
-    content = Faker::Lorem.sentence(5)
+# Create microposts for the some users.
+def make_microposts(num_microposts = 10, num_users = 5)
+  puts "Creating #{num_microposts} microposts for #{num_users} users ..."
+  users = User.where(admin: false).limit num_users
+  num_microposts.times do
     users.each do |user|
-      user.microposts.create!(content: content)
+      user.microposts.create! content: Faker::Lorem.sentence
     end
   end
 end
 
 # Let the first user follow some users and be followed by other users.
 def make_relationships
-  users = User.all
+  users = User.where admin:false
   user = users.first
+  puts "Creating relationships for user #{user.name} ..."
   followed_users = users[1..50]
-  followers       = users[3..40]
+  followers      = users[3..40]
   followed_users.each { |followed| user.follow!(followed) }
   followers.each      { |follower| follower.follow!(user) }
 end
