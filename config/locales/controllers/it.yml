@@ -4,7 +4,7 @@ it:
       invalid_combination: Combinazione email/password non valida
 
   activations:
-    success: Benvenuto in Special Workplaces!
+    success: Il tuo account è stato attivato.
     expired: La tua richiesta di attivazione è scaduta.
 
   users:

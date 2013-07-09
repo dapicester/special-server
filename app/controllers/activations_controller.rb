@@ -9,9 +9,8 @@ class ActivationsController < ApplicationController
       redirect_to signup_path
     else
       @user.activate!
-      sign_in @user
       flash[:success] = I18n.t('activations.success')
-      redirect_to @user
+      redirect_to signin_path
     end
   end
 

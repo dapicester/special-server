@@ -48,16 +48,16 @@ describe "User pages" do
         it { should have_message(:success, t('users.create.success', email: user.email)) }
         it { should_not have_link(t('layouts.header.signout')) }
 
-        describe "and signin in upon activation" do
+        describe "and go to signin upon activation" do
           before { visit activation_url(id: user.activation_token) }
 
           specify { user.reload.active.should be_true }
           specify { user.reload.activation_token.should be_nil }
           specify { user.reload.activation_sent_at.should be_nil }
 
-          it { should have_selector('title', text: user.name) }
+          it { should_not have_selector('title', text: user.name) }
           it { should have_message(:success, t('activations.success')) }
-          it { should have_link(t('layouts.header.signout')) }
+          it { should_not have_link(t('layouts.header.signout')) }
         end
       end
     end
