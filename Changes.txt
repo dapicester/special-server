@@ -1,3 +1,12 @@
+2013-07-09  Update to Rails 3.2.13
+            Update to Ruby 2.0
+            Using HAML and CoffeeScript
+            Added turbolinks
+            Removed Chinese localization
+            Password reset via email
+            Account activation via email
+            Sending email with SendGrid on Heroku
+
 2013-01-16  Update to Rails 3.2.11
 
 2012-05-02  Localization (en, it, zh-CN)
