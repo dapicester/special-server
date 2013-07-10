@@ -1,9 +1,8 @@
+- content_for :head do
+  = javascript_include_tag 'pagination', 'data-turbolinks-track' => true
+
 - provide :title, t('.title')
 %h1= t('.title')
 
-= will_paginate
-
-%ul.users
-  = render @users
-
-= will_paginate
+#user_list
+  = render 'users'
