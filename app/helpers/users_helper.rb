@@ -8,4 +8,9 @@ module UsersHelper
     image_tag(gravatar_url, alt: user.name, class: "gravatar")
   end
 
+  # Return '@nickname' for the given user
+  def at_nick(user)
+    "@#{user.nick}"
+  end
+
 end
