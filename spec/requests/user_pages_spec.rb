@@ -28,6 +28,7 @@ describe "User pages" do
       before do
         fill_in t('users.fields.name'),         with: "Example User"
         fill_in t('users.fields.email'),        with: "user@example.com"
+        fill_in t('users.fields.nick'),         with: "user"
         fill_in t('users.fields.password'),     with: "foobar"
         fill_in t('users.fields.confirmation'), with: "foobar"
       end
