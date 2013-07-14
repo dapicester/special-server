@@ -18,4 +18,4 @@
         %span.timestamp
           = t('microposts.micropost.posted', time: time_ago_in_words(micropost.created_at))
         = render partial: 'shared/delete_post', locals: { post: micropost }
-  = will_paginate @microposts if @microposts
+  = paginate @microposts if @microposts

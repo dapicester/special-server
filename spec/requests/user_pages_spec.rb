@@ -79,8 +79,8 @@ describe "User pages" do
       before(:all) { FactoryGirl.create_list(:user, 30) }
       after(:all)  { User.delete_all }
 
-      let(:first_page)  { User.paginate(page: 1) }
-      let(:second_page) { User.paginate(page: 2) }
+      let(:first_page)  { User.page(1) }
+      let(:second_page) { User.page(2) }
 
       it { should have_link("Next") }
       it { should have_link('2') }

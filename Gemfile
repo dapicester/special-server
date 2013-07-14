@@ -8,8 +8,8 @@ gem 'haml-rails', '0.4'
 gem 'bootstrap-sass', '2.3.0.1'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.1.2'
-gem 'will_paginate', '3.0.4'
-gem 'bootstrap-will_paginate', '0.0.9'
+gem 'kaminari', '0.14.1'
+gem 'kaminari-bootstrap', '0.1.3'
 gem 'roadie', '2.4.1'
 gem 'tire', '0.6.0'
 gem 'tire-contrib', '0.1.3'
@@ -97,5 +97,5 @@ gem 'thin', '1.3.1'
 #gem 'heroku' # deprecated, see https://toolbelt.heroku.com
 
 # I18n
-gem 'will-paginate-i18n', '0.1.1'
+gem 'kaminari-i18n', '0.1.3'
 gem 'rails-i18n', '0.6.3'
