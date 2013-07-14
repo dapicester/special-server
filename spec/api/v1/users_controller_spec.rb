@@ -10,8 +10,8 @@ describe "/api/v1/users", type: :api do
     before(:all) { 30.times { FactoryGirl.create(:user) } }
     after(:all)  { User.delete_all }
 
-    let(:first_page)  { api_users User.paginate(page: 1) }
-    let(:second_page) { api_users User.paginate(page: 2) }
+    let(:first_page)  { api_users User.page(1) }
+    let(:second_page) { api_users User.page(2) }
 
     describe "default pagination" do
       before { get "#{url}.json", token: token }

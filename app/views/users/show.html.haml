@@ -13,4 +13,4 @@
       %h3 #{t('users.show.microposts')} (#{@user.microposts.count})
       %ol.microposts
         = render @microposts
-      = will_paginate @microposts
+      = paginate @microposts

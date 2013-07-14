@@ -39,12 +39,12 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.page(params[:page])
   end
 
   def show
     @user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])
+    @microposts = @user.microposts.page(params[:page])
   end
 
   def destroy
@@ -56,14 +56,14 @@ class UsersController < ApplicationController
   def following
     @title = I18n.t('users.following.title')
     @user = User.find(params[:id])
-    @users = @user.followed_users.paginate(page: params[:page])
+    @users = @user.followed_users.page(params[:page])
     render 'show_follow'
   end
 
   def followers
     @title = I18n.t('users.followers.title')
     @user = User.find(params[:id])
-    @users = @user.followers.paginate(page: params[:page])
+    @users = @user.followers.page(params[:page])
     render 'show_follow'
   end
 
