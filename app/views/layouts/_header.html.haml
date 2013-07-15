@@ -15,9 +15,18 @@
                 = current_user.email
                 %b.caret
               %ul.dropdown-menu
-                %li= link_to t('.profile'), current_user
-                %li= link_to t('.settings'), edit_user_path(current_user)
+                %li
+                  = link_to(current_user) do
+                    %i.icon-user
+                    = t('.profile')
+                %li
+                  = link_to(edit_user_path(current_user)) do
+                    %i.icon-cog
+                    = t('.settings')
                 %li.divider
-                %li= link_to t('.signout'), signout_path, method: :delete
+                %li
+                  = link_to(signout_path, method: :delete) do
+                    %i.icon-off
+                    = t('.signout')
           - else
             %li= link_to t('.signin'), signin_path
