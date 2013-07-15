@@ -1,7 +1,9 @@
 %header.navbar.navbar-fixed-top.navbar-inverse
   .navbar-inner
     .container
-      = link_to logo + '  ' + t('appname'), root_path, id: 'logo'
+      = link_to(root_path, id: 'logo') do
+        = logo + '  ' + t('appname')
+        %span.label.label-important beta
       %nav
         %ul.nav.pull-right
           = render 'layouts/locale_switcher'
