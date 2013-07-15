@@ -11,6 +11,8 @@ en:
   sessions:
     new:
       title: Sign in
+      login: Email or Nick
+      password: Password
       button: Sign in
       forgot: Forgot password?
     notice:

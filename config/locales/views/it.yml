@@ -11,6 +11,8 @@ it:
   sessions:
     new:
       title: Login
+      login: Email o Nick
+      password: Password
       button: Accedi
       forgot: Password dimenticata?
     notice:

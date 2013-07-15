@@ -7,11 +7,16 @@ def full_title(page_title)
   end
 end
 
-def sign_in(user)
+def sign_in(user, with = :email)
   visit signin_path
-  fill_in "Email",    with: user.email
-  fill_in "Password", with: user.password
-  click_button "Sign in"
+  case with
+  when :email
+    fill_in t('sessions.new.login'), with: user.email
+  when :nick
+    fill_in t('sessions.new.login'), with: user.nick
+  end
+  fill_in t('sessions.new.password'), with: user.password
+  click_button t('sessions.new.button')
   # sign in when not using capybara as well
   cookies[:remember_token] = user.remember_token if user.active?
 end

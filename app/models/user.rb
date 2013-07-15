@@ -53,6 +53,10 @@ class User < ActiveRecord::Base
 
   include PasswordValidations
 
+  def self.find_by_email_or_nick(string)
+    self.where('email = :val OR nick = :val', val: string).first
+  end
+
   def feed
     Micropost.from_users_followed_by(self)
   end
