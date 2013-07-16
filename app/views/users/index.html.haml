@@ -1,9 +1,9 @@
 - provide :title, t('.title')
 %h1= t('.title')
 
-= paginate @users
+= paginate @users, remote: true
 
 %ul.users
   = render @users
 
-= paginate @users
+= paginate @users, remote: true

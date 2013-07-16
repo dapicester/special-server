@@ -1,0 +1,3 @@
+$('.microposts').html('<%= j render @microposts %>');
+$('.pagination').html('<%= j paginate @microposts, remote: true %>');
+$('html, body').animate({ scrollTop: 0 }, 'slow');

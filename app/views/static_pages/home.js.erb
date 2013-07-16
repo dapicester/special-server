@@ -1,0 +1,3 @@
+$('.microposts').html('<%= j render partial: 'shared/feed_item', collection: @feed_items %>');
+$('.pagination').html('<%= j paginate @feed_items, remote: true %>');
+$('html, body').animate({ scrollTop: 0 }, 'slow');

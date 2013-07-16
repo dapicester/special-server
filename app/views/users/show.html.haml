@@ -13,4 +13,4 @@
       %h3 #{t('users.show.microposts')} (#{@user.microposts.count})
       %ol.microposts
         = render @microposts
-      = paginate @microposts
+      = paginate @microposts, remote: true
