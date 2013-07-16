@@ -7,7 +7,7 @@
       %nav
         %ul.nav.pull-right
           = render 'layouts/locale_switcher'
-          %li= mailcatcher_web if Rails.env.development?
+          = render 'layouts/mailcatcher' if Rails.env.development?
           %li= link_to t('static_pages.home.title'), root_path
           %li= link_to t('static_pages.help.title'), help_path
           - if signed_in?

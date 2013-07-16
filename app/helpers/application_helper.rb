@@ -21,9 +21,4 @@ module ApplicationHelper
     image_tag("#{locale}.png", alt: locale)
   end
 
-  # Returns the link to MailCatcher
-  def mailcatcher_web
-    link_to 'MailCatcher', 'http://localhost:1080', target: '_blank'
-  end
-
 end
