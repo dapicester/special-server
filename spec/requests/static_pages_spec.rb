@@ -22,20 +22,20 @@ describe "StaticPages" do
         visit root_path
       end
 
-      it "should render the user's name and nick" do
+      it "renders the user's name and nick" do
         page.should have_selector 'h1', text: user.name
         page.should have_selector 'h1 .nick', text: user.nick
       end
 
-      it "should render the user's feed" do
+      it "renders the user's feed" do
         user.feed.each do |item|
           page.should have_selector("li##{item.id}", text: item.content)
           page.should have_selector("li##{item.id} .nick", text: item.user.nick)
         end
       end
 
-      it "should display the microposts count" do
-        page.should have_selector('span', content: "#{plural(user.microposts.count, "micropost")}")
+      it "displays the microposts count" do
+        page.should have_selector('span', content: "#{plural(user.microposts.count, 'micropost')}")
       end
 
       describe "follower/following counts" do
@@ -69,7 +69,7 @@ describe "StaticPages" do
     it_should_behave_like "all static pages"
   end
 
-  it "should have the right links on the layout" do
+  it "has the right links on the layout" do
     visit root_path
     click_link t('static_pages.about.title')
     page.should have_selector 'title', text: full_title(t('static_pages.about.title'))

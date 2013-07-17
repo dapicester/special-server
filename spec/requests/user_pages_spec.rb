@@ -13,7 +13,7 @@ describe "User pages" do
     describe "with invalid information" do
       # empty form
 
-      it "should not create a user" do
+      it "does not create a user" do
         expect { click_button t('users.new.button') }.not_to change(User, :count)
       end
 
@@ -33,7 +33,7 @@ describe "User pages" do
         fill_in t('users.fields.confirmation'), with: "foobar"
       end
 
-      it "should create a user" do
+      it "creates a user" do
         expect { click_button t('users.new.button') }.to change(User, :count).by(1)
       end
 
@@ -84,21 +84,21 @@ describe "User pages" do
       it { should have_link("Next") }
       it { should have_link('2') }
 
-      it "should list each user" do
+      it "lists each user" do
         User.all[0..2].each do |user|
           should have_selector('li', text: user.name)
           should have_selector('li .nick', text: user.nick)
         end
       end
 
-      it "should list the first page of users" do
+      it "lists the first page of users" do
         first_page.each do |user|
           should have_selector('li', text: user.name)
           should have_selector('li .nick', text: user.nick)
         end
       end
 
-      it "should not list the second page of users" do
+      it "does not list the second page of users" do
         second_page.each do |user|
           should_not have_selector('li', text: user.name)
           should_not have_selector('li .nick', text: user.nick)
@@ -114,8 +114,10 @@ describe "User pages" do
           visit users_path
         end
 
-        it { should have_link(t('users.delete.button'), href: user_path(User.first)) }
-        it "should be able to delete another user" do
+        it "has delete buttons" do
+          should have_link(t('users.delete.button'), href: user_path(User.first))
+        end
+        it "is able to delete another user" do
           expect { click_link(t('users.delete.button')) }.to change(User, :count).by(-1)
         end
         it { should_not have_link(t('users.delete.button'), href: user_path(admin)) }
@@ -147,13 +149,13 @@ describe "User pages" do
       describe "following a user" do
         before { visit user_path(other_user) }
 
-        it "should increment the followed count" do
+        it "increments the followed count" do
           expect do
             click_button t('users.follow.button')
           end.to change(user.followed_users, :count).by(1)
         end
 
-        it "should increment the other user's followers count" do
+        it "increments the other user's followers count" do
           expect do
             click_button t('users.follow.button')
           end.to change(other_user.followers, :count).by(1)
@@ -171,13 +173,13 @@ describe "User pages" do
           visit user_path(other_user)
         end
 
-        it "should decrement the followed user count" do
+        it "decrements the followed user count" do
           expect do
             click_button t('users.unfollow.button')
           end.to change(user.followed_users, :count).by(-1)
         end
 
-        it "should decrement the other user's followers count" do
+        it "decrements the other user's followers count" do
           expect do
             click_button t('users.unfollow.button')
           end.to change(other_user.followers, :count).by(-1)

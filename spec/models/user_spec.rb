@@ -237,11 +237,11 @@ describe User do
       FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago)
     end
 
-    it "should have the rigth microposts in the right order" do
+    it "has the rigth microposts in the right order" do
       @user.microposts.should == [newer_micropost, older_micropost]
     end
 
-    it "should destroy associated microposts" do
+    it "destroys associated microposts" do
       microposts = @user.microposts
       @user.destroy
       microposts.each do |micropost|

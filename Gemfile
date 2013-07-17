@@ -41,6 +41,8 @@ group :development, :test do
   gem 'guard-jasmine', '1.17.0'
   gem 'guard-spork', '1.5.0'
   gem 'spork-rails', github: 'railstutorial/spork-rails'
+  gem 'should_not', '1.0.0'
+  gem 'fuubar', '1.1.1'
   # gem 'ruby-debug'
   #gem 'debugger', '1.6.0' # has issues with Ruby 2.0
   gem 'byebug', '1.4.1'

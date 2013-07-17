@@ -118,6 +118,10 @@ GEM
       ruby_parser (~> 3.1, > 3.1.0)
       sexp_processor (~> 4.0)
     formatador (0.2.4)
+    fuubar (1.1.1)
+      rspec (~> 2.0)
+      rspec-instafail (~> 0.2.0)
+      ruby-progressbar (~> 1.0)
     growl (1.0.3)
     guard (1.7.0)
       formatador (>= 0.2.4)
@@ -274,6 +278,7 @@ GEM
     rspec-core (2.13.1)
     rspec-expectations (2.13.0)
       diff-lcs (>= 1.1.3, < 2.0)
+    rspec-instafail (0.2.4)
     rspec-mocks (2.13.1)
     rspec-rails (2.13.1)
       actionpack (>= 3.0)
@@ -283,6 +288,7 @@ GEM
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
     ruby-graphviz (1.0.9)
+    ruby-progressbar (1.1.1)
     ruby2ruby (2.0.6)
       ruby_parser (~> 3.1)
       sexp_processor (~> 4.0)
@@ -300,6 +306,7 @@ GEM
       rubyzip
       websocket (~> 1.0.4)
     sexp_processor (4.2.1)
+    should_not (1.0.0)
     simplecov (0.7.1)
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
@@ -349,6 +356,7 @@ DEPENDENCIES
   email_preview (= 1.5.3)
   factory_girl_rails (~> 4.0)
   faker (= 1.1.2)
+  fuubar (= 1.1.1)
   growl (= 1.0.3)
   guard-jasmine (= 1.17.0)
   guard-rspec (= 2.5.0)
@@ -371,6 +379,7 @@ DEPENDENCIES
   roadie (= 2.4.1)
   rspec-rails (= 2.13.1)
   sass-rails (= 3.2.6)
+  should_not (= 1.0.0)
   simplecov
   simplecov-rcov-text
   spork-rails!

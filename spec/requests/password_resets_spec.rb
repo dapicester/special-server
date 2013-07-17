@@ -12,14 +12,14 @@ describe PasswordResetsController do
   end
 
   describe "without email" do
-    it "should display an error message" do
+    it "displays an error message" do
       click_button t('password_resets.new.button')
       should have_message :error
     end
   end
 
   describe "with invalid email" do
-    it "should not send the email" do
+    it "does not send the email" do
       fill_in t('users.fields.email'), with: 'kajshd sad'
       click_button t('password_resets.new.button')
       should have_message :error
@@ -28,7 +28,7 @@ describe PasswordResetsController do
 
   describe "with email not bound to any user" do
     let(:email) { 'some@email.net' }
-    it "should not send the email" do
+    it "does not send the email" do
       fill_in t('users.fields.email'), with: email
       click_button t('password_resets.new.button')
       should have_content t('password_resets.email.sent', email: email)
@@ -38,7 +38,7 @@ describe PasswordResetsController do
   end
 
   describe "with valid email" do
-    it "should send the reset email password" do
+    it "sends the reset email password" do
       fill_in t('users.fields.email'), with: user.email
       click_button t('password_resets.new.button')
       should have_content t('password_resets.email.sent', email: user.email)
@@ -56,7 +56,7 @@ describe PasswordResetsController do
         user.save
         visit edit_password_reset_path(user.password_reset_token)
       end
-      it "should change the password" do
+      it "changes the password" do
         fill_in t('users.fields.password'), with: "newfoobar"
         fill_in t('users.fields.confirmation'), with: "newfoobar"
         click_button t('password_resets.edit.button')
@@ -66,11 +66,11 @@ describe PasswordResetsController do
         user.password_reset_token.should be_nil
         user.password_reset_sent_at.should be_nil
       end
-      it "should have error if password empty" do
+      it "has error if password empty" do
         click_button t('password_resets.edit.button')
         should have_message :error
       end
-      it "should have error if password not valid" do
+      it "has error if password not valid" do
         fill_in t('users.fields.password'), with: "foobar"
         fill_in t('users.fields.confirmation'), with: "barfoo"
         click_button t('password_resets.edit.button')
@@ -81,7 +81,7 @@ describe PasswordResetsController do
           user.password_reset_sent_at = 125.minutes.ago
           user.save
         end
-        it "should not change the password" do
+        it "does not change the password" do
           # TODO helpers for fill-in and click
           fill_in t('users.fields.password'), with: "newfoobar"
           fill_in t('users.fields.confirmation'), with: "newfoobar"

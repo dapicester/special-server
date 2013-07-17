@@ -105,7 +105,7 @@ describe "Authentication" do
         end
 
         describe "after signing in" do
-          it "should render the desired protected page" do
+          it "renders the desired protected page" do
             should have_selector('title', text: t('users.edit.title'))
           end
 
@@ -117,7 +117,7 @@ describe "Authentication" do
               click_button t('sessions.new.button')
             end
 
-            it "should render the default (home) page" do
+            it "renders the default (home) page" do
               should have_selector('title', text: t('static_pages.home.title'))
             end
           end
