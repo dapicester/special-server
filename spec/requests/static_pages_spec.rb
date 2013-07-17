@@ -22,9 +22,15 @@ describe "StaticPages" do
         visit root_path
       end
 
+      it "should render the user's name and nick" do
+        page.should have_selector 'h1', text: user.name
+        page.should have_selector 'h1 .nick', text: user.nick
+      end
+
       it "should render the user's feed" do
         user.feed.each do |item|
           page.should have_selector("li##{item.id}", text: item.content)
+          page.should have_selector("li##{item.id} .nick", text: item.user.nick)
         end
       end
 

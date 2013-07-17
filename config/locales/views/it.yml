@@ -11,6 +11,8 @@ it:
   sessions:
     new:
       title: Login
+      login: Email o Nick
+      password: Password
       button: Accedi
       forgot: Password dimenticata?
     notice:
@@ -56,6 +58,7 @@ it:
     fields:
       name: Nome
       email: Email
+      nick: Nick
       password: Password
       confirmation: Conferma
     new:

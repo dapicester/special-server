@@ -28,6 +28,7 @@ describe "User pages" do
       before do
         fill_in t('users.fields.name'),         with: "Example User"
         fill_in t('users.fields.email'),        with: "user@example.com"
+        fill_in t('users.fields.nick'),         with: "user"
         fill_in t('users.fields.password'),     with: "foobar"
         fill_in t('users.fields.confirmation'), with: "foobar"
       end
@@ -86,18 +87,21 @@ describe "User pages" do
       it "should list each user" do
         User.all[0..2].each do |user|
           should have_selector('li', text: user.name)
+          should have_selector('li .nick', text: user.nick)
         end
       end
 
       it "should list the first page of users" do
         first_page.each do |user|
           should have_selector('li', text: user.name)
+          should have_selector('li .nick', text: user.nick)
         end
       end
 
       it "should not list the second page of users" do
         second_page.each do |user|
           should_not have_selector('li', text: user.name)
+          should_not have_selector('li .nick', text: user.nick)
         end
       end
 
@@ -127,6 +131,7 @@ describe "User pages" do
     before { visit user_path(user) }
 
     it { should have_selector('h1', text: user.name) }
+    it { should have_selector('span.nick', text: user.nick) }
     it { should have_selector('title', text: user.name) }
 
     describe "microposts" do

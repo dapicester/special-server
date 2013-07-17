@@ -14,11 +14,12 @@
 #  password_reset_sent_at :datetime
 #  activation_token       :string(255)
 #  activation_sent_at     :datetime
-#  active                 :boolean
+#  active                 :boolean          default(FALSE)
+#  nick                   :string(255)      not null
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation
+  attr_accessible :name, :nick, :email, :password, :password_confirmation
   has_secure_password
   has_many :microposts, dependent: :destroy
   has_many :relationships, foreign_key: "follower_id",
@@ -40,10 +41,21 @@ class User < ActiveRecord::Base
   validates :name, presence: true,
                    length: { maximum: NAME_MAX_LEN }
 
+  NICK_MIN_LEN = 3
+  NICK_MAX_LEN = 15
+  NICK_REGEX = /\A\w+\z/i
+  validates :nick, presence: true,
+                   length: { minimum: NICK_MIN_LEN, maximum: NICK_MAX_LEN},
+                   format: NICK_REGEX
+
   include EmailValidations
   validates :email, uniqueness: { case_sensitive: false }
 
   include PasswordValidations
+
+  def self.find_by_email_or_nick(string)
+    self.where('email = :val OR nick = :val', val: string).first
+  end
 
   def feed
     Micropost.from_users_followed_by(self)

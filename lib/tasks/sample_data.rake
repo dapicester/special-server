@@ -23,6 +23,7 @@ def make_admin
   attributes = {
     name:     "Administrator",
     email:    "admin@example.com",
+    nick:     "admin",
     password: "admin123",
     password_confirmation: "admin123"
   }
@@ -43,13 +44,11 @@ end
 def make_users(num_users = 99)
   puts "Creating #{num_users} users ..."
   num_users.times do |n|
-    name = Faker::Name.name
-    email = "example-#{n+1}@example.com"
-    password = "password"
-    user = User.create! name:     name,
-                        email:    email,
-                        password: password,
-                        password_confirmation: password
+    user = User.create! name:     Faker::Name.name,
+                        nick:     Faker::Lorem.words(2).join('_'),
+                        email:    "example-#{n+1}@example.com",
+                        password: "password",
+                        password_confirmation: "password"
     user.activate!
   end
 end

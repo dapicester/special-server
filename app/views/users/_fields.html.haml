@@ -6,6 +6,11 @@
 %br/
 = f.text_field :email
 
+= f.label :nick, t('.nick')
+%br/
+= f.text_field :nick
+-# TODO autofill nick with js
+
 = f.label :password, t('.password')
 %br/
 = f.password_field :password

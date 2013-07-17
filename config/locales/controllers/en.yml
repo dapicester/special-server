@@ -1,7 +1,7 @@
 en:
   sessions:
     create:
-      invalid_combination: Invalid email/password combination
+      invalid_combination: Invalid login/password combination
 
   activations:
     success: Your account has been activated.

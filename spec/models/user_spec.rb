@@ -14,7 +14,8 @@
 #  password_reset_sent_at :datetime
 #  activation_token       :string(255)
 #  activation_sent_at     :datetime
-#  active                 :boolean
+#  active                 :boolean          default(FALSE)
+#  nick                   :string(255)      not null
 #
 
 require 'spec_helper'
@@ -22,43 +23,58 @@ require 'spec_helper'
 describe User do
 
   before do
-    @user = User.new(name: "Example user",
-                     email: "user@example.com",
-                     password: "foobar",
-                     password_confirmation: "foobar")
+    @user = User.new(
+      name: "Example user",
+      nick: "example",
+      email: "user@example.com",
+      password: "foobar",
+      password_confirmation: "foobar"
+    )
   end
 
   subject { @user }
 
-  it { should respond_to(:name) }
-  it { should respond_to(:email) }
-  it { should respond_to(:password_digest) }
-  it { should respond_to(:password) }
-  it { should respond_to(:password_confirmation) }
-  it { should respond_to(:remember_token) }
-  it { should respond_to(:admin) }
-  it { should respond_to(:authenticate) }
-  it { should respond_to(:send_password_reset) }
-  it { should respond_to(:password_reset_token) }
-  it { should respond_to(:password_reset_sent_at) }
-  it { should respond_to(:send_activation) }
-  it { should respond_to(:activation_token) }
-  it { should respond_to(:activation_sent_at) }
-  it { should respond_to(:active?) }
-  it { should respond_to(:activate!) }
-  it { should respond_to(:microposts) }
-  it { should respond_to(:feed) }
-  it { should respond_to(:relationships) }
-  it { should respond_to(:followed_users) }
-  it { should respond_to(:reverse_relationships) }
-  it { should respond_to(:followers) }
-  it { should respond_to(:following?) }
-  it { should respond_to(:follow!) }
-  it { should respond_to(:unfollow!) }
-
   it { should be_valid }
   it { should_not be_active }
   it { should_not be_admin }
+
+  shared_examples_for "respond to" do |values|
+    values.each do |val|
+    end
+  end
+
+  describe "responds to" do
+    %i[ name
+        nick
+        email
+        password_digest
+        password
+        password_confirmation
+        remember_token
+        admin
+        microposts
+        relationships
+        followed_users
+        reverse_relationships
+        followers
+
+        authenticate
+        send_password_reset
+        password_reset_token
+        password_reset_sent_at
+        send_activation
+        activation_token
+        activation_sent_at
+        active?
+        activate!
+        feed
+        following?
+        follow!
+        unfollow!
+      ].each do |sym|
+        it { should respond_to(sym) }
+      end
+  end
 
   describe "with admin attribute set to 'true'" do
     before { @user.toggle!(:admin) }
@@ -70,34 +86,69 @@ describe User do
     it { should be_active }
   end
 
-  describe "when name is not present" do
-    before { @user.name = " " }
+  shared_examples_for "valid with field" do |field, value|
+    before { @user[field] = value }
+    it { should be_valid }
+  end
+
+  shared_examples_for "invalid with field" do |field, value|
+    before { @user[field] = value }
     it { should_not be_valid }
   end
 
-  describe "when email is not present" do
-    before { @user.email = " " }
-    it { should_not be_valid }
+  describe "with missing field" do
+    fields = %i[name nick email]
+    fields.each do |f|
+      it_behaves_like "invalid with field", f, ''
+    end
   end
 
   describe "when name is too long" do
-    before { @user.name = "a" * (User::NAME_MAX_LEN + 1) }
+    it_behaves_like "invalid with field", :name, "a" * (User::NAME_MAX_LEN + 1)
+  end
+
+  describe "when nick is too short" do
+    it_behaves_like "invalid with field", :nick, "a" * (User::NICK_MIN_LEN - 1)
+  end
+
+  describe "when nick is too long" do
+    it_behaves_like "invalid with field", :nick, "a" * (User::NICK_MAX_LEN + 1)
+  end
+
+  describe "when nick contains not valid characters" do
+    invalid_nicks = %w[ simon&garfunkel one-two stop@me no! whynot? ]
+    invalid_nicks.each do |invalid_nick|
+      it_behaves_like "invalid with field", :nick, invalid_nick
+    end
+  end
+
+  describe "when nick is valid" do
+    valid_nicks = %w[ user user21 user_name MyName _whoami ]
+    valid_nicks.each do |valid_nick|
+      it_behaves_like "valid with field", :nick, valid_nick
+    end
+  end
+
+  describe "when nick is already taken" do
+    before do
+      user_with_same_nick = @user.dup
+      user_with_same_nick.nick = @user.nick.upcase
+      user_with_same_nick.save
+    end
     it { should_not be_valid }
   end
 
   describe "when email format is invalid" do
     invalid_addresses =  %w[user@foo,com user_at_foo.org example.user@foo.]
     invalid_addresses.each do |invalid_address|
-      before { @user.email = invalid_address }
-      it { should_not be_valid }
+      it_behaves_like "invalid with field", :email, invalid_address
     end
   end
 
   describe "when email format is valid" do
     valid_addresses = %w[user@foo.com A_USER@f.b.org frst.lst@foo.jp a+b@baz.cn]
     valid_addresses.each do |valid_address|
-      before { @user.email = valid_address }
-      it { should be_valid }
+      it_behaves_like "valid with field", :email, valid_address
     end
   end
 
@@ -107,7 +158,6 @@ describe User do
       user_with_same_email.email = @user.email.upcase
       user_with_same_email.save
     end
-
     it { should_not be_valid }
   end
 
@@ -147,17 +197,21 @@ describe User do
     its(:remember_token) { should_not be_blank }
   end
 
-  describe "password reset" do
-    before { @user.send_password_reset }
+  shared_examples_for "email confirmation with token" do |what|
+    method    = "send_#{what.to_s}".to_sym
+    field     = "#{what.to_s}_token".to_sym
+    timestamp = "#{what.to_s}_sent_at".to_sym
 
-    it "generates a unique password_reset_token" do
-      last_token = @user.password_reset_token
-      @user.send_password_reset
-      @user.password_reset_token.should_not eq(last_token)
+    before { @user.send method }
+
+    it "generates a unique token" do
+      last_token = @user[field]
+      @user.send method
+      @user[field].should_not eq(last_token)
     end
 
-    it "saves the time the password reset was sent" do
-      @user.reload.password_reset_sent_at.should be_present
+    it "saves the time the confirmation was sent" do
+      @user.reload[timestamp].should be_present
     end
 
     it "delivers email to user" do
@@ -165,24 +219,12 @@ describe User do
     end
   end
 
-  # TODO: shared_examples and should_behave_like
+  describe "password reset" do
+    it_behaves_like "email confirmation with token", :password_reset
+  end
 
   describe "activation" do
-    before { @user.send_activation }
-
-    it "generates a unique activation token" do
-      last_token = @user.activation_token
-      @user.send_activation
-      @user.activation_token.should_not eq(last_token)
-    end
-
-    it "saves the time the activation was sent" do
-      @user.reload.activation_sent_at.should be_present
-    end
-
-    it "delivers email to user" do
-      last_email.to.should include @user.email
-    end
+    it_behaves_like "email confirmation with token", :activation
   end
 
   describe "micropost associations" do

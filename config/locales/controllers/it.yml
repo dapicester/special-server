@@ -1,7 +1,7 @@
 it:
   sessions:
     create:
-      invalid_combination: Combinazione email/password non valida
+      invalid_combination: Combinazione login/password non valida
 
   activations:
     success: Il tuo account è stato attivato.

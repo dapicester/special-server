@@ -138,6 +138,16 @@ aside {
   margin-right: 10px;
 }
 
+.nick {
+  color: $grayLight;
+  font-style: italic;
+  font-weight: normal;
+}
+.nick.inline {
+  display: inline;
+  font-size: .8em;
+}
+
 .stats {
   overflow: auto;
   a {

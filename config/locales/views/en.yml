@@ -11,6 +11,8 @@ en:
   sessions:
     new:
       title: Sign in
+      login: Email or Nick
+      password: Password
       button: Sign in
       forgot: Forgot password?
     notice:
@@ -56,6 +58,7 @@ en:
     fields:
       name: Name
       email: Email
+      nick: Nick
       password: Password
       confirmation: Confirmation
     new:
