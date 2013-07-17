@@ -7,14 +7,9 @@ def full_title(page_title)
   end
 end
 
-def sign_in(user, with = :email)
+def sign_in(user, login = :email )
   visit signin_path
-  case with
-  when :email
-    fill_in t('sessions.new.login'), with: user.email
-  when :nick
-    fill_in t('sessions.new.login'), with: user.nick
-  end
+  fill_in t('sessions.new.login'),    with: login == :nick ? user.nick : user.email
   fill_in t('sessions.new.password'), with: user.password
   click_button t('sessions.new.button')
   # sign in when not using capybara as well

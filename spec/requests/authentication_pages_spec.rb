@@ -36,6 +36,7 @@ describe "Authentication" do
       end
 
       describe "and user is activated" do
+        before { user.activate! }
 
         shared_examples_for "signed in user" do
           it { should have_selector('title', text: t('static_pages.home.title')) }
@@ -57,18 +58,12 @@ describe "Authentication" do
         end
 
         describe "using email" do
-          before do
-            user.activate!
-            sign_in user
-          end
+          before { sign_in user }
           it_behaves_like "signed in user"
         end
 
         describe "using nick" do
-          before do
-            user.activate!
-            sign_in user, :nick
-          end
+          before { sign_in user, :login => :nick }
           it_behaves_like "signed in user"
         end
       end
