@@ -16,8 +16,8 @@ describe "StaticPages" do
     describe "for signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
       before do
-        FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")
-        FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet")
+        FactoryGirl.create(:micropost, user: user, content: 'Lorem ipsum')
+        FactoryGirl.create(:micropost, user: user, content: 'Dolor sit amet')
         sign_in user
         visit root_path
       end
@@ -42,8 +42,8 @@ describe "StaticPages" do
         let(:other_user) { FactoryGirl.create(:user) }
         before { user.follow!(other_user) }
 
-        it { should have_selector('a', href: following_user_path(user), content: "0 following") }
-        it { should have_selector('a', href: followers_user_path(user), content: "1 follower") }
+        it { should have_selector('a', href: following_user_path(user), content: "0 #{t 'shared.stats.following'}") }
+        it { should have_selector('a', href: followers_user_path(user), content: "1 #{t 'shared.stats.follower'}") }
       end
     end
   end

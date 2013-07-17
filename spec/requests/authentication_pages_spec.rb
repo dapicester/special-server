@@ -14,7 +14,7 @@ describe "Authentication" do
       before { click_button t('sessions.new.button') }
 
       it { should have_selector('title', text: t('sessions.new.title')) }
-      it { should have_message(:error, 'Invalid') }
+      it { should have_message(:error, t('sessions.create.invalid_combination')) }
 
       describe "after visiting another page" do
         before { click_link t('static_pages.home.title') }
@@ -99,8 +99,8 @@ describe "Authentication" do
       describe "when attempting to visit a protected page" do
         before do
           visit edit_user_path(user)
-          fill_in "Email",    with: user.email
-          fill_in "Password", with: user.password
+          fill_in t('sessions.new.login'),    with: user.email
+          fill_in t('sessions.new.password'), with: user.password
           click_button t('sessions.new.button')
         end
 
@@ -110,10 +110,10 @@ describe "Authentication" do
           end
 
           describe "when signing in again" do
-            before do 
+            before do
               visit signin_path
-              fill_in "Email",    with: user.email
-              fill_in "Password", with: user.password
+              fill_in t('sessions.new.login'),    with: user.email
+              fill_in t('sessions.new.password'), with: user.password
               click_button t('sessions.new.button')
             end
 
@@ -129,7 +129,7 @@ describe "Authentication" do
         it { should have_selector('title', text: t('layouts.header.signin')) }
       end
 
-      describe "in the Users controller" do 
+      describe "in the Users controller" do
         describe "visiting the edit page" do
           before { visit edit_user_path(user) }
           it { should have_selector('title', text: t('layouts.header.signin')) }
@@ -140,7 +140,7 @@ describe "Authentication" do
           specify { response.should redirect_to(signin_path) }
         end
 
-        describe "visiting the following page" do 
+        describe "visiting the following page" do
           before { visit following_user_path(user) }
           it { should have_selector('title', text: t('layouts.header.signin')) }
         end
@@ -175,7 +175,7 @@ describe "Authentication" do
         describe "submitting to the destroy action" do
           before { delete relationship_path(1) }
           specify { response.should redirect_to(signin_path) }
-        end 
+        end
       end
     end
 
