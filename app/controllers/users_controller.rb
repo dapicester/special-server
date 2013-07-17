@@ -39,7 +39,8 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.page(params[:page])
+    self.curr_page = params[:page]
+    @users = User.page(curr_page)
   end
 
   def show
@@ -50,7 +51,7 @@ class UsersController < ApplicationController
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = I18n.t('users.destroy.success')
-    redirect_to users_path
+    redirect_to users_path page: curr_page
   end
 
   def following
@@ -85,6 +86,14 @@ private
   def self_delete
     user = User.find(params[:id])
     redirect_to(root_path) if current_user?(user)
+  end
+
+  def curr_page=(page)
+    cookies[:user_page] = page
+  end
+
+  def curr_page
+    cookies[:user_page]
   end
 
 end
