@@ -5,11 +5,9 @@
   .span6.offset3
     = form_tag sessions_path do
       = label_tag :email, t('.login')
-      %br/
       = text_field_tag :email, params[:email]
 
       = label_tag :password
-      %br/
       = password_field_tag :password
 
       = label_tag :remember_me, class: 'checkbox' do
