@@ -13,6 +13,7 @@ en:
       title: Sign in
       login: Email or Nick
       password: Password
+      remember_me: Stay signed in
       button: Sign in
       forgot: Forgot password?
     notice:

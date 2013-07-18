@@ -16,6 +16,10 @@ def sign_in(user, login = :email )
   cookies[:remember_token] = user.remember_token if user.active?
 end
 
+def get_cookie(name)
+  Capybara.current_session.driver.request.cookies.[](name)
+end
+
 include ActionView::Helpers::TextHelper
 def plural(count, word)
   pluralize(count, word)

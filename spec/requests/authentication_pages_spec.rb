@@ -35,7 +35,7 @@ describe "Authentication" do
         it { should have_link(t('layouts.header.signin'),  href: signin_path) }
       end
 
-      describe "and user is activated" do
+      describe "and user activated" do
         before { user.activate! }
 
         shared_examples_for "signed in user" do
@@ -48,9 +48,11 @@ describe "Authentication" do
           it { should have_link(t('layouts.header.signout'),  href: signout_path) }
 
           it { should_not have_link(t('layouts.header.signin'), href: signin_path) }
+          it { get_cookie(:remember_token).should be_nil }
 
           describe "followed by signout" do
             before { click_link t('layouts.header.signout') }
+            it { get_cookie(:remember_token).should be_nil }
             it { should have_link(t('layouts.header.signin')) }
             it { should_not have_link(t('layouts.header.profile')) }
             it { should_not have_link(t('layouts.header.settings')) }
