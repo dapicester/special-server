@@ -116,14 +116,14 @@ describe User do
   end
 
   describe "when nick contains not valid characters" do
-    invalid_nicks = %w[ simon&garfunkel one-two stop@me no! whynot? ]
+    invalid_nicks = %w[ simon&garfunkel one=two stop@me no! whynot? ]
     invalid_nicks.each do |invalid_nick|
       it_behaves_like "invalid with field", :nick, invalid_nick
     end
   end
 
   describe "when nick is valid" do
-    valid_nicks = %w[ user user21 user_name MyName _whoami ]
+    valid_nicks = %w[ user user21 user_name user-name MyName _whoami ]
     valid_nicks.each do |valid_nick|
       it_behaves_like "valid with field", :nick, valid_nick
     end
