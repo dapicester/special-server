@@ -11,6 +11,7 @@ gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'roadie', '2.4.1'
+gem 'tire', '0.6.0'
 
 gem 'jquery-rails', '2.2.1'
 gem 'turbolinks', '1.0.0'
