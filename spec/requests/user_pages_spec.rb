@@ -76,7 +76,7 @@ describe "User pages" do
     it { should have_button(t('users.index.search')) }
 
     describe "pagination" do
-      before(:all) { 30.times { FactoryGirl.create(:user) } }
+      before(:all) { FactoryGirl.create_list(:user, 30) }
       after(:all)  { User.delete_all }
 
       let(:first_page)  { User.paginate(page: 1) }
@@ -138,7 +138,7 @@ describe "User pages" do
       before do
         User.tire.index.delete
         User.tire.create_elasticsearch_index
-        5.times { FactoryGirl.create(:user) }
+        FactoryGirl.create_list(:user, 15)
         @target_user = FactoryGirl.create(:user, name: 'Find me',
                                                  nick: 'whoami',
                                                  email: 'somebody@tolove.me')
