@@ -53,6 +53,25 @@ class User < ActiveRecord::Base
 
   include PasswordValidations
 
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  index_name "#{Tire::Model::Search.index_prefix}_users"
+
+  tire.mapping do
+    indexes :id, type: 'integer'
+    indexes :name
+    indexes :email
+    indexes :nick
+  end
+
+  def self.search(params)
+    tire.search(load: true, page: params[:page]||1) do
+      query { string params[:query] } if params[:query].present?
+      sort  { by :id } if params[:query].blank? # as returned by database
+    end
+  end
+
   def self.find_by_email_or_nick(string)
     self.where('email = :val OR nick = :val', val: string).first
   end
