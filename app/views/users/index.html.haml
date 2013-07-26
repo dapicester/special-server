@@ -1,9 +1,14 @@
 - provide :title, t('.title')
 %h1= t('.title')
 
-= will_paginate
+-# TODO float align righ
+= form_tag search_users_path, method: :get, class: 'form-search' do
+  = text_field_tag :query, params[:query], class: 'input-medium search-query'
+  = submit_tag t('.search'), name: nil, class: 'btn'
+
+= will_paginate @users unless @users.empty?
 
 %ul.users
   = render @users
 
-= will_paginate
+= will_paginate @users unless @users.empty?

@@ -42,6 +42,18 @@ class UsersController < ApplicationController
     @users = User.paginate(page: params[:page])
   end
 
+  def search
+    begin
+      @users = User.search params
+    rescue Tire::Search::SearchRequestFailed
+      # fail silently in case of errors
+      @users = []
+      error = true
+    end
+    flash[:message] = I18n.t('users.search.not_found') if @users.empty? or error
+    render :index
+  end
+
   def show
     @user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])

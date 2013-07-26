@@ -18,6 +18,8 @@ it:
       title: Following
     followers:
       title: Followers
+    search:
+      not_found: Nessun utente trovato
 
   password_resets:
     changed: La password è stata cambiata.

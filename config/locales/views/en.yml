@@ -74,6 +74,7 @@ en:
       microposts: Microposts
     index:
       title: All users
+      search: Search
     follow:
       button: Follow
     unfollow:

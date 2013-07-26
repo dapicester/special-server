@@ -7,6 +7,9 @@ SpecialServer::Application.routes.draw do
       member do
         get :following, :followers
       end
+      collection do
+        get :search
+      end
     end
     resources :sessions,        only: [:new, :create, :destroy]
     resources :password_resets, only: [:new, :create, :edit, :update]
