@@ -136,13 +136,12 @@ describe "User pages" do
 
     context "for user" do
       before do
-        User.tire.index.delete
-        User.tire.create_elasticsearch_index
+        create_index User
         FactoryGirl.create_list(:user, 15)
         @target_user = FactoryGirl.create(:user, name: 'Find me',
                                                  nick: 'whoami',
                                                  email: 'somebody@tolove.me')
-        User.tire.index.refresh
+        refresh_index User
       end
 
       shared_examples_for "find user" do
