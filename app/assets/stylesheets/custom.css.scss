@@ -136,6 +136,7 @@ aside {
 .gravatar {
   float: left;
   margin-right: 10px;
+  @extend .img-polaroid;
 }
 
 .nick {
