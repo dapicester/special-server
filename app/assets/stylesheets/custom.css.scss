@@ -205,6 +205,16 @@ input {
   @extend .error;
  }
 
+/* search forms */
+
+.top-nav .span4 {
+  width:auto;
+}
+
+.top-nav .span4 .form-search {
+  margin:20px 0;
+}
+
 /* users index */
 
 .users {
