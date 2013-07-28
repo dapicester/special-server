@@ -32,3 +32,5 @@ it:
       success: Micropost pubblicato!
     delete:
       success: Micropost cancellato!
+    search:
+      not_found: Nessun micropost trovato.

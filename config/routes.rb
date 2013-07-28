@@ -13,7 +13,11 @@ SpecialServer::Application.routes.draw do
     end
     resources :sessions,        only: [:new, :create, :destroy]
     resources :password_resets, only: [:new, :create, :edit, :update]
-    resources :microposts,      only: [:create, :destroy]
+    resources :microposts,      only: [:create, :destroy] do
+      collection do
+        get :search
+      end
+    end
     resources :relationships,   only: [:create, :destroy]
 
     get '/signup',         to: 'users#new'

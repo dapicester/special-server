@@ -1,0 +1,11 @@
+- provide :title, t('.title')
+%h1= t('.title')
+
+= form_tag search_microposts_path, method: :get, class: 'form-search' do
+  = text_field_tag :query, params[:query], class: 'input-medium span4 search-query'
+  = submit_tag t('.button'), name: nil, class: 'btn'
+
+- if @microposts.any?
+  %ol.microposts
+    = render partial: 'shared/feed_item', collection: @microposts
+  = will_paginate @feed_items if @microposts

@@ -97,3 +97,7 @@ en:
       posted: Posted %{time} ago.
       placeholder: Compose a new micropost ...
       button: Post
+    search:
+      title: Search into Special
+      title-short: Search
+      button: Search

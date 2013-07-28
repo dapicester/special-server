@@ -39,4 +39,31 @@ describe "MicropostPages" do
       end
     end
   end
+
+  describe "search" do
+    before do
+      create_index Micropost
+      FactoryGirl.create_list(:micropost, 20, user: user, content: Faker::Lorem.sentences)
+      @target_micropost = FactoryGirl.create(:micropost, user: user, content: "Hello World!")
+      refresh_index Micropost
+    end
+
+    before { visit search_microposts_path }
+
+    describe "by content" do
+      before do
+        fill_in 'query', with: 'hello'
+        click_button t('microposts.search.button')
+      end
+      it { should have_selector('li', text: @target_micropost.content) }
+    end
+
+    describe "with no match" do
+      before do
+        fill_in 'query', with: 'difficult to find'
+        click_button t('microposts.search.button')
+      end
+      it { should have_message(:message, t('microposts.search.not_found')) }
+    end
+  end
 end
