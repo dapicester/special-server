@@ -74,6 +74,7 @@ en:
       microposts: Microposts
     index:
       title: All users
+      search: Search
     follow:
       button: Follow
     unfollow:
@@ -96,3 +97,7 @@ en:
       posted: Posted %{time} ago.
       placeholder: Compose a new micropost ...
       button: Post
+    search:
+      title: Search into Special
+      title-short: Search
+      button: Search

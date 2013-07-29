@@ -74,6 +74,7 @@ it:
       microposts: Micropost
     index:
       title: Lista utenti
+      search: Cerca
     follow:
       button: Segui
     unfollow:
@@ -96,3 +97,7 @@ it:
       posted: Creato %{time} fa.
       placeholder: Scrivi un nuovo micropost ...
       button: Pubblica
+    search:
+      title: Cerca in Special
+      title-short: Cerca
+      button: Cerca

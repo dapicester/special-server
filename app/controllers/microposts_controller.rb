@@ -21,6 +21,20 @@ class MicropostsController < ApplicationController
     redirect_back_or root_path
   end
 
+  def search
+    store_location
+    @microposts = []
+    if params[:query].present?
+      begin
+        @microposts = Micropost.search params
+      rescue Tire::Search::SearchRequestFailed
+        # fail silently in case of errors
+        error = true
+      end
+      flash[:message] = I18n.t('microposts.search.not_found') if @microposts.empty? or error
+    end
+  end
+
 private
 
   def correct_user

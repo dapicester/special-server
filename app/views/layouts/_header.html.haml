@@ -12,6 +12,7 @@
           %li= link_to t('static_pages.help.title'), help_path
           - if signed_in?
             %li= link_to t('users.index.title'), users_path
+            %li= link_to t('microposts.search.title-short'), search_microposts_path
             %li#fat-menu.dropdown
               %a(href="#" class="dropdown-toggle" data-toggle="dropdown")
                 = current_user.email

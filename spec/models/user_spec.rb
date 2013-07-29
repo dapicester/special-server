@@ -293,4 +293,19 @@ describe User do
       its(:followed_users) { should_not include(other_user) }
     end
   end
+
+  describe "search" do
+    before :all do
+      User.tire.index.delete
+      User.create_elasticsearch_index
+      FactoryGirl.create(:user, name: "Donald Duck")
+      FactoryGirl.create(:user, name: "Mickey Mouse")
+      User.tire.index.refresh
+    end
+
+    specify { User.search({}).count.should eql 2 }
+    specify { User.search(query: '').count.should eql 2 }
+    specify { User.search(query: 'donald').count.should eql 1 }
+    specify { User.search(query: 'Tex Willer').count.should eql 0 }
+  end
 end

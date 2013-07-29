@@ -136,6 +136,7 @@ aside {
 .gravatar {
   float: left;
   margin-right: 10px;
+  @extend .img-polaroid;
 }
 
 .nick {
@@ -205,6 +206,20 @@ input {
   @extend .error;
  }
 
+/* search forms */
+
+.top-nav .span4 {
+  width:auto;
+}
+
+.top-nav .span4 .form-search {
+  margin:20px 0;
+}
+
+.highlight {
+  background-color: $yellow
+}
+
 /* users index */
 
 .users {
@@ -259,14 +274,6 @@ aside {
 }
 
 /* miscellaneous */
-
-.float-right {
-  float: right;
-}
-
-.float-left {
-  float: left;
-}
 
 .light-gray {
   color: $grayLight;

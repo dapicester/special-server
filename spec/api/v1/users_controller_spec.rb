@@ -7,7 +7,7 @@ describe "/api/v1/users", type: :api do
   describe "index" do
     let(:url) { "/api/v1/users" }
 
-    before(:all) { 30.times { FactoryGirl.create(:user) } }
+    before(:all) { FactoryGirl.create_list(:user, 30) }
     after(:all)  { User.delete_all }
 
     let(:first_page)  { api_users User.paginate(page: 1) }

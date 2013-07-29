@@ -1,0 +1,21 @@
+- provide :title, t('.title')
+%h1= t('.title')
+
+= form_tag search_microposts_path, method: :get, class: 'form-search' do
+  = text_field_tag :query, params[:query], class: 'input-medium span4 search-query'
+  = submit_tag t('.button'), name: nil, class: 'btn'
+
+- if @microposts.any?
+  %ol.microposts
+    - @microposts.each_with_hit do |micropost,hit|
+      %li{id: micropost.id}
+        = link_to gravatar_for(micropost.user), micropost.user
+        %span.user
+          = link_to micropost.user.name, micropost.user
+          .nick.inline= at_nick micropost.user
+        %span.content
+          = raw hit['highlight']['content'].first
+        %span.timestamp
+          = t('microposts.micropost.posted', time: time_ago_in_words(micropost.created_at))
+        = render partial: 'shared/delete_post', locals: { post: micropost }
+  = will_paginate @microposts if @microposts

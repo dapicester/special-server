@@ -18,6 +18,8 @@ en:
       title: Following
     followers:
       title: Followers
+    search:
+      not_found: No user found
 
   password_resets:
     changed: Password has been changed.
@@ -30,3 +32,5 @@ en:
       success: Micropost created!
     delete:
       success: Micropost deleted!
+    search:
+      not_found: No content found.

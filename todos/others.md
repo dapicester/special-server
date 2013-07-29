@@ -8,5 +8,6 @@
 # all
 - refactoring the pages so that are similar with the homepage
 - remove magic values
+- poltergeist engine for capybara
 - use more JavaScript in order to avoid page reloads
 
