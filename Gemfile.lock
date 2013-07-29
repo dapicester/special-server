@@ -173,6 +173,8 @@ GEM
     json_spec (1.0.0)
       multi_json (~> 1.0)
       rspec (~> 2.0)
+    launchy (2.3.0)
+      addressable (~> 2.3)
     libnotify (0.8.0)
       ffi (>= 1.0.11)
     listen (0.7.3)
@@ -382,6 +384,7 @@ DEPENDENCIES
   jquery-rails (= 2.2.1)
   jquery-turbolinks (= 1.0.0)
   json_spec (= 1.0.0)
+  launchy (= 2.3.0)
   libnotify (= 0.8.0)
   metric_fu
   pg
