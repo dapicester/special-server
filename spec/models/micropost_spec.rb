@@ -12,7 +12,7 @@
 require 'spec_helper'
 
 describe Micropost do
-  
+
   let(:user) { FactoryGirl.create(:user) }
   before { @micropost = user.microposts.build(content: "Lorem ipsum") }
 
@@ -30,7 +30,7 @@ describe Micropost do
     it { should_not be_valid }
   end
 
-  describe "with blank content" do 
+  describe "with blank content" do
     before { @micropost.content = " " }
     it { should_not be_valid }
   end
@@ -57,4 +57,22 @@ describe Micropost do
     it { should include(followed_post) }
     it { should_not include(unfollowed_post) }
   end
+
+  describe "search" do
+    # http://blog.lucascaton.com.br/index.php/2012/08/01/how-to-test-elasticsearch-in-a-rails-application/
+    before :all do
+      Micropost.tire.index.delete
+      Micropost.create_elasticsearch_index
+      FactoryGirl.create(:micropost, content: "Lorem ipsum et dolor sic amet")
+      FactoryGirl.create(:micropost, content: "Carpe diem quam minima credula postero")
+      FactoryGirl.create(:micropost, content: "Malus mala mala mala dat")
+      Micropost.tire.index.refresh
+    end
+
+    specify { Micropost.search({}).count.should eql 3 }
+    specify { Micropost.search(query: '').count.should eql 3 }
+    specify { Micropost.search(query: 'mala').count.should eql 1 }
+    specify { Micropost.search(query: 'foobar').count.should eql 0 }
+  end
+
 end

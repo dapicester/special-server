@@ -4,4 +4,5 @@
   - if current_user.admin? && !current_user?(user)
     = link_to t('users.delete.button'), user, method: :delete,
               confirm: t('users.delete.confirm'),
-              class: 'btn btn-mini btn-danger float-right'
+              class: 'btn btn-mini btn-danger pull-right'
+  .nick= at_nick user

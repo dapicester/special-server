@@ -13,7 +13,7 @@ describe "User pages" do
     describe "with invalid information" do
       # empty form
 
-      it "should not create a user" do
+      it "does not create a user" do
         expect { click_button t('users.new.button') }.not_to change(User, :count)
       end
 
@@ -28,11 +28,12 @@ describe "User pages" do
       before do
         fill_in t('users.fields.name'),         with: "Example User"
         fill_in t('users.fields.email'),        with: "user@example.com"
+        fill_in t('users.fields.nick'),         with: "user"
         fill_in t('users.fields.password'),     with: "foobar"
         fill_in t('users.fields.confirmation'), with: "foobar"
       end
 
-      it "should create a user" do
+      it "creates a user" do
         expect { click_button t('users.new.button') }.to change(User, :count).by(1)
       end
 
@@ -72,32 +73,36 @@ describe "User pages" do
     end
 
     it { should have_selector('title', text: t('users.index.title')) }
+    it { should have_button(t('users.index.search')) }
 
     describe "pagination" do
-      before(:all) { 30.times { FactoryGirl.create(:user) } }
+      before(:all) { FactoryGirl.create_list(:user, 30) }
       after(:all)  { User.delete_all }
 
-      let(:first_page)  { User.paginate(page: 1) }
-      let(:second_page) { User.paginate(page: 2) }
+      let(:first_page)  { User.page(1) }
+      let(:second_page) { User.page(2) }
 
       it { should have_link("Next") }
       it { should have_link('2') }
 
-      it "should list each user" do
+      it "lists each user" do
         User.all[0..2].each do |user|
           should have_selector('li', text: user.name)
+          should have_selector('li .nick', text: user.nick)
         end
       end
 
-      it "should list the first page of users" do
+      it "lists the first page of users" do
         first_page.each do |user|
           should have_selector('li', text: user.name)
+          should have_selector('li .nick', text: user.nick)
         end
       end
 
-      it "should not list the second page of users" do
+      it "does not list the second page of users" do
         second_page.each do |user|
           should_not have_selector('li', text: user.name)
+          should_not have_selector('li .nick', text: user.nick)
         end
       end
 
@@ -110,11 +115,72 @@ describe "User pages" do
           visit users_path
         end
 
-        it { should have_link(t('users.delete.button'), href: user_path(User.first)) }
-        it "should be able to delete another user" do
+        it "has delete buttons" do
+          should have_link(t('users.delete.button'), href: user_path(User.first))
+        end
+        it "is able to delete another user" do
           expect { click_link(t('users.delete.button')) }.to change(User, :count).by(-1)
         end
         it { should_not have_link(t('users.delete.button'), href: user_path(admin)) }
+      end
+    end
+  end
+
+  describe "search" do
+    let(:user) { FactoryGirl.create(:user) }
+
+    before do
+      sign_in user
+      visit users_path
+    end
+
+    context "for user" do
+      before do
+        create_index User
+        FactoryGirl.create_list(:user, 15)
+        @target_user = FactoryGirl.create(:user, name: 'Find me',
+                                                 nick: 'whoami',
+                                                 email: 'somebody@tolove.me')
+        refresh_index User
+      end
+
+      shared_examples_for "find user" do
+        before { click_button t('users.index.search') }
+        it "finds the user" do
+          should have_selector('li', text: @target_user.name)
+          should have_selector('li .nick', text: @target_user.nick)
+        end
+      end
+
+      describe "by name" do
+        before { fill_in 'query', with: "name:#{@target_user.name}" }
+        it_behaves_like "find user"
+      end
+
+      describe "by nick" do
+        before { fill_in 'query', with: "nick:#{@target_user.nick}" }
+        it_behaves_like "find user"
+      end
+
+      describe "by email" do
+        before { fill_in 'query', with: "email:#{@target_user.email}" }
+        it_behaves_like "find user"
+      end
+
+      describe "with no match" do
+        before do
+          fill_in 'query', with: "you_cannot_find_me"
+          click_button t('users.index.search')
+        end
+        it { should have_message(:message, t('users.search.not_found')) }
+      end
+
+      describe "with invalid query" do
+        before do
+          fill_in 'query', with: "no["
+          click_button t('users.index.search')
+        end
+        it { should_not have_message(:error) }
       end
     end
   end
@@ -127,6 +193,7 @@ describe "User pages" do
     before { visit user_path(user) }
 
     it { should have_selector('h1', text: user.name) }
+    it { should have_selector('span.nick', text: user.nick) }
     it { should have_selector('title', text: user.name) }
 
     describe "microposts" do
@@ -142,13 +209,13 @@ describe "User pages" do
       describe "following a user" do
         before { visit user_path(other_user) }
 
-        it "should increment the followed count" do
+        it "increments the followed count" do
           expect do
             click_button t('users.follow.button')
           end.to change(user.followed_users, :count).by(1)
         end
 
-        it "should increment the other user's followers count" do
+        it "increments the other user's followers count" do
           expect do
             click_button t('users.follow.button')
           end.to change(other_user.followers, :count).by(1)
@@ -166,13 +233,13 @@ describe "User pages" do
           visit user_path(other_user)
         end
 
-        it "should decrement the followed user count" do
+        it "decrements the followed user count" do
           expect do
             click_button t('users.unfollow.button')
           end.to change(user.followed_users, :count).by(-1)
         end
 
-        it "should decrement the other user's followers count" do
+        it "decrements the other user's followers count" do
           expect do
             click_button t('users.unfollow.button')
           end.to change(other_user.followers, :count).by(-1)

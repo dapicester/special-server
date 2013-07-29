@@ -2,6 +2,7 @@
   = gravatar_for current_user, size: 52
 %h1
   = current_user.name
+  .nick.inline= at_nick current_user
 %span
   = link_to t('.view_profile'), current_user
 %span

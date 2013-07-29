@@ -21,6 +21,27 @@ class Micropost < ActiveRecord::Base
   # Returns microposts from the users being followed by the given user.
   scope :from_users_followed_by, lambda { |user| followed_by(user) }
 
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  index_name "#{Tire::Model::Search.index_prefix}_microposts"
+
+  tire.mapping do
+    indexes :content
+  end
+
+  def self.search(params)
+    tire.search(load: true, page: params[:page]||1) do
+      query { string params[:query] } if params[:query].present?
+      highlight :content, options: { tag: "<em class='highlight'>" }
+    end
+  end
+
+  after_destroy do
+    # TODO use background task instead of direct call
+    tire.index.refresh
+  end
+
 private
 
   # Returns an SQL condition for users folloew by the given user.
@@ -28,6 +49,7 @@ private
   def self.followed_by(user)
     followed_user_ids = %(SELECT followed_id FROM relationships
                           WHERE follower_id = :user_id)
-    where("user_id IN (#{followed_user_ids}) OR user_id = :user_id", user_id: user) # automatically uses user.id
+    where("user_id IN (#{followed_user_ids})
+        OR user_id = :user_id", user_id: user) # automatically uses user.id
   end
 end

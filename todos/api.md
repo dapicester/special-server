@@ -1,6 +1,11 @@
 # API refactoring
 
-- use a batter way to render formats
+- update with recent additions
+  - signup
+  - activation
+  - login with email or nick
+  - password reset
+- use a better way to render formats
   - json: rabl, jbuilder
   - others: xml, msgpack
 - proper versioning

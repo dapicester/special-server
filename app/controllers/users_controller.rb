@@ -39,12 +39,24 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.page(params[:page])
+  end
+
+  def search
+    begin
+      @users = User.search params
+    rescue Tire::Search::SearchRequestFailed
+      # fail silently in case of errors
+      @users = []
+      error = true
+    end
+    flash[:message] = I18n.t('users.search.not_found') if @users.empty? or error
+    render :index
   end
 
   def show
     @user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])
+    @microposts = @user.microposts.page(params[:page])
   end
 
   def destroy
@@ -56,14 +68,14 @@ class UsersController < ApplicationController
   def following
     @title = I18n.t('users.following.title')
     @user = User.find(params[:id])
-    @users = @user.followed_users.paginate(page: params[:page])
+    @users = @user.followed_users.page(params[:page])
     render 'show_follow'
   end
 
   def followers
     @title = I18n.t('users.followers.title')
     @user = User.find(params[:id])
-    @users = @user.followers.paginate(page: params[:page])
+    @users = @user.followers.page(params[:page])
     render 'show_follow'
   end
 

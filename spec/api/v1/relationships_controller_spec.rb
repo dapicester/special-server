@@ -11,14 +11,14 @@ describe Api::V1::RelationshipsController, type: :api do
   describe "#create" do
     let(:relationship) { { followed_id: other_user.id } }
 
-    it "should create a new relationship" do
+    it "creates a new relationship" do
       expect do
         post "#{url}.json", token: token, relationship: relationship
       end.to change(user.followed_users, :count).by(1)
       response.status.should eql(201)
     end
 
-    it "should not create a new relationship" do
+    it "does not create a new relationship" do
       expect do
         post "#{url}.json", token: token, relationship: {}
       end.not_to change(Relationship, :count)
@@ -37,14 +37,14 @@ describe Api::V1::RelationshipsController, type: :api do
     let(:relationship)       { user.relationships.find_by_followed_id(other_user) }
     let(:other_relationship) { other_user.relationships.find_by_followed_id(user) }
 
-    it "should delete a relationship" do
+    it "deletes a relationship" do
       expect do
         delete "#{url}/#{relationship.id}.json", token: token
       end.to change(user.followed_users, :count).by(-1)
       response.status.should eql(200)
     end
 
-    it "should not delete a non-existent relationship" do
+    it "does not delete a non-existent relationship" do
       expect do
         delete "#{url}/0.json", token: token
       end.not_to change(Relationship, :count)
@@ -53,7 +53,7 @@ describe Api::V1::RelationshipsController, type: :api do
       response.body.should be_json_eql(error.to_json)
     end
 
-    it "should not delete if not owner" do
+    it "does not delete if not owner" do
       expect do
         delete "#{url}/#{other_relationship.id}.json", token: token
       end.not_to change(Relationship, :count)

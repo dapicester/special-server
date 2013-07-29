@@ -1,9 +1,15 @@
 - provide :title, t('.title')
 %h1= t('.title')
 
-= will_paginate
+.row.top-nav
+  .pull-left
+    = paginate @users unless @users.empty?
+  .pull-right.span4
+    = form_tag search_users_path, method: :get, class: 'form-search' do
+      = text_field_tag :query, params[:query], class: 'input-medium search-query'
+      = submit_tag t('.search'), name: nil, class: 'btn'
 
 %ul.users
   = render @users
 
-= will_paginate
+= paginate @users unless @users.empty?

@@ -14,7 +14,7 @@ describe "Authentication" do
       before { click_button t('sessions.new.button') }
 
       it { should have_selector('title', text: t('sessions.new.title')) }
-      it { should have_message(:error, 'Invalid') }
+      it { should have_message(:error, t('sessions.create.invalid_combination')) }
 
       describe "after visiting another page" do
         before { click_link t('static_pages.home.title') }
@@ -35,27 +35,38 @@ describe "Authentication" do
         it { should have_link(t('layouts.header.signin'),  href: signin_path) }
       end
 
-      describe "and activated" do
-        before do
-          user.activate!
-          sign_in user
+      describe "and user activated" do
+        before { user.activate! }
+
+        shared_examples_for "signed in user" do
+          it { should have_selector('title', text: t('static_pages.home.title')) }
+
+          it { should have_link(t('users.index.title'), href: users_path) }
+          it { should have_link("#{user.email}", href: '#') }
+          it { should have_link(t('layouts.header.profile'),  href: user_path(user)) }
+          it { should have_link(t('layouts.header.settings'), href: edit_user_path(user)) }
+          it { should have_link(t('layouts.header.signout'),  href: signout_path) }
+
+          it { should_not have_link(t('layouts.header.signin'), href: signin_path) }
+          it { get_cookie(:remember_token).should be_nil }
+
+          describe "followed by signout" do
+            before { click_link t('layouts.header.signout') }
+            it { get_cookie(:remember_token).should be_nil }
+            it { should have_link(t('layouts.header.signin')) }
+            it { should_not have_link(t('layouts.header.profile')) }
+            it { should_not have_link(t('layouts.header.settings')) }
+          end
         end
 
-        it { should have_selector('title', text: t('static_pages.home.title')) }
+        describe "using email" do
+          before { sign_in user }
+          it_behaves_like "signed in user"
+        end
 
-        it { should have_link(t('users.index.title'), href: users_path) }
-        it { should have_link("#{user.email}", href: '#') }
-        it { should have_link(t('layouts.header.profile'),  href: user_path(user)) }
-        it { should have_link(t('layouts.header.settings'), href: edit_user_path(user)) }
-        it { should have_link(t('layouts.header.signout'),  href: signout_path) }
-
-        it { should_not have_link(t('layouts.header.signin'), href: signin_path) }
-
-        describe "followed by signout" do
-          before { click_link t('layouts.header.signout') }
-          it { should have_link(t('layouts.header.signin')) }
-          it { should_not have_link(t('layouts.header.profile')) }
-          it { should_not have_link(t('layouts.header.settings')) }
+        describe "using nick" do
+          before { sign_in user, :login => :nick }
+          it_behaves_like "signed in user"
         end
       end
     end
@@ -85,25 +96,25 @@ describe "Authentication" do
       describe "when attempting to visit a protected page" do
         before do
           visit edit_user_path(user)
-          fill_in "Email",    with: user.email
-          fill_in "Password", with: user.password
+          fill_in t('sessions.new.login'),    with: user.email
+          fill_in t('sessions.new.password'), with: user.password
           click_button t('sessions.new.button')
         end
 
         describe "after signing in" do
-          it "should render the desired protected page" do
+          it "renders the desired protected page" do
             should have_selector('title', text: t('users.edit.title'))
           end
 
           describe "when signing in again" do
-            before do 
+            before do
               visit signin_path
-              fill_in "Email",    with: user.email
-              fill_in "Password", with: user.password
+              fill_in t('sessions.new.login'),    with: user.email
+              fill_in t('sessions.new.password'), with: user.password
               click_button t('sessions.new.button')
             end
 
-            it "should render the default (home) page" do
+            it "renders the default (home) page" do
               should have_selector('title', text: t('static_pages.home.title'))
             end
           end
@@ -115,7 +126,7 @@ describe "Authentication" do
         it { should have_selector('title', text: t('layouts.header.signin')) }
       end
 
-      describe "in the Users controller" do 
+      describe "in the Users controller" do
         describe "visiting the edit page" do
           before { visit edit_user_path(user) }
           it { should have_selector('title', text: t('layouts.header.signin')) }
@@ -126,7 +137,7 @@ describe "Authentication" do
           specify { response.should redirect_to(signin_path) }
         end
 
-        describe "visiting the following page" do 
+        describe "visiting the following page" do
           before { visit following_user_path(user) }
           it { should have_selector('title', text: t('layouts.header.signin')) }
         end
@@ -161,7 +172,7 @@ describe "Authentication" do
         describe "submitting to the destroy action" do
           before { delete relationship_path(1) }
           specify { response.should redirect_to(signin_path) }
-        end 
+        end
       end
     end
 

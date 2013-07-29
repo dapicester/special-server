@@ -23,6 +23,8 @@ Set up integration with Bundler
 External dependencies
 ---
 
+Searches are powered by [ElasticSearch](http://www.elasticsearch.org).
+
 In order to run the tests, a JavaScript engine is required, for
 example [Node.js](http://nodejs.org/).
 
@@ -129,4 +131,15 @@ sending. One just need to
 1. start the daemon `mailcatcher`
 1. use `smtp://localhost:1025` for sending emails
 1. check `http://localhost:1080`
+
+### Elastic search
+
+In order to index existing data, issue the following command:
+
+    $ rake environment tire:import:all
+
+or selectively index with:
+
+    $ rake environment tire:import CLASS='User' FORCE=true
+
 

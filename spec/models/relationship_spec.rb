@@ -31,7 +31,7 @@ describe Relationship do
     its(:follower) { should == follower }
     its(:followed) { should == followed }
 
-    it "should destroy relationship" do
+    it "destroys relationship" do
       expect do
         followed.destroy
       end.to change(Micropost.from_users_followed_by(follower), :count).by(-1)

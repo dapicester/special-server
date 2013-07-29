@@ -1,15 +1,15 @@
 = f.label :name, t('.name')
-%br/
 = f.text_field :name
 
 = f.label :email, t('.email')
-%br/
 = f.text_field :email
 
+= f.label :nick, t('.nick')
+= f.text_field :nick
+-# TODO autofill nick with js
+
 = f.label :password, t('.password')
-%br/
 = f.password_field :password
 
 = f.label :password_confirmation, t('.confirmation')
-%br/
 = f.password_field :password_confirmation

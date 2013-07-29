@@ -11,7 +11,10 @@ it:
   sessions:
     new:
       title: Login
+      login: Email o Nick
+      password: Password
       button: Accedi
+      remember_me: Resta connesso
       forgot: Password dimenticata?
     notice:
       signin: Fai prima login.
@@ -56,6 +59,7 @@ it:
     fields:
       name: Nome
       email: Email
+      nick: Nick
       password: Password
       confirmation: Conferma
     new:
@@ -70,6 +74,7 @@ it:
       microposts: Micropost
     index:
       title: Lista utenti
+      search: Cerca
     follow:
       button: Segui
     unfollow:
@@ -92,3 +97,7 @@ it:
       posted: Creato %{time} fa.
       placeholder: Scrivi un nuovo micropost ...
       button: Pubblica
+    search:
+      title: Cerca in Special
+      title-short: Cerca
+      button: Cerca

@@ -6,7 +6,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   #TODO: https://github.com/fabrik42/acts_as_api
 
   def index
-    users = User.paginate(page: page) 
+    users = User.page(page) 
     respond_with api_user_list(users)
   end
 
@@ -15,22 +15,22 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def following
-    followed_users = @user.followed_users.paginate(page: page)
+    followed_users = @user.followed_users.page(page)
     respond_with api_user_list(followed_users)
   end
 
   def followers
-    followers = @user.followers.paginate(page: page)
+    followers = @user.followers.page(page)
     respond_with api_user_list(followers)
   end
 
   def microposts
-    microposts = @user.microposts.paginate(page: page)
+    microposts = @user.microposts.page(page)
     respond_with microposts
   end
 
   def feed
-    feeds = Micropost.from_users_followed_by(@current_user).paginate(page: page)
+    feeds = Micropost.from_users_followed_by(@current_user).page(page)
     respond_with api_feed_list(feeds)
   end
 

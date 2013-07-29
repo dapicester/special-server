@@ -11,6 +11,9 @@ en:
   sessions:
     new:
       title: Sign in
+      login: Email or Nick
+      password: Password
+      remember_me: Stay signed in
       button: Sign in
       forgot: Forgot password?
     notice:
@@ -56,6 +59,7 @@ en:
     fields:
       name: Name
       email: Email
+      nick: Nick
       password: Password
       confirmation: Confirmation
     new:
@@ -70,6 +74,7 @@ en:
       microposts: Microposts
     index:
       title: All users
+      search: Search
     follow:
       button: Follow
     unfollow:
@@ -92,3 +97,7 @@ en:
       posted: Posted %{time} ago.
       placeholder: Compose a new micropost ...
       button: Post
+    search:
+      title: Search into Special
+      title-short: Search
+      button: Search
