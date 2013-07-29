@@ -33,6 +33,7 @@ class Micropost < ActiveRecord::Base
   def self.search(params)
     tire.search(load: true, page: params[:page]||1) do
       query { string params[:query] } if params[:query].present?
+      highlight :content, options: { tag: "<em class='highlight'>" }
     end
   end
 

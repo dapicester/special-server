@@ -55,7 +55,10 @@ describe "MicropostPages" do
         fill_in 'query', with: 'hello'
         click_button t('microposts.search.button')
       end
-      it { should have_selector('li', text: @target_micropost.content) }
+      it do
+        should have_selector('li', text: @target_micropost.content)
+        should have_selector('li .highlight', text: 'Hello') # search is case insensitive
+      end
     end
 
     describe "with no match" do
