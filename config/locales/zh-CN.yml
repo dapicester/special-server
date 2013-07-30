@@ -7,3 +7,18 @@ zh-CN:
 
   new_user: 还没注册？
   signup_now: 马上注册！
+
+  user_mailer:
+    activation:
+      subject: 欢迎来到Special Workplaces
+      body:
+        link: 激活账户请点击以下链接
+        ignore: 如果您没有注册请忽略此邮件。
+
+    password_reset:
+      subject: 密码重置说明
+      body:
+        link: 重置密码请点击以下链接
+        ignore: >
+          如果您没有要求重置密码请忽略此邮件，
+          同时您的密码将保持原样。
