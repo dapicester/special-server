@@ -7,10 +7,3 @@ zh-CN:
 
   new_user: 还没注册？
   signup_now: 马上注册！
-  
-  activerecord:
-    attributes:
-      user:
-        name: 姓名
-        email: 邮箱
-        password_digest: 密码
