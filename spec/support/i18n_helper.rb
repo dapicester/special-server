@@ -21,7 +21,9 @@ module I18nHelper
   end
 
   def base_i18n_files
-    Dir["config/locales/**/*.yml"].select { |x| File.basename(x).match(/\A\w\w.yml\Z/) }
+    Dir["config/locales/**/*.yml"].select do |file|
+      File.basename(file).match I18n.available_locales.join('|')
+    end
   end
 
   def locales_to_keys
