@@ -94,7 +94,7 @@ zh-CN:
 
   microposts:
     micropost:
-      posted: 发布于 %{time} 前。
+      posted: "发布于 %{time} 前。"
       placeholder: 发布一条新微播⋯⋯
       button: 发布
     search:
