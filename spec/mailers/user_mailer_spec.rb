@@ -15,9 +15,10 @@ describe UserMailer do
       mail.to.should eq([user.email])
       mail.from.should eq([ UserMailer.default[:from] ])
     end
-    describe "contains the token link" do
-      it { mail.text_part.body.encoded.should match(link) }
-      it { mail.html_part.body.encoded.should match(link) }
+    it "contains the token link" do
+      mail.text_part.body.encoded.should match(link)
+      mail.html_part.body.encoded.should match(link)
+      link.should match(I18n.locale.to_s)
     end
   end
 
@@ -35,7 +36,7 @@ describe UserMailer do
     let(:mail) { UserMailer.activation(user) }
     it_behaves_like "a confirmation email" do
       let(:subject) { t('user_mailer.activation.subject') }
-      let(:link) { activation_path(user.activation_token) }
+      let(:link) { activation_path user.activation_token, locale: I18n.locale }
     end
   end
 end
