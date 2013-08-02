@@ -37,11 +37,6 @@ class Micropost < ActiveRecord::Base
     end
   end
 
-  after_destroy do
-    # TODO use background task instead of direct call
-    tire.index.refresh
-  end
-
 private
 
   # Returns an SQL condition for users folloew by the given user.
