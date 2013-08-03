@@ -8,6 +8,7 @@ SpecialServer::Application.routes.draw do
         get :following, :followers
       end
       collection do
+        get 'page/:page', action: :index
         get :search
       end
     end
