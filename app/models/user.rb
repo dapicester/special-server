@@ -41,9 +41,9 @@ class User < ActiveRecord::Base
   validates :name, presence: true,
                    length: { maximum: NAME_MAX_LEN }
 
-  NICK_MIN_LEN = 3
+  NICK_MIN_LEN = 2
   NICK_MAX_LEN = 30
-  NICK_REGEX = /\A[\w\-]+\z/i
+  NICK_REGEX = /\A[\w\p{Han}\-]+\z/i
   validates :nick, presence: true,
                    length: { minimum: NICK_MIN_LEN, maximum: NICK_MAX_LEN},
                    format: NICK_REGEX,
