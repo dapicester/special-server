@@ -20,6 +20,7 @@ gem 'jquery-turbolinks', '1.0.0'
 gem 'jbuilder', '1.0.1'
 
 group :development do
+  gem 'pry-rails', '0.3.2'
   gem 'sqlite3','1.3.7'
   gem 'annotate', '2.5.0'
   gem 'rails-erd', '1.1.0'
