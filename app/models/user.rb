@@ -46,7 +46,9 @@ class User < ActiveRecord::Base
   NICK_REGEX = /\A[\w\-]+\z/i
   validates :nick, presence: true,
                    length: { minimum: NICK_MIN_LEN, maximum: NICK_MAX_LEN},
-                   format: NICK_REGEX
+                   format: NICK_REGEX,
+                   uniqueness: true
+
 
   include EmailValidations
   validates :email, uniqueness: { case_sensitive: false }
