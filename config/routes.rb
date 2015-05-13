@@ -2,12 +2,13 @@ SpecialServer::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
-  scope '(:locale)', locale: /en|it/ do
+  scope '(:locale)', locale: /#{I18n.available_locales.join("|")}/ do
     resources :users do
       member do
         get :following, :followers
       end
       collection do
+        get 'page/:page', action: :index
         get :search
       end
     end

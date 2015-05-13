@@ -2,7 +2,7 @@
 %p
   #{t('.body.link')}:
   %br/
-  - link = activation_url id: @user.activation_token
+  - link = activation_url @user.activation_token, locale: I18n.locale
   %a{href: link}= link
 %p
   = t('.body.ignore')

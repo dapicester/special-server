@@ -28,7 +28,7 @@ en:
       content: Here there should be some information about how to contact us.
     help:
       title: Help
-      content: Here there should be some useful information about how to use Special Workplaces. 
+      content: Here there should be some useful information about how to use Special Workplaces.
     home:
       title: Home
     home_unsigned_in:
@@ -94,7 +94,7 @@ en:
 
   microposts:
     micropost:
-      posted: Posted %{time} ago.
+      posted: "Posted %{time} ago."
       placeholder: Compose a new micropost ...
       button: Post
     search:

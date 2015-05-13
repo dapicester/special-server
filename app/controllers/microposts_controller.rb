@@ -22,7 +22,6 @@ class MicropostsController < ApplicationController
   end
 
   def search
-    store_location
     @microposts = []
     if params[:query].present?
       begin

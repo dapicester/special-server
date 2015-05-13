@@ -1,5 +1,6 @@
 # https://gist.github.com/henrik/2994129
 
+require 'i18n'
 require 'yaml'
 
 module I18nHelper
@@ -21,7 +22,11 @@ module I18nHelper
   end
 
   def base_i18n_files
-    Dir["config/locales/**/*.yml"].select { |x| File.basename(x).match(/\A\w\w.yml\Z/) }
+    Dir[File.join "config", "locales", "**", "*.yml"].select do |file|
+      File.basename(file).match I18n.available_locales.join('|')
+    end.select do |file|
+      not File.dirname(file).match 'specific'
+    end
   end
 
   def locales_to_keys
@@ -31,7 +36,9 @@ module I18nHelper
   def locales_to_documents
     @locales_to_documents = locales_to_keys.keys.inject({}) do |hash, locale|
       # E.g. [ "terms" ]
-      documents = Dir["config/locales/documents/*.#{locale}.*"].map { |file| File.basename(file, ".#{locale}.markdown") }
+      documents = Dir[File.join "config", "locales", "documents", "*.#{locale}.*"].map do |file|
+        File.basename(file, ".#{locale}.markdown")
+      end
       hash.merge locale => documents
     end
   end

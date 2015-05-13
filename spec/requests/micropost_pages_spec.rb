@@ -59,10 +59,6 @@ describe "MicropostPages" do
         should have_selector('li', text: @target_micropost.content)
         should have_selector('li .highlight', text: 'Hello') # search is case insensitive
       end
-      it "stay on the page after deletion" do
-        click_link t('shared.delete_post.delete')
-        should have_selector('h1', text: t('microposts.search.title'))
-      end
     end
 
     describe "with no match" do

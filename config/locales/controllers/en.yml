@@ -9,7 +9,7 @@ en:
 
   users:
     create:
-      success: Email sent to %{email} with activation instructions.
+      success: "Email sent to %{email} with activation instructions."
     update:
       success: Profile updated
     destroy:
@@ -25,7 +25,7 @@ en:
     changed: Password has been changed.
     expired: Your password reset request has expired.
     email:
-      sent: Email sent to %{email} with password reset instructions.
+      sent: "Email sent to %{email} with password reset instructions."
 
   microposts:
     create:

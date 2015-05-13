@@ -17,5 +17,4 @@
           = raw hit['highlight']['content'].first
         %span.timestamp
           = t('microposts.micropost.posted', time: time_ago_in_words(micropost.created_at))
-        = render partial: 'shared/delete_post', locals: { post: micropost }
   = paginate @microposts if @microposts

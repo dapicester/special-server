@@ -23,3 +23,7 @@ ERD.pdf
 *.swp
 *~
 .jhw-cache
+
+# These are required only in development
+.env
+Procfile

@@ -1,10 +1,15 @@
 zh-CN:
   sessions:
     create:
-      invalid_combination: 出错了！邮箱或者密码不正确
+      invalid_combination: 出错了！login或者密码不正确
+
+  activations:
+    success: 您的账户已激活。
+    expired: 您的激活申请已过期。
+
   users:
     create:
-      success: 欢迎使用 Special Workplaces！
+      success: "账户激活邮件已发送至%{email}。"
     update:
       success: 个人信息已更新
     destroy:
@@ -13,9 +18,19 @@ zh-CN:
       title: 关注
     followers:
       title: 粉丝
+    search:
+      not_found: 该用户未找到
+
+  password_resets:
+    changed: 密码已修改。
+    expired: 您的密码重置申请已过期。
+    email:
+      sent: "密码重置邮件已发送至%{email}。"
 
   microposts:
     create:
       success: 微播已生成！
     delete:
       success: 微播已删除！
+    search:
+      not_found: 该内容未找到。

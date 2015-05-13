@@ -22,9 +22,3 @@ it:
         ignore: >
           Se non hai richiesto di reimpostare la password puoi ignorare
           questo messaggio e la tua password non cambierà.
-
-  activerecord:
-    attributes:
-      user:
-        name: Nome
-        password_digest: Password

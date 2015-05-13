@@ -1,6 +1,9 @@
 # new
 - Feed controller
 
+# signup
+- add brief description inside the text form fields
+
 # edit profile
 - refactoring code and test
 - set field old_password
