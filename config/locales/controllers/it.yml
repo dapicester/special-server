@@ -9,7 +9,7 @@ it:
 
   users:
     create:
-      success: Le istruzioni per confermare la registrazone sono state inviate all'indirizzo %{email}.
+      success: "Le istruzioni per confermare la registrazone sono state inviate all'indirizzo %{email}."
     update:
       success: Profilo aggiornato
     destroy:
@@ -25,7 +25,7 @@ it:
     changed: La password è stata cambiata.
     expired: La richiesta è scaduta.
     email:
-      sent: Le instruzioni per cambiare la password sono state inviate all'indirizzo %{email}.
+      sent: "Le instruzioni per cambiare la password sono state inviate all'indirizzo %{email}."
 
   microposts:
     create:

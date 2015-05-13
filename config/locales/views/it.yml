@@ -94,7 +94,7 @@ it:
 
   microposts:
     micropost:
-      posted: Creato %{time} fa.
+      posted: "Creato %{time} fa."
       placeholder: Scrivi un nuovo micropost ...
       button: Pubblica
     search:

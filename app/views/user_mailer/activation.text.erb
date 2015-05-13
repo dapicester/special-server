@@ -2,7 +2,7 @@
 
 <%= t('.body.link') %>:
 
-<%= activation_url id: @user.activation_token %>
+<%= activation_url @user.activation_token, locale: I18n.locale %>
 
 <%= t('.body.ignore') %>
 

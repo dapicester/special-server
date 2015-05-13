@@ -1,0 +1,12 @@
+zh-CN:
+  authentication_error: 验证错误。
+  bad_request: 错误申请。
+  forbidden: 无法执行。
+  not_authorized: 未验证。
+  not_found: "%{name}未找到。"
+  unprocessable: 不可执行的申请。
+  email_sent: "邮件已发送至%{email}。"
+
+  user: 用户
+  micropost: 微播
+  relationship: 友邻

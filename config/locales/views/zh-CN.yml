@@ -11,7 +11,11 @@ zh-CN:
   sessions:
     new:
       title: 登录
+      login: 邮箱或昵称
+      password: 密码
+      remember_me: 保持登录
       button: 登录
+      forgot: 忘记密码？
     notice:
       signin: 请先登陆。
 
@@ -31,7 +35,7 @@ zh-CN:
       title_html: 欢迎使用<br/>Special Workplaces
       subtitle_html: 这里是Special Workplaces的主页。
     home_signed_in:
-      micropost_feed:  友邻广播
+      micropost_feed: 友邻广播
 
   shared:
     delete_post:
@@ -40,6 +44,7 @@ zh-CN:
     error_messages:
       contains: 表格上有
       errors:
+        one:  处错误
         other: "%{count} 处错误 "
     stats:
       following: 关注
@@ -47,12 +52,14 @@ zh-CN:
     user_info:
       view_profile: 我的信息
       microposts:
+        one: 条微播
         other: "%{count} 条微播"
 
   users:
     fields:
       name: 姓名
       email: 邮箱
+      nick: 昵称
       password: 密码
       confirmation: 确认
     new:
@@ -67,6 +74,7 @@ zh-CN:
       microposts: 我的微播
     index:
       title: 用户列表
+      search: 搜索
     follow:
       button: 关注
     unfollow:
@@ -75,8 +83,21 @@ zh-CN:
       button: 删除
       confirm: 你确定吗？
 
+  password_resets:
+    new:
+      title: 忘记密码
+      button: 发送
+      description: 我们将向您发送一封邮件说明如何进行密码重置。
+    edit:
+      title: 密码重置
+      button: 确认
+
   microposts:
     micropost:
-      posted: 发布于 %{time} 前。
-      placeholder: 发布一条新微播
+      posted: "发布于 %{time} 前。"
+      placeholder: 发布一条新微播⋯⋯
       button: 发布
+    search:
+      title: 站内搜索
+      title-short: 搜索
+      button: 搜索
