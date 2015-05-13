@@ -94,7 +94,7 @@ end
 # Use Thin webserver
 gem 'thin', '1.3.1'
 
-# Deployment platform 
+# Deployment platform
 #gem 'heroku' # deprecated, see https://toolbelt.heroku.com
 
 # I18n
